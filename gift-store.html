@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dissara - Gift Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Didot font -->
+    <link href="https://fonts.googleapis.com/css2?family=Didot:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --gold: #d4af37;
+          --navy: #1a2238;
+          --offwhite: #f8f6f3;
+          --gray: #e5e7eb;
+          --dark: #111827;
+        }
+        body {
+          background: var(--offwhite);
+        }
+        .navbar-font {
+          font-family: 'Cormorant Garamond', serif;
+          letter-spacing: 0.02em;
+        }
+        .didot {
+          font-family: 'Didot', 'Didot LT STD', 'Didot Italic', serif;
+          letter-spacing: 0.01em;
+        }
+        .gold-text {
+          color: var(--gold);
+        }
+        .gold-bg {
+          background: var(--gold);
+          color: var(--dark);
+        }
+        .gold-border {
+          border-color: var(--gold);
+        }
+        .navy-bg {
+          background: var(--navy);
+          color: #fff;
+        }
+        .navy-text {
+          color: var(--navy);
+        }
+        .card-hover {
+          transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .card-hover:hover {
+          box-shadow: 0 8px 32px 0 rgba(212,175,55,0.18);
+          transform: translateY(-6px) scale(1.03);
+          border-color: var(--gold);
+        }
+        .dropdown {
+          background: #fae6b1;
+          border-radius: 1rem;
+          box-shadow: 0 2px 8px 0 rgba(212,175,55,0.07);
+        }
+        .dropdown select {
+          background: transparent;
+          border: none;
+          font-size: 1.1rem;
+          font-family: 'Didot', serif;
+          color: var(--navy);
+        }
+        .nav-link {
+          position: relative;
+          transition: color 0.2s;
+        }
+        .nav-link:after {
+          content: '';
+          display: block;
+          margin: 0 auto;
+          width: 0;
+          height: 2px;
+          background: var(--gold);
+          transition: width 0.3s;
+        }
+        .nav-link:hover:after, .nav-link.active:after {
+          width: 80%;
+        }
+        .nav-link.active {
+          color: var(--gold);
+        }
+    </style>
+</head>
+<body class="bg-[var(--offwhite)] text-[var(--dark)]">
+    <!-- Navigation -->
+    <nav class="navbar-font navy-bg shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <img src="logo.png" alt="Dissara Logo" class="h-12 w-auto mr-4 align-middle" />
+                </div>
+                <div class="hidden md:flex items-center space-x-2">
+                    <a href="gift-store.html" class="nav-link px-4 py-2 text-lg didot font-normal active">Gift Store</a>
+                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Sale</a>
+                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">ShopBy</a>
+                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Best Sellers</a>
+                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">New Arrivals</a>
+                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Track order</a>
+                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">About us</a>
+                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Return & Exchange</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gift Store Section -->
+    <section class="py-16 bg-[#fff7e6] min-h-screen">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="didot text-5xl md:text-6xl font-normal gold-text mb-12 text-center tracking-wide leading-tight">Find the best gift for your loved ones</h2>
+        <div class="flex flex-col md:flex-row gap-8 mb-16 justify-center items-center">
+          <!-- Custom Dropdown: Occasion -->
+          <div class="relative flex-1 max-w-xs mx-auto px-8 py-6 flex flex-col items-center rounded-2xl shadow-sm hover:shadow-md transition bg-[#fae6b1] min-w-[320px]">
+            <label class="text-xs md:text-sm tracking-widest uppercase gold-text mb-4 font-medium text-center w-full">Occasion</label>
+            <div class="relative w-full flex flex-col items-center justify-center">
+              <button type="button" id="occasionDropdownBtn" class="w-full flex justify-center items-center gap-2 bg-transparent border-none text-lg md:text-xl navy-text font-medium didot text-center py-2 rounded-xl focus:ring-2 focus:ring-[var(--gold)] focus:border-[var(--gold)] hover:border-[var(--gold)] transition cursor-pointer outline-none" aria-haspopup="listbox" aria-expanded="false">
+                <span id="occasionSelected" class="flex-1 text-center">Birthday</span>
+                <span class="text-[var(--gold)] flex items-center justify-center">
+                  <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </span>
+              </button>
+              <ul id="occasionDropdown" tabindex="-1" class="hidden absolute left-0 top-full w-full bg-[#fff7e6] border border-[var(--gold)] rounded-xl shadow-lg z-20 py-2 mt-2 didot text-lg text-[var(--navy)] font-medium text-center">
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Birthday">Birthday</li>
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Anniversary">Anniversary</li>
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Wedding">Wedding</li>
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Graduation">Graduation</li>
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Festive">Festive</li>
+              </ul>
+            </div>
+          </div>
+          <!-- Custom Dropdown: Gift Type -->
+          <div class="relative flex-1 max-w-xs mx-auto px-8 py-6 flex flex-col items-center rounded-2xl shadow-sm hover:shadow-md transition bg-[#fae6b1] min-w-[320px]">
+            <label class="text-xs md:text-sm tracking-widest uppercase gold-text mb-4 font-medium text-center w-full">Gift type</label>
+            <div class="relative w-full flex flex-col items-center justify-center">
+              <button type="button" id="giftTypeDropdownBtn" class="w-full flex justify-center items-center gap-2 bg-transparent border-none text-lg md:text-xl navy-text font-medium didot text-center py-2 rounded-xl focus:ring-2 focus:ring-[var(--gold)] focus:border-[var(--gold)] hover:border-[var(--gold)] transition cursor-pointer outline-none" aria-haspopup="listbox" aria-expanded="false">
+                <span id="giftTypeSelected" class="flex-1 text-center">Rings</span>
+                <span class="text-[var(--gold)] flex items-center justify-center">
+                  <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </span>
+              </button>
+              <ul id="giftTypeDropdown" tabindex="-1" class="hidden absolute left-0 top-full w-full bg-[#fff7e6] border border-[var(--gold)] rounded-xl shadow-lg z-20 py-2 mt-2 didot text-lg text-[var(--navy)] font-medium text-center">
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Rings">Rings</li>
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Necklaces">Necklaces</li>
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Earrings">Earrings</li>
+                <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Combos">Combos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+<script>
+// Custom Dropdown: Occasion
+const occasionBtn = document.getElementById('occasionDropdownBtn');
+const occasionDropdown = document.getElementById('occasionDropdown');
+const occasionSelected = document.getElementById('occasionSelected');
+occasionBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  occasionDropdown.classList.toggle('hidden');
+  occasionBtn.setAttribute('aria-expanded', !occasionDropdown.classList.contains('hidden'));
+});
+document.querySelectorAll('#occasionDropdown li').forEach(item => {
+  item.addEventListener('click', function() {
+    occasionSelected.textContent = this.getAttribute('data-value');
+    occasionDropdown.classList.add('hidden');
+    occasionBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+document.addEventListener('click', function(e) {
+  if (!occasionDropdown.classList.contains('hidden')) {
+    occasionDropdown.classList.add('hidden');
+    occasionBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+// Custom Dropdown: Gift Type
+const giftTypeBtn = document.getElementById('giftTypeDropdownBtn');
+const giftTypeDropdown = document.getElementById('giftTypeDropdown');
+const giftTypeSelected = document.getElementById('giftTypeSelected');
+giftTypeBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  giftTypeDropdown.classList.toggle('hidden');
+  giftTypeBtn.setAttribute('aria-expanded', !giftTypeDropdown.classList.contains('hidden'));
+});
+document.querySelectorAll('#giftTypeDropdown li').forEach(item => {
+  item.addEventListener('click', function() {
+    giftTypeSelected.textContent = this.getAttribute('data-value');
+    giftTypeDropdown.classList.add('hidden');
+    giftTypeBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+document.addEventListener('click', function(e) {
+  if (!giftTypeDropdown.classList.contains('hidden')) {
+    giftTypeDropdown.classList.add('hidden');
+    giftTypeBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+</script>
+        <h3 class="didot text-3xl md:text-4xl font-normal navy-text mb-12 text-center tracking-wide">Categories</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+          <div class="flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
+            <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
+              <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/NecklaceSet1.jpg?v=1680000000" alt="Radiant Sunburst Necklace & Earring Set" class="object-contain max-h-32 max-w-32" />
+            </div>
+            <div class="didot text-lg font-medium navy-text mb-3 text-center leading-snug">Radiant Sunburst Necklace & Earring Set</div>
+            <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn">Buy now</button>
+          </div>
+          <div class="flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
+            <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
+              <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/GoldBracelet1.jpg?v=1680000000" alt="Floral Cutout Gold Bracelet" class="object-contain max-h-32 max-w-32" />
+            </div>
+            <div class="didot text-lg font-medium navy-text mb-3 text-center leading-snug">Floral Cutout Gold Bracelet</div>
+            <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn">Buy now</button>
+          </div>
+          <div class="flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
+            <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
+              <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/EvilEyeBracelet.jpg?v=1680000000" alt="Evil Eye Rose Gold Bracelet" class="object-contain max-h-32 max-w-32" />
+            </div>
+            <div class="didot text-lg font-medium navy-text mb-3 text-center leading-snug">Evil Eye Rose Gold Bracelet</div>
+            <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn">Buy now</button>
+          </div>
+          <div class="flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
+            <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
+              <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/DualPearlEarrings.jpg?v=1680000000" alt="Dual Pearl Gold-Toned Drop Earrings" class="object-contain max-h-32 max-w-32" />
+            </div>
+            <div class="didot text-lg font-medium navy-text mb-3 text-center leading-snug">Dual Pearl Gold-Toned Drop Earrings</div>
+            <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn">Buy now</button>
+          </div>
+        </div>
+
+<!-- Luxury Modal for Buy Now -->
+<div id="luxuryModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center">
+  <div class="relative bg-[#fffdfa] rounded-3xl shadow-2xl max-w-3xl w-full mx-4 p-14 flex flex-col" style="font-family: 'Didot', serif; min-width:380px;">
+    <div class="flex items-center justify-between mb-2">
+      <button id="backLuxuryModal" class="text-2xl text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none flex items-center gap-1">
+        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span class="text-base md:text-lg">Back</span>
+      </button>
+      <div class="flex items-center gap-4">
+        <button id="shareLuxuryModal" class="text-2xl text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none flex items-center" title="Share">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="20" cy="7" r="2"/>
+            <circle cx="8" cy="14" r="2"/>
+            <circle cx="20" cy="21" r="2"/>
+            <line x1="9.7" y1="13.1" x2="18.3" y2="8.9"/>
+            <line x1="9.7" y1="14.9" x2="18.3" y2="19.1"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <h2 class="text-4xl md:text-5xl font-normal navy-text mb-2 leading-tight">Gold Tone Circular<br>Charm Necklace</h2>
+    <div class="text-xl navy-text mb-2">with Pave stones</div>
+    <div class="inline-block px-6 py-2 rounded-full bg-[#e5d6f6] text-[#7c4d99] text-2xl font-medium mb-2">Rs.799.00</div>
+    <div class="text-base text-red-600 font-semibold mb-2">Only Few items left in store!!</div>
+    <div class="text-base navy-text mb-4 flex items-center gap-2 cursor-pointer" id="showDescriptionBtn">
+      <span class="underline decoration-1 underline-offset-4 hover:text-[var(--gold)] transition">Item Description</span>
+    </div>
+    <div id="productDescription" class="hidden text-base navy-text mb-4 bg-[#f8f6f3] rounded-xl p-4 border border-[var(--gold)]">This elegant gold tone circular charm necklace features sparkling pave stones, perfect for adding a touch of luxury to any outfit. Hypoallergenic, lightweight, and beautifully crafted for all occasions. <br><br>• Gold-tone finish<br>• Pave stone detailing<br>• Adjustable chain<br>• Hypoallergenic & skin safe<br>• Comes in a luxury gift box</div>
+    <div class="flex items-center gap-4 mb-4">
+      <button class="gold-bg px-8 py-3 rounded-lg font-medium shadow hover:shadow-lg transition text-lg">ADD TO CART</button>
+      <div class="flex items-center border border-[var(--gray)] rounded-lg overflow-hidden bg-white">
+        <button id="qtyMinus" class="px-4 py-3 text-xl text-[var(--navy)] hover:bg-[var(--gray)] transition">-</button>
+        <span id="qtyValue" class="px-6 py-3 text-xl text-[var(--navy)] bg-white">1</span>
+        <button id="qtyPlus" class="px-4 py-3 text-xl text-[var(--navy)] hover:bg-[var(--gray)] transition">+</button>
+      </div>
+    </div>
+    <div class="flex items-center justify-between text-base text-[var(--navy)] mb-4">
+      <span class="flex items-center gap-2 cursor-pointer" id="wishlistBtn"><span class="text-red-500">&#9825;</span> ADD TO WISHLIST</span>
+      <span class="flex items-center gap-2 cursor-pointer" id="compareBtn"><span>&#9878;</span> ADD TO COMPARE</span>
+      <span class="flex items-center gap-2 cursor-pointer" id="reviewsBtn"><span>&#128172;</span> CHECK REVIEWS</span>
+    </div>
+    <button class="w-full mt-2 py-4 rounded-xl gold-bg text-xl font-medium shadow hover:shadow-lg transition">BUY NOW</button>
+  </div>
+</div>
+
+<!-- Reviews Modal -->
+<div id="reviewsModal" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center">
+  <div class="relative bg-[#fffdfa] rounded-3xl shadow-2xl max-w-lg w-full mx-4 p-8 flex flex-col" style="font-family: 'Didot', serif;">
+    <button id="closeReviewsModal" class="absolute top-4 right-4 text-2xl text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none">&times;</button>
+    <h3 class="text-2xl font-medium gold-text mb-4">Customer Reviews</h3>
+    <div class="mb-4">
+      <div class="mb-3 p-4 bg-[#f8f6f3] rounded-xl border-l-4 border-[var(--gold)]">
+        <div class="font-medium navy-text mb-1">Aarushi S.</div>
+        <div class="text-base navy-text mb-1">Absolutely stunning necklace! Looks even better in person. Packaging was beautiful too.</div>
+        <div class="text-sm gold-text">★★★★★</div>
+      </div>
+      <div class="mb-3 p-4 bg-[#f8f6f3] rounded-xl border-l-4 border-[var(--gold)]">
+        <div class="font-medium navy-text mb-1">Megha T.</div>
+        <div class="text-base navy-text mb-1">Loved the quality and shine. Perfect for gifting!</div>
+        <div class="text-sm gold-text">★★★★★</div>
+      </div>
+      <div class="mb-3 p-4 bg-[#f8f6f3] rounded-xl border-l-4 border-[var(--gold)]">
+        <div class="font-medium navy-text mb-1">Simran K.</div>
+        <div class="text-base navy-text mb-1">Fast delivery and the product is exactly as shown. Will buy again!</div>
+        <div class="text-sm gold-text">★★★★★</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Wishlist Modal -->
+<div id="wishlistModal" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center">
+  <div class="relative bg-[#fffdfa] rounded-3xl shadow-2xl max-w-lg w-full mx-4 p-8 flex flex-col" style="font-family: 'Didot', serif;">
+    <button id="closeWishlistModal" class="absolute top-4 right-4 text-2xl text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none">&times;</button>
+    <h3 class="text-2xl font-medium gold-text mb-4">Your Wishlist</h3>
+    <ul class="space-y-3">
+      <li class="flex items-center justify-between bg-[#f8f6f3] rounded-xl p-4">
+        <span class="navy-text">Gold Tone Circular Charm Necklace</span>
+        <span class="text-xs gold-text">In Stock</span>
+      </li>
+      <li class="flex items-center justify-between bg-[#f8f6f3] rounded-xl p-4">
+        <span class="navy-text">Floral Cutout Gold Bracelet</span>
+        <span class="text-xs gold-text">In Stock</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Compare Modal -->
+<div id="compareModal" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center">
+  <div class="relative bg-[#fffdfa] rounded-3xl shadow-2xl max-w-lg w-full mx-4 p-8 flex flex-col" style="font-family: 'Didot', serif;">
+    <button id="closeCompareModal" class="absolute top-4 right-4 text-2xl text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none">&times;</button>
+    <h3 class="text-2xl font-medium gold-text mb-4">Compare List</h3>
+    <ul class="space-y-3">
+      <li class="flex items-center justify-between bg-[#f8f6f3] rounded-xl p-4">
+        <span class="navy-text">Gold Tone Circular Charm Necklace</span>
+        <span class="text-xs gold-text">Rs.799.00</span>
+      </li>
+      <li class="flex items-center justify-between bg-[#f8f6f3] rounded-xl p-4">
+        <span class="navy-text">Evil Eye Rose Gold Bracelet</span>
+        <span class="text-xs gold-text">Rs.799.00</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Modal open/close logic
+const modalOverlay = document.getElementById('luxuryModalOverlay');
+// Removed closeLuxuryModal button since it's not present
+document.querySelectorAll('.buy-now-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    modalOverlay.classList.remove('hidden');
+    modalOverlay.classList.add('flex');
+  });
+});
+// Back button closes modal
+const backLuxuryModal = document.getElementById('backLuxuryModal');
+backLuxuryModal.addEventListener('click', function() {
+  modalOverlay.classList.add('hidden');
+  modalOverlay.classList.remove('flex');
+});
+// Share button shows alert (can be replaced with real share logic)
+const shareLuxuryModal = document.getElementById('shareLuxuryModal');
+shareLuxuryModal.addEventListener('click', function(e) {
+  e.stopPropagation();
+  alert('Share functionality coming soon!');
+});
+// Description toggle
+const showDescriptionBtn = document.getElementById('showDescriptionBtn');
+const productDescription = document.getElementById('productDescription');
+showDescriptionBtn.addEventListener('click', function() {
+  productDescription.classList.toggle('hidden');
+});
+// Quantity selector
+const qtyMinus = document.getElementById('qtyMinus');
+const qtyPlus = document.getElementById('qtyPlus');
+const qtyValue = document.getElementById('qtyValue');
+qtyMinus.addEventListener('click', function() {
+  let val = parseInt(qtyValue.textContent);
+  if (val > 1) qtyValue.textContent = val - 1;
+});
+qtyPlus.addEventListener('click', function() {
+  let val = parseInt(qtyValue.textContent);
+  qtyValue.textContent = val + 1;
+});
+// Reviews modal
+const reviewsModal = document.getElementById('reviewsModal');
+const reviewsBtn = document.getElementById('reviewsBtn');
+const closeReviewsModal = document.getElementById('closeReviewsModal');
+reviewsBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  reviewsModal.classList.remove('hidden');
+  reviewsModal.classList.add('flex');
+});
+closeReviewsModal.addEventListener('click', function() {
+  reviewsModal.classList.add('hidden');
+  reviewsModal.classList.remove('flex');
+});
+reviewsModal.addEventListener('click', function(e) {
+  if (e.target === reviewsModal) {
+    reviewsModal.classList.add('hidden');
+    reviewsModal.classList.remove('flex');
+  }
+});
+// Wishlist modal
+const wishlistModal = document.getElementById('wishlistModal');
+const wishlistBtn = document.getElementById('wishlistBtn');
+const closeWishlistModal = document.getElementById('closeWishlistModal');
+wishlistBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  wishlistModal.classList.remove('hidden');
+  wishlistModal.classList.add('flex');
+});
+closeWishlistModal.addEventListener('click', function() {
+  wishlistModal.classList.add('hidden');
+  wishlistModal.classList.remove('flex');
+});
+wishlistModal.addEventListener('click', function(e) {
+  if (e.target === wishlistModal) {
+    wishlistModal.classList.add('hidden');
+    wishlistModal.classList.remove('flex');
+  }
+});
+// Compare modal
+const compareModal = document.getElementById('compareModal');
+const compareBtn = document.getElementById('compareBtn');
+const closeCompareModal = document.getElementById('closeCompareModal');
+compareBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  compareModal.classList.remove('hidden');
+  compareModal.classList.add('flex');
+});
+closeCompareModal.addEventListener('click', function() {
+  compareModal.classList.add('hidden');
+  compareModal.classList.remove('flex');
+});
+compareModal.addEventListener('click', function(e) {
+  if (e.target === compareModal) {
+    compareModal.classList.add('hidden');
+    compareModal.classList.remove('flex');
+  }
+});
+</script>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="navy-bg py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h4 class="didot text-2xl font-medium mb-4 gold-text">Dissara</h4>
+                    <p class="text-gray-400 mb-4 max-w-md">
+                        Creating timeless jewelry pieces that celebrate life's most precious moments.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-[var(--gold)] transition-colors">Facebook</a>
+                        <a href="#" class="text-gray-400 hover:text-[var(--gold)] transition-colors">Instagram</a>
+                        <a href="#" class="text-gray-400 hover:text-[var(--gold)] transition-colors">Pinterest</a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-medium mb-4 gold-text didot">Quick Links</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Collections</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Custom Design</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Care Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-medium mb-4 gold-text didot">Customer Care</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Size Guide</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Returns</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Warranty</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Dissara. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

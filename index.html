@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dissara - Exquisite Jewelry Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --gold: #d4af37;
+          --navy: #1a2238;
+          --offwhite: #f8f6f3;
+          --gray: #e5e7eb;
+          --dark: #111827;
+        }
+        body {
+          background: var(--offwhite);
+        }
+        .navbar-font {
+          font-family: 'Cormorant Garamond', serif;
+          letter-spacing: 0.02em;
+        }
+        .hero-font {
+          font-family: 'Playfair Display', serif;
+        }
+        .fade-in {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(.4,0,.2,1);
+        }
+        .fade-in.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .shimmer {
+          background: linear-gradient(90deg, var(--gold) 0%, #fffbe6 50%, var(--gold) 100%);
+          background-size: 200% 100%;
+          animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        .hover-lift {
+          transition: all 0.3s cubic-bezier(.4,0,.2,1);
+        }
+        .hover-lift:hover {
+          transform: translateY(-8px) scale(1.03);
+          box-shadow: 0 20px 40px rgba(212,175,55,0.10);
+          border-color: var(--gold);
+        }
+        .jewelry-card {
+          position: relative;
+          overflow: hidden;
+          border: 1.5px solid var(--gray);
+          border-radius: 1rem;
+          background: #fffdfa;
+          box-shadow: 0 2px 16px 0 rgba(26,34,56,0.04);
+        }
+        .jewelry-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(212,175,55,0.15), transparent);
+          transition: left 0.5s;
+        }
+        .jewelry-card:hover::before {
+          left: 100%;
+        }
+        .sparkle {
+          position: relative;
+        }
+        .sparkle::after {
+          content: '✨';
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          opacity: 0;
+          animation: sparkle 2s infinite;
+        }
+        @keyframes sparkle {
+          0%, 100% { opacity: 0; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+        .gold-text {
+          color: var(--gold);
+        }
+        .gold-bg {
+          background: var(--gold);
+          color: var(--dark);
+        }
+        .gold-border {
+          border-color: var(--gold);
+        }
+        .navy-bg {
+          background: var(--navy);
+          color: #fff;
+        }
+        .navy-text {
+          color: var(--navy);
+        }
+    </style>
+</head>
+<body class="bg-[var(--offwhite)] text-[var(--dark)]">
+    <!-- Navigation -->
+    <nav class="navbar-font navy-bg shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20"> <!-- Increased height for bigger logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <img src="logo.png" alt="Dissara Logo" class="h-14 w-auto mr-3" /> <!-- Logo image, larger size -->
+                    <!-- <h1 class="text-2xl font-bold gold-text hero-font">Dissara</h1> -->
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="gift-store.html" class="gold-text hover:text-white px-3 py-2 text-lg font-semibold transition-colors duration-200">Gift Store</a>
+                        <a href="#" class="gold-text hover:text-white px-3 py-2 text-lg font-semibold transition-colors duration-200">Sale</a>
+                        <a href="#" class="gold-text hover:text-white px-3 py-2 text-lg font-semibold transition-colors duration-200">ShopBy</a>
+                        <a href="#" class="gold-text hover:text-white px-3 py-2 text-lg font-semibold transition-colors duration-200">Best Sellers</a>
+                        <a href="#" class="gold-text hover:text-white px-3 py-2 text-lg font-semibold transition-colors duration-200">New Arrivals</a>
+                        <a href="#" class="gold-text hover:text-white px-3 py-2 text-lg font-semibold transition-colors duration-200">Track order</a>
+                        <a href="#" class="gold-text hover:text-white px-3 py-2 text-lg font-semibold transition-colors duration-200">About us</a>
+                        <a href="#" class="gold-text hover:text-white px-3 py-2 text-lg font-semibold transition-colors duration-200">Return & Exchange</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-[var(--offwhite)] to-[var(--gold)] min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h2 class="hero-font text-5xl lg:text-6xl font-light navy-text mb-6">
+                        Exquisite
+                        <span class="block font-normal italic gold-text">Jewelry</span>
+                        <span class="block font-light navy-text">Collection</span>
+                    </h2>
+                    <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+                        Discover timeless elegance with our carefully curated collection of fine jewelry, 
+                        crafted with precision and passion.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="gold-bg px-8 py-3 hover:bg-yellow-400 transition-colors duration-300 tracking-wider sparkle rounded-lg font-semibold shadow">
+                            EXPLORE COLLECTION
+                        </button>
+                        <button class="border gold-border text-[var(--navy)] px-8 py-3 hover:bg-[var(--gold)] hover:text-[var(--dark)] transition-colors duration-300 tracking-wider rounded-lg font-semibold">
+                            BOOK CONSULTATION
+                        </button>
+                    </div>
+                </div>
+                <div class="fade-in jewelry-card">
+                    <div class="relative">
+                        <div class="w-full h-96 shimmer rounded-lg flex items-center justify-center">
+                            <img src="mainpagepic.png" alt="Featured Jewelry" class="w-full h-full object-cover rounded-lg shadow-lg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h3 class="hero-font text-4xl font-light navy-text mb-4">Our Collections</h3>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    From engagement rings to statement necklaces, explore our diverse range of handcrafted pieces
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="fade-in hover-lift jewelry-card bg-white p-8 text-center gold-border">
+                    <div class="text-5xl mb-4 gold-text">💍</div>
+                    <h4 class="hero-font text-2xl font-medium mb-3 navy-text">Rings</h4>
+                    <p class="text-gray-600 mb-4">Engagement, wedding, and fashion rings</p>
+                    <a href="#" class="gold-text hover:text-[var(--navy)] underline decoration-1 underline-offset-4">Shop Rings</a>
+                </div>
+                <div class="fade-in hover-lift jewelry-card bg-white p-8 text-center gold-border">
+                    <div class="text-5xl mb-4 gold-text">📿</div>
+                    <h4 class="hero-font text-2xl font-medium mb-3 navy-text">Necklaces</h4>
+                    <p class="text-gray-600 mb-4">Elegant chains and statement pieces</p>
+                    <a href="#" class="gold-text hover:text-[var(--navy)] underline decoration-1 underline-offset-4">Shop Necklaces</a>
+                </div>
+                <div class="fade-in hover-lift jewelry-card bg-white p-8 text-center gold-border">
+                    <div class="text-5xl mb-4 gold-text">👂</div>
+                    <h4 class="hero-font text-2xl font-medium mb-3 navy-text">Earrings</h4>
+                    <p class="text-gray-600 mb-4">Studs, hoops, and drop earrings</p>
+                    <a href="#" class="gold-text hover:text-[var(--navy)] underline decoration-1 underline-offset-4">Shop Earrings</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-gradient-to-r from-[var(--offwhite)] to-[var(--gray)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h3 class="hero-font text-4xl font-light navy-text mb-6">Crafted with Passion</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        At Dissara, every piece tells a story. Our master craftsmen combine traditional techniques 
+                        with contemporary design to create jewelry that transcends time.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <div class="text-2xl font-bold gold-text mb-2">25+</div>
+                            <div class="text-gray-600">Years of Excellence</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold gold-text mb-2">10k+</div>
+                            <div class="text-gray-600">Happy Customers</div>
+                        </div>
+                    </div>
+                    <button class="gold-text hover:text-[var(--navy)] underline decoration-1 underline-offset-4 text-lg">
+                        Learn Our Story →
+                    </button>
+                </div>
+                <div class="fade-in jewelry-card">
+                    <div class="w-full h-80 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-6xl mb-4 gold-text">⚒️</div>
+                            <p class="text-gray-600 hero-font text-lg">Artisan at Work</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="navy-bg py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h4 class="hero-font text-2xl font-bold mb-4 gold-text">Dissara</h4>
+                    <p class="text-gray-400 mb-4 max-w-md">
+                        Creating timeless jewelry pieces that celebrate life's most precious moments.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-[var(--gold)] transition-colors">Facebook</a>
+                        <a href="#" class="text-gray-400 hover:text-[var(--gold)] transition-colors">Instagram</a>
+                        <a href="#" class="text-gray-400 hover:text-[var(--gold)] transition-colors">Pinterest</a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4 gold-text">Quick Links</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Collections</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Custom Design</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Care Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4 gold-text">Customer Care</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Size Guide</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Returns</a></li>
+                        <li><a href="#" class="hover:text-[var(--gold)] transition-colors">Warranty</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Dissara. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add initial visible class to hero elements
+        setTimeout(() => {
+            document.querySelector('.fade-in').classList.add('visible');
+        }, 200);
+    </script>
+</body>
+</html> 
