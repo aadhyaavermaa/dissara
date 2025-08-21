@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Track Order | Dissara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #fff;
+      color: #111827;
+      font-family: 'Cormorant Garamond', serif;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(26,34,56,0.08);
+      padding: 0.5rem 0;
+    }
+    .navbar-content {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: bold;
+      font-size: 1.7rem;
+      letter-spacing: 0.04em;
+    }
+    .navbar-links a {
+      color: #111827;
+      font-weight: 600;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+    }
+    .navbar-links a:hover {
+      color: #d4af37;
+    }
+    .track-order-container {
+      max-width: 700px;
+      margin: 2rem auto;
+      background: #fafafa;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 12px rgba(26,34,56,0.08);
+      padding: 2rem 2.5rem;
+    }
+    .order-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .order-status-bar {
+      width: 100%;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 3px;
+      margin: 1rem 0;
+      position: relative;
+    }
+    .order-status-progress {
+      height: 100%;
+      background: #111827;
+      border-radius: 3px;
+      width: 60%; /* Change as per status */
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .order-section-title {
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 0.7rem;
+      font-size: 1.1rem;
+    }
+    .order-summary {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 1px 6px rgba(26,34,56,0.05);
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .order-summary-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .order-summary-item img {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      margin-right: 1rem;
+      background: #e5e7eb;
+      object-fit: cover;
+    }
+    .order-summary-details {
+      flex: 1;
+    }
+    .order-summary-details h4 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .order-summary-details p {
+      margin: 0.2rem 0 0 0;
+      font-size: 0.95rem;
+      color: #444;
+    }
+    .order-total {
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: right;
+      margin-top: 1rem;
+    }
+    .shipping-timeline {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+      max-width: 100%;
+    }
+    .timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+      min-width: 80px;
+    }
+    .timeline-step .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      border: 3px solid #e5e7eb;
+      margin-bottom: 8px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .timeline-step.completed .dot {
+      background: #111827;
+      border-color: #111827; /* changed from #d4af37 to black */
+    }
+    .timeline-step.active .dot {
+      background: #111827;    /* changed from #d4af37 to black */
+      border-color: #111827;  /* changed from #d4af37 to black */
+    }
+    .timeline-step .label {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    .timeline-step .date {
+      font-size: 0.92rem;
+      color: #444;
+    }
+    .timeline-bar {
+      position: absolute;
+      top: 8px;
+      left: 9px;
+      right: 9px;
+      height: 4px;
+      background: #e5e7eb;
+      z-index: 0;
+    }
+    .timeline-step.completed ~ .timeline-bar,
+    .timeline-step.active ~ .timeline-bar {
+      background: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar (main website style) -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-logo">DISSARA</div>
+      <div class="navbar-links">
+        <a href="#">Gift Store</a>
+        <a href="#">Sale</a>
+        <a href="#">ShopBy</a>
+        <a href="#">Best Sellers</a>
+        <a href="#">New Arrivals</a>
+        <a href="#">Track Order</a>
+        <a href="#">About Us</a>
+        <a href="#">Return & Exchange</a>
+      </div>
+    </div>
+  </nav>
+  <!-- Remove pink menu strip and search bar -->
+
+  <!-- Track Order Section -->
+  <div class="track-order-container">
+    <div class="order-title">Order #123456</div>
+    <div>Ordered on July 25, 2025 at 9:00 am</div>
+    
+    <!-- Shipping Timeline -->
+    <div class="shipping-timeline" style="margin: 2rem 0;">
+      <div class="timeline-step completed">
+        <span class="dot"></span>
+        <span class="label">Order Placed</span>
+        <span class="date">Jul 25, 2025</span>
+      </div>
+      <div class="timeline-step completed">
+        <span class="dot"></span>
+        <span class="label">Shipped</span>
+        <span class="date">Jul 26, 2025</span>
+      </div>
+      <div class="timeline-step active">
+        <span class="dot"></span>
+        <span class="label">Out for Delivery</span>
+        <span class="date">Jul 29, 2025</span>
+      </div>
+      <div class="timeline-step">
+        <span class="dot"></span>
+        <span class="label">Delivered</span>
+        <span class="date">Expected: Jul 30, 2025</span>
+      </div>
+      <div class="timeline-bar"></div>
+    </div>
+    
+    <div>Estimated delivery: July 30, 2025</div>
+    <div class="order-section-title">Shipping Address</div>
+    <div>Testla Carter<br>123 Main Street<br>Anytown, CA 95124</div>
+    <div class="order-section-title">Billing Address</div>
+    <div>Testla Carter<br>123 Main Street<br>Anytown, CA 95124</div>
+    <div class="order-section-title">Payment Method</div>
+    <div>Visa ending in 4242</div>
+    <div class="order-section-title">Order Summary</div>
+    <div class="order-summary">
+      <div class="order-summary-item">
+        <img src="https://via.placeholder.com/48" alt="Product Image" />
+        <div class="order-summary-details">
+          <h4>Product Name 1</h4>
+          <p>Size: M</p>
+          <p>Color: Red</p>
+        </div>
+      </div>
+      <div class="order-summary-item">
+        <img src="https://via.placeholder.com/48" alt="Product Image" />
+        <div class="order-summary-details">
+          <h4>Product Name 2</h4>
+          <p>Size: L</p>
+          <p>Color: Blue</p>
+        </div>
+      </div>
+      <div class="order-total">Total: $99.99</div>
+    </div>
+  </div>
+</body>
+</html>

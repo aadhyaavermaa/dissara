@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dissara | Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #131826;
+      font-family: 'Cormorant Garamond', serif;
+      margin: 0;
+      color: #111827;
+      min-height: 100vh;
+    }
+    .login-container {
+      max-width: 420px;
+      margin: 48px auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(26,34,56,0.18);
+      padding: 2.7rem 2.2rem 2.2rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: none;}
+    }
+    .login-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.04em;
+      text-align: center;
+      color: #111827;
+    }
+    .login-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.7rem;
+      text-align: center;
+      color: #222;
+      font-family: 'Playfair Display', serif;
+    }
+    .login-label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      margin-top: 1rem;
+      display: block;
+      color: #222;
+      font-size: 1.05rem;
+    }
+    .login-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1.5px solid #e5e7eb;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      background: #f7f7fa;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .login-input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 2px 8px rgba(212,175,55,0.08);
+      background: #fffbe6;
+    }
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(90deg, #d4af37 60%, #bfa13a 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.9rem 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(212,175,55,0.10);
+      letter-spacing: 0.01em;
+    }
+    .login-btn:hover {
+      background: #111827;
+      color: #ffd700;
+      box-shadow: 0 4px 16px rgba(212,175,55,0.18);
+    }
+    .login-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      color: #222;
+    }
+    .login-footer a {
+      color: #3887fe;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+      margin-left: 0.2rem;
+    }
+    .login-footer a:hover {
+      color: #d4af37;
+    }
+    @media (max-width: 600px) {
+      .login-container {
+        max-width: 98vw;
+        padding: 1.2rem 0.5rem;
+        border-radius: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-logo">DISSARA</div>
+    <div class="login-title">Welcome Back</div>
+    <form id="loginForm">
+      <label class="login-label" for="email">Email</label>
+      <input class="login-input" type="email" id="email" name="email" required placeholder="Enter your email address" />
+
+      <label class="login-label" for="password">Password</label>
+      <input class="login-input" type="password" id="password" name="password" required placeholder="Enter your password" />
+
+      <button class="login-btn" type="submit">Log In</button>
+    </form>
+    <div class="login-footer">
+      Don't Have An Account? <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+  <script>
+  document.getElementById('loginForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const res = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem('token', data.token);
+      window.location.href = 'dashboard.html';
+    } else {
+      alert(data.message || 'Login failed');
+    }
+  };
+  </script>
+</body>
+</html>

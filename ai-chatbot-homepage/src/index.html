@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chatbot Homepage</title>
+  <link rel="stylesheet" href="chatbot.css" />
+  <style>
+    .chat-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Our Website</h1>
+  <p>Click the chat icon to start chatting with our AI chatbot!</p>
+  
+  <img src="assets/chat-icon.svg" alt="Chat Icon" class="chat-icon" onclick="openChatbot()" />
+
+  <script>
+    function openChatbot() {
+      window.open('chatbot.html', 'Chatbot', 'width=400,height=600');
+    }
+  </script>
+</body>
+</html>
