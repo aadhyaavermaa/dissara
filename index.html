@@ -1,450 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dissara - Exquisite Jewelry Collection</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-          --gold: #d4af37;
-          --navy: #111827;
-          --offwhite: #f8f6f3;
-          --gray: #e5e7eb;
-          --dark: #111827;
-          --gradient: linear-gradient(90deg, #d4af37 0%, #bfa13a 100%);
-        }
-        body {
-          background: var(--offwhite);
-          color: var(--dark);
-          font-family: 'Cormorant Garamond', serif;
-        }
-        .navbar-font {
-          font-family: 'Cormorant Garamond', serif;
-          letter-spacing: 0.02em;
-        }
-        nav {
-          background: #fff;
-          box-shadow: 0 2px 12px rgba(26,34,56,0.08);
-          border-bottom: 1.5px solid var(--gray);
-        }
-        nav a {
-          color: var(--dark);
-          font-weight: 600;
-          font-size: 1.1rem;
-          position: relative;
-          transition: color 0.2s;
-          padding: 0.5rem 1rem;
-          border-radius: 8px;
-        }
-        nav a:hover, nav a.active {
-          color: var(--gold);
-          background: #fffbe6;
-        }
-        .profile-btn-modern {
-          background: var(--gold);
-          color: var(--dark);
-          border-radius: 50%;
-          width: 44px;
-          height: 44px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 2px 8px rgba(212,175,55,0.10);
-          transition: background 0.2s, color 0.2s;
-          border: none;
-        }
-        .profile-btn-modern:hover {
-          background: var(--navy);
-          color: var(--gold);
-        }
-        #profileDropdown {
-          min-width: 200px;
-          box-shadow: 0 8px 32px rgba(26,34,56,0.10);
-          border: none;
-          background: #fff;
-          border-radius: 16px;
-          overflow: hidden;
-          animation: fadeIn 0.3s;
-        }
-        #profileDropdown a {
-          font-family: 'Cormorant Garamond', serif;
-          padding: 1rem 1.2rem;
-          font-size: 1.08rem;
-          color: var(--dark);
-          transition: background 0.2s, color 0.2s;
-          border-radius: 0;
-        }
-        #profileDropdown a:hover, #profileDropdown a.active {
-          background: var(--gold);
-          color: #fff;
-        }
-        #profileDropdown .font-semibold {
-          color: var(--gold);
-        }
-        #profileDropdown .border-t {
-          border-top: 1.5px solid var(--gray);
-        }
-        .hero-section {
-          background: linear-gradient(120deg, #fffbe6 60%, #f8f6f3 100%);
-          min-height: 80vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 4rem 2rem;
-        }
-        .hero-title {
-          font-family: 'Playfair Display', serif;
-          font-size: 3.2rem;
-          font-weight: 700;
-          color: var(--dark);
-          margin-bottom: 1.2rem;
-          letter-spacing: 0.03em;
-        }
-        .hero-title span {
-          color: var(--gold);
-          font-style: italic;
-        }
-        .hero-desc {
-          font-size: 1.25rem;
-          color: #444;
-          margin-bottom: 2.2rem;
-          max-width: 500px;
-        }
-        .hero-buttons {
-          display: flex;
-          gap: 1.2rem;
-        }
-        .hero-btn {
-          background: var(--gradient);
-          color: #fff;
-          border: none;
-          border-radius: 12px;
-          padding: 0.9rem 2.2rem;
-          font-size: 1.15rem;
-          font-weight: 600;
-          box-shadow: 0 2px 8px rgba(212,175,55,0.10);
-          transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-          cursor: pointer;
-          letter-spacing: 0.01em;
-        }
-        .hero-btn:hover {
-          background: var(--navy);
-          color: var(--gold);
-          box-shadow: 0 4px 16px rgba(212,175,55,0.18);
-        }
-        .jewelry-card {
-          border: none;
-          border-radius: 1.2rem;
-          background: #fff;
-          box-shadow: 0 8px 32px 0 rgba(212,175,55,0.10);
-          transition: box-shadow 0.3s, border-color 0.3s;
-        }
-        .jewelry-card:hover {
-          box-shadow: 0 16px 48px rgba(212,175,55,0.18);
-        }
-        .gold-text {
-          color: var(--gold);
-        }
-        .gold-border {
-          border-color: var(--gold);
-        }
-        .navy-bg {
-          background: #fff;
-          color: var(--dark);
-        }
-        .navy-text {
-          color: var(--dark);
-        }
-        .footer-link {
-          color: var(--dark);
-          transition: color 0.2s;
-        }
-        .footer-link:hover {
-          color: var(--gold);
-        }
-        #chatbot-icon {
-          position: fixed;
-          bottom: 32px;
-          right: 32px;
-          background: var(--gold);
-          color: var(--navy);
-          border-radius: 50%;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-          width: 56px;
-          height: 56px;
-          border: none;
-          cursor: pointer;
-          font-size: 2rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: box-shadow 0.2s, background 0.2s;
-        }
-        #chatbot-icon:hover {
-          background: var(--navy);
-          color: var(--gold);
-          box-shadow: 0 4px 16px rgba(212,175,55,0.25);
-        }
-        #chatbot-popup {
-          display: none;
-          position: fixed;
-          bottom: 100px;
-          right: 32px;
-          z-index: 1001;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px);}
-          to { opacity: 1; transform: none;}
-        }
-        @media (max-width: 900px) {
-          .hero-title {
-            font-size: 2.2rem;
-          }
-          .hero-desc {
-            font-size: 1rem;
-          }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dissara Luxury | Fine Jewellery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar-font navy-bg shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center">
-                    <img src="logo.png" alt="Dissara Logo" class="h-14 w-auto mr-3" />
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="gift-store.html">Gift Store</a>
-                        <a href="#">Sale</a>
-                        <a href="#">ShopBy</a>
-                        <a href="#">Best Sellers</a>
-                        <a href="#">New Arrivals</a>
-                        <a href="track-order.html">Track order</a>
-                        <a href="#">About us</a>
-                        <a href="#">Return & Exchange</a>
-                    </div>
-                </div>
-                <!-- Profile Icon and Dropdown -->
-                <div class="relative group ml-6">
-                  <button id="profileBtn" class="profile-btn-modern" aria-label="Profile">
-                    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                      <circle cx="12" cy="8" r="4"/>
-                      <path d="M4 20c0-4 8-4 8-4s8 0 8 4"/>
-                    </svg>
-                  </button>
-                  <!-- Profile Dropdown -->
-                  <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl py-2 z-50">
-                    <a href="#" class="block px-4 py-3 text-[1.08rem] hover:bg-[var(--gold)] hover:text-white transition">My Profile</a>
-                    <a href="#" class="block px-4 py-3 text-[1.08rem] hover:bg-[var(--gold)] hover:text-white transition">Orders</a>
-                    <a href="#" class="block px-4 py-3 text-[1.08rem] hover:bg-[var(--gold)] hover:text-white transition">Wishlist</a>
-                    <div class="border-t my-1"></div>
-                    <a href="login.html" class="block px-4 py-3 text-[1.08rem] font-semibold text-[var(--gold)] hover:bg-[var(--gold)] hover:text-white transition">Sign In</a>
-                    <a href="signup.html" class="block px-4 py-3 text-[1.08rem] hover:bg-[var(--gold)] hover:text-white transition">Sign Up</a>
-                    <a href="login.html" class="block px-4 py-3 text-[1.08rem] hover:bg-[var(--gold)] hover:text-white transition">Log Out</a>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div>
-            <h2 class="hero-title">
-                Exquisite <span>Jewelry</span> Collection
-            </h2>
-            <p class="hero-desc">
-                Discover timeless elegance with our carefully curated collection of fine jewelry, crafted with precision and passion.
-            </p>
-            <div class="hero-buttons">
-                <button class="hero-btn">EXPLORE COLLECTION</button>
-                <button class="hero-btn">BOOK CONSULTATION</button>
-            </div>
-        </div>
-        <div>
-            <img src="mainpagepic.png" alt="Featured Jewelry" class="jewelry-card w-[350px] h-[350px] object-cover shadow-2xl" />
-        </div>
-    </section>
-
-    <!-- Featured Categories -->
-    <section class="py-16 bg-[var(--offwhite)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h3 class="hero-font text-4xl font-light navy-text mb-4">Our Collections</h3>
-                <p class="text-lg max-w-2xl mx-auto">
-                    From engagement rings to statement necklaces, explore our diverse range of handcrafted pieces
-                </p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="jewelry-card bg-[var(--offwhite)] p-8 text-center gold-border hover:scale-105 transition-transform duration-200">
-                    <div class="text-5xl mb-4 gold-text">💍</div>
-                    <h4 class="hero-font text-2xl font-medium mb-3 navy-text">Rings</h4>
-                    <p class="mb-4">Engagement, wedding, and fashion rings</p>
-                    <a href="#" class="footer-link underline decoration-1 underline-offset-4">Shop Rings</a>
-                </div>
-                <div class="jewelry-card bg-[var(--offwhite)] p-8 text-center gold-border hover:scale-105 transition-transform duration-200">
-                    <div class="text-5xl mb-4 gold-text">📿</div>
-                    <h4 class="hero-font text-2xl font-medium mb-3 navy-text">Necklaces</h4>
-                    <p class="mb-4">Elegant chains and statement pieces</p>
-                    <a href="#" class="footer-link underline decoration-1 underline-offset-4">Shop Necklaces</a>
-                </div>
-                <div class="jewelry-card bg-[var(--offwhite)] p-8 text-center gold-border hover:scale-105 transition-transform duration-200">
-                    <div class="text-5xl mb-4 gold-text">👂</div>
-                    <h4 class="hero-font text-2xl font-medium mb-3 navy-text">Earrings</h4>
-                    <p class="mb-4">Studs, hoops, and drop earrings</p>
-                    <a href="#" class="footer-link underline decoration-1 underline-offset-4">Shop Earrings</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="py-16 bg-[var(--offwhite)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h3 class="hero-font text-4xl font-light navy-text mb-6">Crafted with Passion</h3>
-                    <p class="text-lg leading-relaxed mb-6">
-                        At Dissara, every piece tells a story. Our master craftsmen combine traditional techniques 
-                        with contemporary design to create jewelry that transcends time.
-                    </p>
-                    <div class="grid grid-cols-2 gap-6 mb-8">
-                        <div>
-                            <div class="text-2xl font-bold gold-text mb-2">25+</div>
-                            <div>Years of Excellence</div>
-                        </div>
-                        <div>
-                            <div class="text-2xl font-bold gold-text mb-2">10k+</div>
-                            <div>Happy Customers</div>
-                        </div>
-                    </div>
-                    <button class="footer-link underline decoration-1 underline-offset-4 text-lg">
-                        Learn Our Story →
-                    </button>
-                </div>
-                <div class="jewelry-card shadow-xl">
-                    <div class="w-full h-80 bg-[var(--gray)] rounded-lg flex items-center justify-center">
-                        <div class="text-center">
-                            <div class="text-6xl mb-4 gold-text">⚒️</div>
-                            <p class="hero-font text-lg">Artisan at Work</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- New Arrivals Section -->
-    <section style="background: linear-gradient(to bottom, #fdf6e3 80%, #fff 100%); padding: 4rem 0;">
-      <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 2.5rem;">
-          NEW ARRIVALS
-        </h2>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 2rem;">
-          <button id="newArrPrev" style="background: none; border: none; font-size: 2rem; color: #222; cursor: pointer;">&#60;</button>
-          <div id="newArrSlider" style="display: flex; gap: 2rem; align-items: center;">
-            <img src="arrival1.jpg" alt="New Arrival 1" style="width: 140px; height: 140px; object-fit: cover; border-radius: 14px; box-shadow: 0 4px 16px rgba(212,175,55,0.10);" />
-            <img src="arrival2.jpg" alt="New Arrival 2" style="width: 140px; height: 140px; object-fit: cover; border-radius: 14px; box-shadow: 0 4px 16px rgba(212,175,55,0.10);" />
-            <img src="arrival3.jpg" alt="New Arrival 3" style="width: 140px; height: 140px; object-fit: cover; border-radius: 14px; box-shadow: 0 4px 16px rgba(212,175,55,0.10);" />
-          </div>
-          <button id="newArrNext" style="background: none; border: none; font-size: 2rem; color: #222; cursor: pointer;">&#62;</button>
-        </div>
-        <div style="margin-top: 2rem; height: 2px; width: 100%; background: linear-gradient(to right, #fff 0%, #d4af37 50%, #fff 100%);"></div>
-      </div>
-    </section>
-
-    <script>
-      // Simple slider logic for demo (replace images as needed)
-      const images = [
-        ["arrival1.jpg", "arrival2.jpg", "arrival3.jpg"],
-        ["arrival2.jpg", "arrival3.jpg", "arrival1.jpg"],
-        ["arrival3.jpg", "arrival1.jpg", "arrival2.jpg"]
-      ];
-      let idx = 0;
-      document.getElementById('newArrPrev').onclick = function() {
-        idx = (idx + images.length - 1) % images.length;
-        updateSlider();
-      };
-      document.getElementById('newArrNext').onclick = function() {
-        idx = (idx + 1) % images.length;
-        updateSlider();
-      };
-      function updateSlider() {
-        const slider = document.getElementById('newArrSlider');
-        slider.innerHTML = images[idx].map(src =>
-          `<img src="${src}" alt="New Arrival" style="width: 140px; height: 140px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);" />`
-        ).join('');
-      }
-    </script>
-
-    <!-- Footer -->
-    <footer class="navy-bg py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-1 md:col-span-2">
-                    <h4 class="hero-font text-2xl font-bold mb-4 gold-text">Dissara</h4>
-                    <p class="mb-4 max-w-md">
-                        Creating timeless jewelry pieces that celebrate life's most precious moments.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="footer-link">Facebook</a>
-                        <a href="#" class="footer-link">Instagram</a>
-                        <a href="#" class="footer-link">Pinterest</a>
-                    </div>
-                </div>
-                <div>
-                    <h5 class="font-semibold mb-4 gold-text">Quick Links</h5>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="footer-link">About Us</a></li>
-                        <li><a href="#" class="footer-link">Collections</a></li>
-                        <li><a href="#" class="footer-link">Custom Design</a></li>
-                        <li><a href="#" class="footer-link">Care Guide</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="font-semibold mb-4 gold-text">Customer Care</h5>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="footer-link">Contact Us</a></li>
-                        <li><a href="#" class="footer-link">Size Guide</a></li>
-                        <li><a href="#" class="footer-link">Returns</a></li>
-                        <li><a href="#" class="footer-link">Warranty</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-300 mt-8 pt-8 text-center">
-                <p>&copy; 2025 Dissara. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Chatbot Icon & Popup -->
-    <button id="chatbot-icon" onclick="toggleChatbot()" aria-label="Open Chatbot">
-      💬
-    </button>
-    <div id="chatbot-popup">
-      <iframe src="chatbot.html" width="350" height="500" style="border:none;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,0.2);"></iframe>
+  <!-- Floating Navigation -->
+  <header class="floating-nav">
+    <div class="brand">
+      <img src="logo.png" alt="Dissara" />
+      <span class="name">DISSARA</span>
     </div>
-    <script>
-      function toggleChatbot() {
-        var popup = document.getElementById('chatbot-popup');
-        popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
-      }
-      // Profile dropdown toggle for click (for accessibility)
-      const profileBtn = document.getElementById('profileBtn');
-      const profileDropdown = document.getElementById('profileDropdown');
-      profileBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        profileDropdown.classList.toggle('hidden');
-      });
-      document.addEventListener('click', function(e) {
-        if (!profileDropdown.contains(e.target) && !profileBtn.contains(e.target)) {
-          profileDropdown.classList.add('hidden');
-        }
-      });
-    </script>
+    <nav class="navlinks">
+      <a href="gift-store.html"><span>Gift<br/>Store</span></a>
+      <a href="#sale">Sale</a>
+      <a href="#shopby">ShopBy</a>
+      <a href="#bestsellers"><span>Best<br/>Sellers</span></a>
+      <a href="#newarrivals"><span>New<br/>Arrivals</span></a>
+      <a href="#collections">Collections</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav-cta">Book Consultation</button>
+  </header>
+
+  <!-- Hero with Parallax and Animated Gold Accents -->
+  <section class="hero" aria-label="Luxury diamond showcase">
+    <div class="hero-inner">
+      <div class="hero-copy" data-parallax="0.15">
+        <div class="kicker">Handcrafted Elegance</div>
+        <h1 class="h1-title">
+          Sparkling <span class="shine">Diamond</span> Masterpieces
+        </h1>
+        <p class="lead">Timeless craftsmanship meets modern allure. Discover pieces that shimmer with a story—made to be adored, forever.</p>
+        <div class="hero-cta">
+          <button class="btn-primary">Explore Collection</button>
+          <button class="btn-ghost">Our Heritage</button>
+        </div>
+      </div>
+      <div class="hero-showcase" data-parallax="0.06">
+        <div class="hero-card">
+          <img src="mainpagepic.png" alt="Featured diamond jewellery" />
+        </div>
+        <!-- Animated sparkling accents -->
+        <div class="sparks">
+          <span class="spark s1"></span>
+          <span class="spark s2 g"></span>
+          <span class="spark s3"></span>
+          <span class="spark s4 g"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Signature Collections -->
+  <section id="collections" class="section">
+    <div class="container">
+      <h2 class="section-title">Signature Collections</h2>
+      <p class="lead" style="margin-bottom:28px">Curated lines inspired by celestial light, oceanic grace, and the bold geometry of the modern age.</p>
+      <div class="gallery-grid" id="gallery">
+        <a class="tile span-4x2" href="#" aria-label="Eternal Rings">
+          <img src="mainpagepic.png" alt="Eternal Rings" />
+          <span class="label">Eternal Rings</span>
+        </a>
+        <a class="tile span-3x3" href="#" aria-label="Celestial Drops">
+          <img src="mainpagepic.png" alt="Celestial Drops" />
+          <span class="label">Celestial Drops</span>
+        </a>
+        <a class="tile span-5x3" href="#" aria-label="Auric Chains">
+          <img src="mainpagepic.png" alt="Auric Chains" />
+          <span class="label">Auric Chains</span>
+        </a>
+        <a class="tile span-6x4" href="#" aria-label="Midnight Halo">
+          <img src="mainpagepic.png" alt="Midnight Halo" />
+          <span class="label">Midnight Halo</span>
+        </a>
+        <a class="tile span-4x4" href="#" aria-label="Luna Bracelets">
+          <img src="mainpagepic.png" alt="Luna Bracelets" />
+          <span class="label">Luna Bracelets</span>
+        </a>
+        <a class="tile span-3x3" href="#" aria-label="Gilded Studs">
+          <img src="mainpagepic.png" alt="Gilded Studs" />
+          <span class="label">Gilded Studs</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Shop By / Products -->
+  <section id="shopby" class="products">
+    <div class="container">
+      <h2 class="section-title">Curated Picks</h2>
+      <p class="lead" style="margin-bottom:18px">Explore handpicked designs with dazzling brilliance and irresistible value.</p>
+      <div class="grid" id="productGrid"></div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Best Sellers -->
+  <section id="bestsellers" class="products">
+    <div class="container">
+      <h2 class="section-title">Best Sellers</h2>
+      <p class="lead" style="margin-bottom:18px">Most-loved designs with top ratings.</p>
+      <div class="grid" id="productBest"></div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- New Arrivals -->
+  <section id="newarrivals" class="products">
+    <div class="container">
+      <h2 class="section-title">New Arrivals</h2>
+      <p class="lead" style="margin-bottom:18px">Fresh drops—be the first to shine.</p>
+      <div class="grid" id="productNew"></div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1.1fr .9fr; gap:26px; align-items:center">
+        <div>
+          <h2 class="section-title">Crafted to Captivate</h2>
+          <p class="lead">For over two decades, Dissara has united artisanal mastery with ethically sourced diamonds and precious metals. Every facet is polished for brilliance, every curve drawn for grace.</p>
+          <div style="display:flex; gap:28px; margin-top:20px">
+            <div>
+              <div style="color:var(--gold); font-weight:700; font-size:1.6rem">25+</div>
+              Years of Excellence
+            </div>
+            <div>
+              <div style="color:var(--gold); font-weight:700; font-size:1.6rem">10k+</div>
+              Bespoke Creations
+            </div>
+          </div>
+        </div>
+        <div class="hero-card" data-parallax="0.08">
+          <img src="mainpagepic.png" alt="Atelier craftsmanship" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="cols">
+        <div>
+          <h3 class="section-title" style="margin-bottom:8px">Dissara</h3>
+          <p class="lead">Luxury jewellery designed to be cherished today, tomorrow, and always.</p>
+        </div>
+        <div>
+          <strong style="color:var(--ink)">Explore</strong><br/>
+          <a href="#collections">Collections</a><br/>
+          <a href="#gallery">Gallery</a><br/>
+          <a href="#about">About</a><br/>
+        </div>
+        <div>
+          <strong style="color:var(--ink)">Contact</strong><br/>
+          <a href="mailto:hello@dissara.example">hello@dissara.example</a><br/>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Product Detail Modal -->
+  <div class="modal" id="productModal" aria-hidden="true" role="dialog" aria-label="Product details">
+    <div class="backdrop" data-close="modal"></div>
+    <div class="panel">
+      <button class="close-x" id="modalClose" aria-label="Close">✕</button>
+      <div class="inner">
+        <div class="gal">
+          <img id="modalImage" src="" alt="Product image" />
+        </div>
+        <div class="info">
+          <h3 id="modalTitle">Product</h3>
+          <div class="meta">
+            <span id="modalBrand">DISSARA</span>
+            <span class="dot"></span>
+            <span id="modalRating">★★★★★</span>
+          </div>
+          <div class="price">
+            <span class="now" id="modalNow">Rs. 0</span>
+            <span class="mrp" id="modalMrp">Rs. 0</span>
+            <span class="badge" id="modalDisc">-00% OFF</span>
+          </div>
+          <div class="cta">
+            <button class="btn-primary solid">Add to Cart</button>
+            <button class="btn-ghost small" data-close="modal">Close</button>
+          </div>
+          <div class="specs" id="modalSpecs"></div>
+          <div class="reviews" id="modalReviews"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Chatbot -->
+  <button class="chatbot-btn" id="chatbotBtn" aria-label="Open Chatbot">💬</button>
+  <div class="chatbot-popup" id="chatbotPopup" aria-hidden="true">
+    <iframe src="chatbot.html" title="Dissara Chatbot"></iframe>
+  </div>
+
+  <script src="assets/js/luxury.js?v=2"></script>
 </body>
 </html>
