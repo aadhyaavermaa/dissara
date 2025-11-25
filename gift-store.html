@@ -98,6 +98,32 @@
                     <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">ShopBy</a>
                     <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Best Sellers</a>
                     <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">New Arrivals</a>
+                    <div class="relative ml-4">
+                        <button id="cartButton" class="text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none relative">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span id="cartCount" class="absolute -top-2 -right-2 bg-[var(--gold)] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </button>
+                        <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 border border-[var(--gold)]">
+                            <div class="p-4">
+                                <h3 class="text-lg font-medium text-[var(--navy)] mb-2">Your Cart</h3>
+                                <div id="cartItems" class="max-h-60 overflow-y-auto">
+                                    <!-- Cart items will be added here dynamically -->
+                                    <p class="text-center text-gray-500 py-4">Your cart is empty</p>
+                                </div>
+                                <div id="cartTotal" class="border-t border-gray-200 pt-3 mt-3 hidden">
+                                    <div class="flex justify-between items-center">
+                                        <span class="font-medium">Total:</span>
+                                        <span id="cartTotalAmount" class="font-bold">₹0.00</span>
+                                    </div>
+                                    <button id="checkoutBtn" class="w-full mt-2 py-2 bg-[var(--gold)] text-white rounded-lg hover:bg-opacity-90 transition">
+                                        Proceed to Checkout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Track order</a>
                     <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">About us</a>
                     <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Return & Exchange</a>
@@ -256,6 +282,41 @@ document.addEventListener('click', function(e) {
       <span class="underline decoration-1 underline-offset-4 hover:text-[var(--gold)] transition">Item Description</span>
     </div>
     <div id="productDescription" class="hidden text-base navy-text mb-4 bg-[#f8f6f3] rounded-xl p-4 border border-[var(--gold)]">This elegant gold tone circular charm necklace features sparkling pave stones, perfect for adding a touch of luxury to any outfit. Hypoallergenic, lightweight, and beautifully crafted for all occasions. <br><br>• Gold-tone finish<br>• Pave stone detailing<br>• Adjustable chain<br>• Hypoallergenic & skin safe<br>• Comes in a luxury gift box</div>
+    
+    <!-- Customization Options -->
+    <div class="mb-6 border border-[var(--gold)] rounded-xl p-4">
+      <h3 class="text-lg font-medium navy-text mb-3">Customization Options</h3>
+      
+      <!-- Add a Note Option -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label class="flex items-center cursor-pointer">
+            <input type="checkbox" id="addNoteCheckbox" class="h-4 w-4 text-[var(--gold)] rounded border-gray-300 focus:ring-[var(--gold)]">
+            <span class="ml-2 text-base navy-text">Add a note with it</span>
+          </label>
+          <span class="text-base font-medium">₹30.00</span>
+        </div>
+        <div id="noteInputContainer" class="mt-2 hidden">
+          <textarea id="noteInput" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent" rows="3" placeholder="Type your custom message here..."></textarea>
+          <p class="text-xs text-gray-500 mt-1">Your personal message will be included with the gift.</p>
+        </div>
+      </div>
+      
+      <!-- Gift Wrap Option -->
+      <div>
+        <div class="flex items-center justify-between">
+          <label class="flex items-center cursor-pointer">
+            <input type="checkbox" id="giftWrapCheckbox" class="h-4 w-4 text-[var(--gold)] rounded border-gray-300 focus:ring-[var(--gold)]">
+            <span class="ml-2 text-base navy-text">Gift wrap it</span>
+          </label>
+          <span class="text-base font-medium">₹50.00</span>
+        </div>
+        <div id="giftWrapDetails" class="mt-2 hidden">
+          <p class="text-sm text-gray-600">Your item will be beautifully wrapped in premium gift packaging.</p>
+        </div>
+      </div>
+    </div>
+    
     <div class="flex items-center gap-4 mb-4">
       <button class="gold-bg px-8 py-3 rounded-lg font-medium shadow hover:shadow-lg transition text-lg">ADD TO CART</button>
       <div class="flex items-center border border-[var(--gray)] rounded-lg overflow-hidden bg-white">
@@ -269,7 +330,186 @@ document.addEventListener('click', function(e) {
       <span class="flex items-center gap-2 cursor-pointer" id="compareBtn"><span>&#9878;</span> ADD TO COMPARE</span>
       <span class="flex items-center gap-2 cursor-pointer" id="reviewsBtn"><span>&#128172;</span> CHECK REVIEWS</span>
     </div>
-    <button class="w-full mt-2 py-4 rounded-xl gold-bg text-xl font-medium shadow hover:shadow-lg transition">BUY NOW</button>
+    <button id="buyNowBtn" class="w-full mt-2 py-4 rounded-xl gold-bg text-xl font-medium shadow hover:shadow-lg transition">BUY NOW</button>
+  </div>
+</div>
+
+<!-- Checkout Modal -->
+<div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center p-4">
+  <div class="relative bg-[#fffdfa] rounded-3xl shadow-2xl max-w-4xl w-full mx-4 p-8 flex flex-col max-h-[90vh] overflow-y-auto" style="font-family: 'Didot', serif;">
+    <button id="closeCheckoutModal" class="absolute top-6 right-6 text-2xl text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none">&times;</button>
+    <h2 class="text-3xl font-normal navy-text mb-6 text-center">Complete Your Purchase</h2>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Left Column: Delivery Details -->
+      <div class="md:col-span-2">
+        <div class="bg-[#f8f6f3] rounded-xl p-6 mb-6">
+          <h3 class="text-xl font-medium navy-text mb-4 flex items-center">
+            <span class="w-8 h-8 rounded-full bg-[var(--gold)] text-white flex items-center justify-center mr-2">1</span>
+            Delivery Address
+          </h3>
+          <form id="deliveryForm" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium navy-text mb-1">First Name*</label>
+                <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent">
+              </div>
+              <div>
+                <label class="block text-sm font-medium navy-text mb-1">Last Name*</label>
+                <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium navy-text mb-1">Address*</label>
+              <textarea required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent" rows="3"></textarea>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="col-span-2">
+                <label class="block text-sm font-medium navy-text mb-1">City*</label>
+                <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent">
+              </div>
+              <div>
+                <label class="block text-sm font-medium navy-text mb-1">Pincode*</label>
+                <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium navy-text mb-1">State*</label>
+              <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium navy-text mb-1">Phone Number*</label>
+              <input type="tel" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--gold)] focus:border-transparent">
+            </div>
+          </form>
+        </div>
+
+        <div class="bg-[#f8f6f3] rounded-xl p-6">
+          <h3 class="text-xl font-medium navy-text mb-4 flex items-center">
+            <span class="w-8 h-8 rounded-full bg-[var(--gold)] text-white flex items-center justify-center mr-2">2</span>
+            Payment Method
+          </h3>
+          
+          <div class="space-y-4">
+            <div class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-[var(--gold)] payment-method">
+              <input type="radio" name="payment" id="upi" class="h-4 w-4 text-[var(--gold)] focus:ring-[var(--gold)]" checked>
+              <label for="upi" class="ml-3 flex-1">
+                <div class="flex items-center justify-between">
+                  <span class="block text-sm font-medium navy-text">UPI</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/825/825454.png" alt="UPI" class="h-6">
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Google Pay, PhonePe, Paytm, etc.</p>
+              </label>
+            </div>
+
+            <div class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-[var(--gold)] payment-method">
+              <input type="radio" name="payment" id="card" class="h-4 w-4 text-[var(--gold)] focus:ring-[var(--gold)]">
+              <label for="card" class="ml-3 flex-1">
+                <div class="flex items-center justify-between">
+                  <span class="block text-sm font-medium navy-text">Credit/Debit Card</span>
+                  <div class="flex space-x-2">
+                    <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" alt="Visa" class="h-4">
+                    <img src="https://cdn-icons-png.flaticon.com/512/196/196566.png" alt="Mastercard" class="h-4">
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <div class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-[var(--gold)] payment-method">
+              <input type="radio" name="payment" id="netbanking" class="h-4 w-4 text-[var(--gold)] focus:ring-[var(--gold)]">
+              <label for="netbanking" class="ml-3 flex-1">
+                <span class="block text-sm font-medium navy-text">Net Banking</span>
+                <p class="text-xs text-gray-500 mt-1">All major banks supported</p>
+              </label>
+            </div>
+
+            <div class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-[var(--gold)] payment-method">
+              <input type="radio" name="payment" id="cod" class="h-4 w-4 text-[var(--gold)] focus:ring-[var(--gold)]">
+              <label for="cod" class="ml-3 flex-1">
+                <div class="flex items-center justify-between">
+                  <span class="block text-sm font-medium navy-text">Cash on Delivery</span>
+                  <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">+₹50</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Pay when you receive your order</p>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary -->
+      <div class="md:col-span-1">
+        <div class="bg-[#f8f6f3] rounded-xl p-6 sticky top-4">
+          <h3 class="text-xl font-medium navy-text mb-4">Order Summary</h3>
+          
+          <div class="space-y-4 mb-6">
+            <div class="flex items-start">
+              <img id="checkoutProductImage" src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/NecklaceSet1.jpg" alt="Product" class="w-20 h-20 object-cover rounded-lg mr-3">
+              <div class="flex-1">
+                <h4 id="checkoutProductName" class="font-medium navy-text">Gold Tone Circular Charm Necklace</h4>
+                <p id="checkoutProductVariant" class="text-sm text-gray-600">with Pave stones</p>
+                <div class="flex items-center justify-between mt-1">
+                  <span class="text-sm">Qty: <span id="checkoutProductQty">1</span></span>
+                  <span id="checkoutProductPrice" class="font-medium">₹799.00</span>
+                </div>
+                
+                <div id="checkoutCustomizations" class="mt-2 space-y-1">
+                  <!-- Customization options will be added here -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200 pt-4 space-y-3">
+            <div class="flex justify-between text-sm">
+              <span>Subtotal</span>
+              <span id="subtotal">₹799.00</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span>Shipping</span>
+              <span>Free</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span>GST (18%)</span>
+              <span id="gst">₹143.82</span>
+            </div>
+            <div id="codFee" class="hidden flex justify-between text-sm">
+              <span>Cash on Delivery</span>
+              <span>+₹50.00</span>
+            </div>
+            <div class="flex justify-between font-medium pt-2 border-t border-gray-200 mt-2">
+              <span>Total</span>
+              <span id="totalAmount">₹942.82</span>
+            </div>
+          </div>
+
+          <button id="placeOrderBtn" class="w-full mt-6 py-3 bg-[var(--gold)] text-white font-medium rounded-lg hover:bg-opacity-90 transition">
+            Place Order
+          </button>
+          
+          <p class="text-xs text-center text-gray-500 mt-3">By placing this order, you agree to our <a href="#" class="text-[var(--gold)] hover:underline">Terms & Conditions</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center">
+  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 text-center">
+    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+    <h3 class="text-2xl font-medium text-gray-900 mb-2">Order Placed Successfully!</h3>
+    <p class="text-gray-600 mb-6">Your order #DISSARA-<span id="orderId"></span> has been placed and will be delivered soon.</p>
+    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+      <p class="text-sm text-gray-600">A confirmation has been sent to <span id="userEmail">your email</span></p>
+    </div>
+    <button id="continueShoppingBtn" class="w-full py-3 bg-[var(--gold)] text-white font-medium rounded-lg hover:bg-opacity-90 transition">
+      Continue Shopping
+    </button>
   </div>
 </div>
 
@@ -375,6 +615,159 @@ qtyPlus.addEventListener('click', function() {
   let val = parseInt(qtyValue.textContent);
   qtyValue.textContent = val + 1;
 });
+
+// Cart functionality
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartCount = document.getElementById('cartCount');
+const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const cartTotalAmount = document.getElementById('cartTotalAmount');
+const cartButton = document.getElementById('cartButton');
+const cartDropdown = document.getElementById('cartDropdown');
+
+// Toggle cart dropdown
+cartButton.addEventListener('click', (e) => {
+  e.stopPropagation();
+  cartDropdown.classList.toggle('hidden');
+});
+
+// Close cart when clicking outside
+document.addEventListener('click', (e) => {
+  if (!cartDropdown.contains(e.target) && e.target !== cartButton) {
+    cartDropdown.classList.add('hidden');
+  }
+});
+
+// Update cart count
+function updateCartCount() {
+  const count = cart.reduce((total, item) => total + item.quantity, 0);
+  cartCount.textContent = count;
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartDisplay();
+}
+
+// Update cart display
+function updateCartDisplay() {
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<p class="text-center text-gray-500 py-4">Your cart is empty</p>';
+    cartTotal.classList.add('hidden');
+    return;
+  }
+
+  cartItems.innerHTML = '';
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    const itemTotal = (item.price + (item.addNote ? 30 : 0) + (item.giftWrap ? 50 : 0)) * item.quantity;
+    total += itemTotal;
+    
+    const itemElement = document.createElement('div');
+    itemElement.className = 'flex items-start py-3 border-b border-gray-200';
+    itemElement.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg mr-3">
+      <div class="flex-1">
+        <h4 class="font-medium text-[var(--navy)]">${item.name}</h4>
+        <p class="text-sm text-gray-600">Qty: ${item.quantity}</p>
+        ${item.addNote ? `<p class="text-xs text-gray-500 mt-1">Note: ${item.noteText || 'No note'}</p>` : ''}
+        ${item.giftWrap ? '<p class="text-xs text-[var(--gold)] mt-1">Gift Wrapped</p>' : ''}
+      </div>
+      <div class="text-right">
+        <p class="font-medium">₹${itemTotal.toFixed(2)}</p>
+        <button class="text-xs text-red-500 hover:text-red-700 remove-item" data-index="${index}">Remove</button>
+      </div>
+    `;
+    cartItems.appendChild(itemElement);
+  });
+
+  // Add event listeners to remove buttons
+  document.querySelectorAll('.remove-item').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const index = e.target.getAttribute('data-index');
+      cart.splice(index, 1);
+      updateCartCount();
+    });
+  });
+
+  cartTotalAmount.textContent = `₹${total.toFixed(2)}`;
+  cartTotal.classList.remove('hidden');
+}
+
+// Handle add to cart
+const addToCartBtn = document.querySelector('.gold-bg');
+if (addToCartBtn && addToCartBtn.textContent.includes('ADD TO CART')) {
+  addToCartBtn.addEventListener('click', function() {
+    const productName = document.querySelector('h2').textContent;
+    const productPrice = parseFloat(document.querySelector('.inline-block.px-6').textContent.replace('Rs.', '').trim());
+    const quantity = parseInt(qtyValue.textContent);
+    const addNote = document.getElementById('addNoteCheckbox').checked;
+    const noteText = document.getElementById('noteInput').value;
+    const giftWrap = document.getElementById('giftWrapCheckbox').checked;
+    const productImage = document.querySelector('.buy-now-btn').closest('.flex').querySelector('img').src;
+
+    const cartItem = {
+      name: productName,
+      price: productPrice,
+      quantity: quantity,
+      image: productImage,
+      addNote: addNote,
+      noteText: noteText,
+      giftWrap: giftWrap
+    };
+
+    cart.push(cartItem);
+    updateCartCount();
+    
+    // Show success message
+    const successMsg = document.createElement('div');
+    successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+    successMsg.innerHTML = `
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      Added to cart!
+    `;
+    document.body.appendChild(successMsg);
+    setTimeout(() => {
+      successMsg.remove();
+    }, 3000);
+  });
+}
+
+// Handle checkout
+const checkoutBtn = document.getElementById('checkoutBtn');
+if (checkoutBtn) {
+  checkoutBtn.addEventListener('click', function() {
+    alert('Proceeding to checkout with ' + cart.length + ' items');
+    // Here you would typically redirect to checkout page
+  });
+}
+
+// Toggle note input visibility
+document.getElementById('addNoteCheckbox').addEventListener('change', function() {
+  const noteInputContainer = document.getElementById('noteInputContainer');
+  if (this.checked) {
+    noteInputContainer.classList.remove('hidden');
+  } else {
+    noteInputContainer.classList.add('hidden');
+  }
+});
+
+// Toggle gift wrap details
+document.getElementById('giftWrapCheckbox').addEventListener('change', function() {
+  const giftWrapDetails = document.getElementById('giftWrapDetails');
+  if (this.checked) {
+    giftWrapDetails.classList.remove('hidden');
+  } else {
+    giftWrapDetails.classList.add('hidden');
+  }
+});
+
+// Initialize cart on page load
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartCount();
+  updateCartDisplay();
+});
+
 // Reviews modal
 const reviewsModal = document.getElementById('reviewsModal');
 const reviewsBtn = document.getElementById('reviewsBtn');

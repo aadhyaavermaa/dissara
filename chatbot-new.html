@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perry - Your Personal Jewelry Assistant | Dissara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="chatbot.css">
+  <style>
+    /* Critical CSS for initial loading */
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+      background: rgba(0, 0, 0, 0.7);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .chat-container {
+      width: 100%;
+      max-width: 400px;
+      height: 600px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .chat-header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: #fff;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      border-bottom: 2px solid #d4af37;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .chat-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+    }
+    
+    .chat-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+    }
+    
+    .chat-header i {
+      color: #d4af37;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    
+    .close-btn:hover {
+      color: #d4af37;
+    }
+    
+    .chat-box {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .message {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+      animation: fadeIn 0.3s ease;
+      word-wrap: break-word;
+      position: relative;
+    }
+    
+    .bot-message {
+      background: #ffffff;
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+      color: #000000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #f0f0f0;
+      margin-right: 20px;
+    }
+    
+    .bot-message::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 15px;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-right: 10px solid #fff;
+      border-bottom: 8px solid transparent;
+    }
+    
+    .user-message {
+      background: #d4af37;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+      margin-left: 20px;
+      position: relative;
+    }
+    
+    .user-message::after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: 15px;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-left: 10px solid #d4af37;
+      border-bottom: 8px solid transparent;
+    }
+    
+    .typing-indicator {
+      display: none;
+      gap: 6px;
+      padding: 14px 18px;
+      background: #f8f8f8;
+      border-radius: 18px;
+      align-self: flex-start;
+      margin: 5px 0 10px 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      width: fit-content;
+      position: relative;
+    }
+    
+    .typing-indicator::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 15px;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-right: 10px solid #f8f8f8;
+      border-bottom: 8px solid transparent;
+    }
+    
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #d4af37;
+      border-radius: 50%;
+      display: inline-block;
+      animation: typingAnimation 1.4s infinite ease-in-out;
+      opacity: 0.7;
+    }
+    
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    
+    @keyframes typingAnimation {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-4px); }
+    }
+    
+    .chat-footer {
+      padding: 15px;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: 10px;
+      background: #fff;
+    }
+    
+    #user-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    #user-input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+    }
+    
+    .send-btn {
+      background: #d4af37;
+      color: white;
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      flex-shrink: 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .send-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+    
+    .send-btn:hover {
+      background: #c19a4f;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    }
+    
+    .send-btn:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    
+    .send-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .send-btn i {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+    
+    .send-btn:hover i {
+      transform: translateX(2px);
+    }
+    
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    
+    .suggestion-btn {
+      background: #f8f8f8;
+      border: 1px solid #e0e0e0;
+      border-radius: 18px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+      margin: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .suggestion-btn i {
+      font-size: 0.9em;
+    }
+    
+    .suggestion-btn:hover {
+      background: #d4af37;
+      color: white;
+      border-color: #d4af37;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(212, 175, 55, 0.2);
+    }
+    
+    .suggestion-btn:active {
+      transform: translateY(0);
+    }
+    
+    .welcome-message {
+      text-align: center;
+      padding: 20px;
+      color: #000000;
+      font-style: italic;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .chat-container {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+      }
+      
+      .message {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h3><i class="fas fa-gem" style="color: #d4af37;"></i> Your Jewelry Assistant</h3>
+      <button class="close-btn" id="close-chatbot">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="chat-box" id="chat-box">
+      <div class="welcome-message">
+        <p>Namaste! I'm Perry, your personal jewelry assistant. How may I help you today?</p>
+      </div>
+      <div class="suggestions">
+        <button class="suggestion-btn" onclick="insertSuggestion('Show me your collections')">
+          <i class="fas fa-gem"></i> Collections
+        </button>
+        <button class="suggestion-btn" onclick="insertSuggestion('What are your prices?')">
+          <i class="fas fa-tag"></i> Pricing
+        </button>
+        <button class="suggestion-btn" onclick="insertSuggestion('How to care for jewelry?')">
+          <i class="fas fa-hands-wash"></i> Care Guide
+        </button>
+        <button class="suggestion-btn" onclick="insertSuggestion('Can I add a name or note?')">
+          <i class="fas fa-edit"></i> Name/Note
+        </button>
+      </div>
+      <div class="typing-indicator" id="typing-indicator">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+    
+    <div class="chat-footer">
+      <input type="text" id="user-input" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+      <button class="send-btn" onclick="sendMessage()">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Toggle chatbot visibility
+    const chatbotContainer = document.querySelector('.chat-container');
+    const closeChatbot = document.getElementById('close-chatbot');
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+    const typingIndicator = document.getElementById('typing-indicator');
+
+    // Show chat after a short delay
+    setTimeout(() => {
+      chatbotContainer.classList.add('visible');
+    }, 300);
+
+    // Close button functionality
+    closeChatbot.addEventListener('click', () => {
+      chatbotContainer.style.opacity = '0';
+      chatbotContainer.style.transform = 'translateY(20px)';
+      setTimeout(() => {
+        chatbotContainer.style.display = 'none';
+      }, 300);
+    });
+
+    // Auto-scroll to bottom of chat
+    function scrollToBottom() {
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Show typing indicator
+    function showTypingIndicator() {
+      typingIndicator.style.display = 'flex';
+      scrollToBottom();
+    }
+
+    // Hide typing indicator
+    function hideTypingIndicator() {
+      typingIndicator.style.display = 'none';
+    }
+
+    // Add message to chat with animation
+    function addMessage(message, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+      messageDiv.style.opacity = '0';
+      messageDiv.style.transform = isUser ? 'translateX(20px)' : 'translateX(-20px)';
+      
+      // Convert newlines to <br> for better formatting
+      message.split('\n').forEach((line, index) => {
+        if (index > 0) messageDiv.appendChild(document.createElement('br'));
+        messageDiv.appendChild(document.createTextNode(line));
+      });
+      
+      chatBox.insertBefore(messageDiv, typingIndicator);
+      scrollToBottom();
+      
+      // Animate message appearance
+      setTimeout(() => {
+        messageDiv.style.opacity = '1';
+        messageDiv.style.transform = 'translateX(0)';
+        messageDiv.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      }, 10);
+    }
+
+    // Insert suggestion into input
+    function insertSuggestion(text) {
+      userInput.value = text;
+      userInput.focus();
+    }
+
+    // Get bot response
+    function getBotResponse(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      // Greetings
+      if (/(hi|hello|hey|namaste|hola|greetings)/.test(lowerMessage)) {
+        const greetings = [
+          "Namaste! I'm Perry, your personal jewelry assistant at Dissara. How may I help you today?",
+          "Hello! Welcome to Dissara. I'm here to assist you with our jewelry collection. What would you like to know?",
+          "Hi there! I'm Perry, your jewelry expert. How can I help you find the perfect piece today?"
+        ];
+        return greetings[Math.floor(Math.random() * greetings.length)];
+      }
+      
+      // Name/Note requests
+      if (/(name|note|engrav|personaliz|gift message)/.test(lowerMessage)) {
+        return "For a personal touch with your jewelry gift, we offer:\n\n• Name engravings (on select pieces only)\n• Handwritten gift notes\n• Special gift packaging\n\nPlease note that not all pieces can be engraved due to design constraints. Would you like to know which of our collections are eligible for engravings?";
+      }
+      
+      // Pricing
+      if (/(price|cost|how much|rate)/.test(lowerMessage)) {
+        return "Our jewelry prices vary based on the type of metal, gemstones, and craftsmanship. Here's a general idea:\n\n• Gold jewelry: Starting from ₹25,000\n• Diamond jewelry: Starting from ₹50,000\n• Polki/Kundan sets: Starting from ₹75,000\n• Bridal sets: Starting from ₹1,50,000\n\nFor exact pricing on specific pieces, please share more details!";
+      }
+      
+      // Care guide
+      if (/(care|maintain|clean|store)/.test(lowerMessage)) {
+        return "Here are some jewelry care tips:\n\n• Store pieces separately in soft pouches\n• Clean with a soft, dry cloth after each use\n• Avoid contact with perfumes and chemicals\n• Remove jewelry before swimming or showering\n• Get professional cleaning every 6 months\n\nWould you like more specific care instructions for a particular type of jewelry?";
+      }
+      
+      // Default response
+      const defaultResponses = [
+        "I'm here to help with all your jewelry needs. Could you please rephrase your question?",
+        "I'd love to assist you! Could you provide more details about what you're looking for?",
+        "I'm not sure I understand. Could you ask in a different way?",
+        "I'm here to help you find the perfect jewelry piece. What would you like to know?"
+      ];
+      return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+    }
+
+    // Send message function
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (message === '') return;
+      
+      // Add user message to chat
+      addMessage(message, true);
+      userInput.value = '';
+      
+      // Show typing indicator
+      showTypingIndicator();
+      
+      // Simulate bot response after a short delay
+      setTimeout(() => {
+        hideTypingIndicator();
+        const response = getBotResponse(message);
+        addMessage(response);
+        
+        // Show suggestions after bot response if it's a greeting
+        if (/(namaste|hello|hi|hey)/i.test(message)) {
+          showSuggestions();
+        }
+      }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
+    }
+    
+    // Show suggestion buttons with icons
+    function showSuggestions() {
+      const suggestions = [
+        { text: 'Show me your collections', icon: 'gem' },
+        { text: 'What are your prices?', icon: 'tag' },
+        { text: 'How to care for jewelry?', icon: 'hands-wash' },
+        { text: 'Can I add a name or note?', icon: 'edit' },
+        { text: 'What materials do you use?', icon: 'gem' },
+        { text: 'Do you offer gift wrapping?', icon: 'gift' }
+      ];
+      
+      const suggestionsDiv = document.createElement('div');
+      suggestionsDiv.className = 'suggestions';
+      
+      suggestions.forEach(suggestion => {
+        const btn = document.createElement('button');
+        btn.className = 'suggestion-btn';
+        btn.innerHTML = `<i class="fas fa-${suggestion.icon}"></i> ${suggestion.text}`;
+        btn.onclick = () => insertSuggestion(suggestion.text);
+        suggestionsDiv.appendChild(btn);
+      });
+      
+      chatBox.insertBefore(suggestionsDiv, typingIndicator);
+      scrollToBottom();
+    }
+
+    // Handle Enter key
+    userInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+    
+    // Initial focus on input
+    userInput.focus();
+  </script>
+</body>
+</html>

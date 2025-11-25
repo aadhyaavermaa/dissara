@@ -27,17 +27,16 @@ body{
 .floating-nav{
   position:fixed; top:18px; left:50%; transform:translateX(-50%);
   width:min(1120px,92%);
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:center;
   background:rgba(12,16,22,.55);
   border:1px solid rgba(212,175,55,.35);
   border-radius:18px; padding:14px 18px; z-index:1000;
   backdrop-filter: blur(8px);
   box-shadow: 0 8px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.03);
 }
-.brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.08em}
-.brand img{height:28px; width:auto}
-.brand .name{color:var(--ink)}
-.navlinks{display:flex; gap:20px}
+.brand{display:flex; align-items:center; font-weight:700; letter-spacing:.08em; margin-right: 20px}
+.brand img{height:38px; width:auto}
+.navlinks{display:flex; justify-content: space-between; width: 100%; padding: 0 20px;}
 .navlinks a{
   color:var(--ink); text-decoration:none; font-weight:600; letter-spacing:.04em;
   padding:8px 12px; border-radius:12px; position:relative;
