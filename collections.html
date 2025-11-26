@@ -59,6 +59,20 @@
       <a href="index.html#contact">Contact</a>
       <a href="index.html#about">About Us</a>
       <span id="authSlot"></span>
+      <div class="nav-actions">
+        <button id="wishlistIconButton" class="nav-icon-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
+          </svg>
+          <span id="wishlistCount" class="nav-icon-badge" style="display:none;">0</span>
+        </button>
+        <button id="cartButton" class="nav-icon-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span id="cartCount" class="nav-icon-badge" style="display:none;">0</span>
+        </button>
+      </div>
     </nav>
   </header>
 
@@ -543,6 +557,26 @@
       });
       document.querySelector('h1.section-title')?.scrollIntoView({behavior:'smooth'});
     })();
+
+    // Sync wishlist heart badge with localStorage data on collections page
+    function updateWishlistCount() {
+      try {
+        const data = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const badge = document.getElementById('wishlistCount');
+        if (!badge) return;
+        const count = Array.isArray(data) ? data.length : 0;
+        badge.textContent = count > 99 ? '99+' : String(count);
+        badge.style.display = count > 0 ? 'flex' : 'none';
+      } catch (e) {
+        console.error('Error updating wishlist count', e);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', updateWishlistCount);
+    } else {
+      updateWishlistCount();
+    }
   </script>
 </body>
 </html>

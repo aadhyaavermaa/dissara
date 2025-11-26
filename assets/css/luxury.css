@@ -36,7 +36,25 @@ body{
 }
 .brand{display:flex; align-items:center; font-weight:700; letter-spacing:.08em; margin-right: 20px}
 .brand img{height:38px; width:auto}
-.navlinks{display:flex; justify-content: space-between; width: 100%; padding: 0 20px;}
+.navlinks{display:flex; align-items:center; justify-content: space-between; width: 100%; padding: 0 20px;}
+.nav-actions{position:relative; display:flex; align-items:center; gap:20px}
+.nav-icon-btn{color:var(--ink); background:transparent; border:none; padding:0; cursor:pointer}
+.nav-icon-btn:hover{color:var(--gold)}
+.nav-icon-badge{
+  position:absolute;
+  top:-0.45rem;
+  right:-0.45rem;
+  background:var(--gold);
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  border-radius:999px;
+  width:16px;
+  height:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 .navlinks a{
   color:var(--ink); text-decoration:none; font-weight:600; letter-spacing:.04em;
   padding:8px 12px; border-radius:12px; position:relative;
@@ -159,7 +177,7 @@ body{
 .price .mrp{text-decoration: line-through; color:#6b7280}
 .rating{margin-top:6px; color:#f7d680; font-size:.95rem}
 .card .actions{display:flex; justify-content:space-between; margin-top:12px}
-.btn-link{background:transparent; border:1px solid rgba(212,175,55,.4); color:var(--ink); padding:8px 10px; border-radius:12px; cursor:pointer; font-weight:700}
+.btn-link{background:transparent; border:1px solid rgba(212,175,55,.4); color:var(--ink); padding:8px 10px; border-radius:12px; cursor:pointer; font-weight:700; pointer-events:auto; position:relative; z-index:10}
 .btn-link:hover{border-color:var(--gold); color:var(--gold)}
 @media (max-width: 1000px){.card{grid-column: span 6}}
 @media (max-width: 640px){.card{grid-column: span 12}}

@@ -21,49 +21,93 @@
     }
     #shopSort:focus{ outline:none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(212,175,55,.25); }
     #shopSort option{ background:#101720; color:#e8eaee; }
+    
+    /* Button Clickability Fix */
+    .btn-link, button[data-product], .add-to-cart {
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      z-index: 10;
+    }
+    
+    /* Cart Dropdown Styling */
+    .nav-actions {
+      position: relative;
+    }
+    
+    #cartDropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      display: none; /* Hide by default */
+    }
+    
+    #cartDropdown.show {
+      display: block; /* Show when has .show class */
+    }
+
+    .buy-now-btn {
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      z-index: 10;
+      border: none;
+      position: relative;
+    }
   </style>
 </head>
 <body>
-  <!-- Floating Navigation -->
-  <header class="floating-nav">
-    <div class="brand">
-      <a href="index.html" aria-label="Home">
-        <img src="logo.png" alt="Dissara" class="logo" />
-      </a>
-    </div>
-    <nav class="navlinks">
-      <a href="index.html">Home</a>
-      <a href="gift-store.html">Gift Store</a>
-      <a href="collections.html">Collections</a>
-      <a href="#newarrivals">New Arrivals</a>
-      <span id="shopbyWrap" style="position:relative; display:flex; align-items:center">
-        <a href="#shopby" id="shopbyLink" style="display:inline-block; padding:8px 12px; border-radius:12px">Shop By ▾</a>
-        <div id="shopbyMenu" style="position:absolute; left:0; top:calc(100% + 8px); background:rgba(16,23,32,.96); border:1px solid rgba(212,175,55,.35); border-radius:12px; padding:8px; display:none; z-index:1300; min-width:180px">
-          <button class="btn-ghost" data-sel="all" style="width:100%; text-align:left; margin:4px 0">All</button>
-          <div style="height:1px; background:rgba(212,175,55,.25); margin:6px 0"></div>
-          <button class="btn-ghost" data-sel="rings" style="width:100%; text-align:left; margin:4px 0">Rings</button>
-          <button class="btn-ghost" data-sel="earrings" style="width:100%; text-align:left; margin:4px 0">Earrings</button>
-          <button class="btn-ghost" data-sel="necklaces" style="width:100%; text-align:left; margin:4px 0">Necklaces</button>
-          <button class="btn-ghost" data-sel="bracelets" style="width:100%; text-align:left; margin:4px 0">Bracelets</button>
-          <div style="height:1px; background:rgba(212,175,55,.25); margin:6px 0"></div>
-          <button class="btn-ghost" data-sel="men" style="width:100%; text-align:left; margin:4px 0">Men</button>
-          <button class="btn-ghost" data-sel="women" style="width:100%; text-align:left; margin:4px 0">Women</button>
-        </div>
-      </span>
-      <a href="#contact">Contact</a>
-      <a href="#about">About Us</a>
-      <span id="authSlot"></span>
-      <div class="relative ml-4">
-        <button id="cartButton" class="text-[var(--ink)] hover:text-[var(--gold)] focus:outline-none relative">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-          <span id="cartCount" class="absolute -top-2 -right-2 bg-[var(--gold)] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
-        </button>
+  <!-- Floating Navigation (unified) -->
+    <header class="floating-nav">
+      <div class="brand">
+        <a href="index.html" aria-label="Home">
+          <img src="logo.png" alt="Dissara" class="logo" />
+        </a>
       </div>
-    </nav>
-    
-  </header>
+      <nav class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="gift-store.html">Gift Store</a>
+        <a href="collections.html">Collections</a>
+        <a href="index.html#newarrivals">New Arrivals</a>
+        <a href="index.html#shopby">Shop By</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#about">About Us</a>
+        <span id="authSlot"></span>
+        <div class="nav-actions">
+          <button id="wishlistIconButton" class="nav-icon-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
+            </svg>
+            <span id="wishlistCount" class="nav-icon-badge" style="display:none;">0</span>
+          </button>
+          <button id="cartButton" class="nav-icon-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span id="cartCount" class="nav-icon-badge" style="display:none;">0</span>
+          </button>
+
+          <!-- Cart Dropdown -->
+          <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 border border-gray-200" style="min-width: 320px;">
+            <div class="p-4 border-b border-gray-200">
+              <h3 class="text-lg font-semibold text-gray-800">Your Cart</h3>
+            </div>
+            <div id="cartItems" class="max-h-96 overflow-y-auto">
+              <!-- Cart items will be added here dynamically -->
+              <p class="text-center text-gray-500 py-4">Your cart is empty</p>
+            </div>
+            <div id="cartTotal" class="hidden p-4 border-t border-gray-200 bg-gray-50">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-medium text-gray-700">Total:</span>
+                <span id="cartTotalAmount" class="font-bold text-lg text-gray-900">₹0.00</span>
+              </div>
+              <button id="checkoutBtn" class="w-full bg-[var(--gold)] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
 
   <!-- Hero with Parallax and Animated Gold Accents -->
   <section class="hero" aria-label="Luxury diamond showcase">
@@ -224,33 +268,89 @@
     </div>
   </footer>
 
-  <!-- Product Detail Modal -->
-  <div class="modal" id="productModal" aria-hidden="true" role="dialog" aria-label="Product details">
-    <div class="backdrop" data-close="modal"></div>
-    <div class="panel">
-      <button class="close-x" id="modalClose" aria-label="Close">✕</button>
-      <div class="inner">
-        <div class="gal">
-          <img id="modalImage" src="" alt="Product image" />
+  <!-- Cart Dropdown -->
+  <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 border border-gray-200">
+    <div class="p-4">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-medium text-gray-900">Your Cart</h3>
+        <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div id="emptyCart" class="text-center py-8">
+        <i class="fas fa-shopping-cart text-3xl text-gray-300 mb-2"></i>
+        <p class="text-gray-500">Your cart is empty</p>
+        <a href="collections.html" class="mt-2 inline-block text-purple-600 hover:underline text-sm">Continue Shopping</a>
+      </div>
+      
+      <div id="cartContent" class="hidden">
+        <div id="cartItems" class="max-h-96 overflow-y-auto -mx-4 px-4"></div>
+        
+        <div id="cartTotal" class="border-t border-gray-200 mt-4 pt-4">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-medium">Subtotal</span>
+            <span id="cartTotalAmount" class="font-medium">₹0.00</span>
+          </div>
+          <a href="checkout.html" class="block w-full bg-purple-600 hover:bg-purple-700 text-white text-center py-2 rounded-md font-medium transition-colors">
+            Proceed to Checkout
+          </a>
+          <div class="text-center mt-2">
+            <a href="cart.html" class="text-sm text-purple-600 hover:underline">View Cart</a>
+          </div>
         </div>
-        <div class="info">
-          <h3 id="modalTitle">Product</h3>
-          <div class="meta">
-            <span id="modalBrand">DISSARA</span>
-            <span class="dot"></span>
-            <span id="modalRating">★★★★★</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Detail Modal -->
+  <div class="modal" id="productModal" aria-hidden="true" role="dialog" aria-label="Product details" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+    <div class="backdrop" data-close="modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7);"></div>
+    <div class="panel" style="max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; background: white; border-radius: 12px; position: relative; z-index: 1001;">
+      <button class="close-x" id="modalClose" aria-label="Close" style="position: sticky; top: 15px; right: 15px; z-index: 10; background: rgba(0,0,0,0.7); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: none; color: white; cursor: pointer; float: right; margin: 10px;">✕</button>
+      <div class="inner" style="display: flex; flex-direction: column; padding: 15px;">
+        <!-- Product Image -->
+        <div class="gal" style="width: 100%; padding: 10px; display: flex; justify-content: center; margin-bottom: 15px;">
+          <img id="modalImage" src="" alt="Product image" style="max-width: 300px; max-height: 300px; object-fit: contain;" />
+        </div>
+        <!-- Product Info -->
+        <div class="info" style="padding: 10px;">
+          <h3 id="modalTitle" style="margin: 0 0 10px 0; font-size: 1.3rem; color: #333; line-height: 1.3;">Product</h3>
+          <div class="meta" style="margin-bottom: 10px; display: flex; align-items: center; gap: 6px; color: #666; font-size: 0.85rem;">
+            <span id="modalBrand" style="font-weight: 500;">DISSARA</span>
+            <span class="dot" style="font-size: 1.1em;">•</span>
+            <span id="modalRating" style="color: #f5a623; font-size: 0.9em;">★★★★★</span>
           </div>
-          <div class="price">
-            <span class="now" id="modalNow">Rs. 0</span>
-            <span class="mrp" id="modalMrp">Rs. 0</span>
-            <span class="badge" id="modalDisc">-00% OFF</span>
+          <div class="price" style="margin: 8px 0 15px 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px;">
+            <span class="now" id="modalNow" style="font-size: 1.2rem; font-weight: 600; color: #8b5cf6;">Rs. 0</span>
+            <span class="mrp" id="modalMrp" style="text-decoration: line-through; color: #999; font-size: 0.9rem;">Rs. 0</span>
+            <span class="badge" id="modalDisc" style="background: #f0f0f0; color: #333; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 500;">-00% OFF</span>
           </div>
-          <div class="cta">
-            <button class="btn-primary solid">Add to Cart</button>
-            <button class="btn-ghost small" data-close="modal">Close</button>
+          
+          <!-- Quantity Selector -->
+          <div class="quantity-selector" style="margin: 15px 0; display: flex; align-items: center; gap: 10px;">
+            <span style="font-weight: 500; color: #333;">Quantity:</span>
+            <div style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+              <button id="decreaseQty" style="background: #f5f5f5; border: none; padding: 5px 12px; cursor: pointer; font-size: 1.1rem;">-</button>
+              <span id="quantity" style="padding: 5px 15px; min-width: 30px; text-align: center; font-weight: 500;">1</span>
+              <button id="increaseQty" style="background: #f5f5f5; border: none; padding: 5px 12px; cursor: pointer; font-size: 1.1rem;">+</button>
+            </div>
           </div>
-          <div class="specs" id="modalSpecs"></div>
-          <div class="reviews" id="modalReviews"></div>
+          
+          <div class="cta" style="margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;">
+            <button id="addToCartBtn" class="btn-primary solid" style="flex: 1; min-width: 160px; padding: 10px; border-radius: 8px; background: #8b5cf6; color: white; border: none; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+              Add to Cart
+            </button>
+            <button class="btn-ghost small" data-close="modal" style="padding: 10px 16px; border-radius: 8px; background: #f5f5f5; border: 1px solid #ddd; cursor: pointer; transition: all 0.2s;">
+              Close
+            </button>
+          </div>
+          
+          <div class="specs" id="modalSpecs" style="margin: 15px 0; font-size: 0.9rem; line-height: 1.5; color: #444;"></div>
+          <div class="reviews" id="modalReviews" style="margin-top: 15px; padding-top: 12px; border-top: 1px solid #eee; font-size: 0.85rem; color: #555;">
+            <h4 style="margin: 0 0 10px 0; font-size: 1rem; color: #333;">Product Details</h4>
+            <div id="productDescription" style="line-height: 1.6;"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -263,16 +363,271 @@
   </div>
 
   <script src="assets/js/luxury.js?v=2"></script>
+  <script src="assets/js/cart.js"></script>
   <script>
-  // Cart functionality
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const cartCount = document.getElementById('cartCount');
-  const cartItems = document.getElementById('cartItems');
-  const cartTotal = document.getElementById('cartTotal');
-  const cartTotalAmount = document.getElementById('cartTotalAmount');
-  const cartButton = document.getElementById('cartButton');
-  const cartDropdown = document.getElementById('cartDropdown');
-  const checkoutBtn = document.getElementById('checkoutBtn');
+    // Sync wishlist heart badge with localStorage data on home page
+    function updateWishlistCount() {
+      try {
+        const data = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const badge = document.getElementById('wishlistCount');
+        if (!badge) return;
+        const count = Array.isArray(data) ? data.length : 0;
+        badge.textContent = count > 99 ? '99+' : String(count);
+        badge.style.display = count > 0 ? 'flex' : 'none';
+      } catch (e) {
+        console.error('Error updating wishlist count', e);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', updateWishlistCount);
+    } else {
+      updateWishlistCount();
+    }
+  </script>
+  <script>
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = document.getElementById('cartCount');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartTotalAmount = document.getElementById('cartTotalAmount');
+    const cartButton = document.getElementById('cartButton');
+    const cartDropdown = document.getElementById('cartDropdown');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    
+    // Initialize components when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize modal
+      const modal = document.getElementById('productModal');
+      const modalClose = document.getElementById('modalClose');
+      const addToCartBtn = document.getElementById('addToCartBtn');
+      const increaseQty = document.getElementById('increaseQty');
+      const decreaseQty = document.getElementById('decreaseQty');
+      const quantityEl = document.getElementById('quantity');
+      
+      // Initialize cart display
+      updateCartCount();
+      updateCartDisplay();
+      
+      // Toggle cart dropdown
+      if (cartButton) {
+        cartButton.addEventListener('click', (e) => {
+          e.stopPropagation();
+          cartDropdown.classList.toggle('hidden');
+        });
+      }
+      
+      // Close cart when clicking outside
+      document.addEventListener('click', (e) => {
+        if (cartDropdown && !cartDropdown.contains(e.target) && e.target !== cartButton) {
+          cartDropdown.classList.add('hidden');
+        }
+      });
+      
+      // Quantity controls
+      if (increaseQty && decreaseQty && quantityEl) {
+        increaseQty.addEventListener('click', () => {
+          const currentQty = parseInt(quantityEl.textContent);
+          quantityEl.textContent = currentQty + 1;
+        });
+        
+        decreaseQty.addEventListener('click', () => {
+          const currentQty = parseInt(quantityEl.textContent);
+          if (currentQty > 1) {
+            quantityEl.textContent = currentQty - 1;
+          }
+        });
+      }
+      
+      // Add to cart functionality
+      if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function() {
+          const product = {
+            id: Date.now().toString(),
+            name: document.getElementById('modalTitle').textContent,
+            price: parseFloat(document.getElementById('modalNow').textContent.replace('Rs. ', '')),
+            image: document.getElementById('modalImage').src,
+            quantity: parseInt(quantityEl.textContent),
+            brand: document.getElementById('modalBrand').textContent,
+            size: selectedSize,
+            color: selectedColor
+          };
+          
+          // Add to cart using the shared function
+          addToCart(product);
+          
+          // Close modal after adding to cart
+          if (modal) modal.style.display = 'none';
+          
+          // Auto-open cart dropdown
+          const cartDropdown = document.getElementById('cartDropdown');
+          if (cartDropdown) {
+            cartDropdown.classList.remove('hidden');
+            // Ensure cart is updated in the UI
+            updateCartDisplay();
+          }
+        });
+      }
+      
+      // Close modal handlers
+      if (modal && modalClose) {
+        modalClose.addEventListener('click', function() {
+          modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside content
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.style.display = 'none';
+          }
+        });
+      }
+      
+      // Handle checkout
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function() {
+          if (cart.length === 0) {
+            showNotification('Your cart is empty');
+            return;
+          }
+          // Here you would typically redirect to checkout page
+          alert('Proceeding to checkout with ' + cart.length + ' items');
+        });
+      }
+    });
+    
+    // Update cart count in the header
+    function updateCartCount() {
+      if (!cartCount) return;
+      const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      const cartCounters = document.querySelectorAll('.cart-count');
+      
+      cartCounters.forEach(el => {
+        el.textContent = totalItems > 99 ? '99+' : totalItems;
+        el.style.display = totalItems > 0 ? 'flex' : 'none';
+      });
+      
+      if (cartCount) {
+        cartCount.textContent = totalItems > 99 ? '99+' : totalItems;
+      }
+    }
+    
+    // Update cart display in dropdown
+    function updateCartDisplay() {
+      if (!cartItems) return;
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="text-center text-gray-500 py-4">Your cart is empty</p>';
+        if (cartTotal) cartTotal.classList.add('hidden');
+        return;
+      }
+      
+      cartItems.innerHTML = '';
+      let total = 0;
+      
+      cart.forEach((item, index) => {
+        const itemTotal = (item.price || 0) * (item.quantity || 1);
+        total += itemTotal;
+        
+        const itemElement = document.createElement('div');
+        itemElement.className = 'flex items-start py-3 border-b border-gray-200';
+        itemElement.innerHTML = `
+          <img src="${item.image || 'https://via.placeholder.com/64'}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg mr-3">
+          <div class="flex-1">
+            <h4 class="font-medium text-[var(--navy)]">${item.name}</h4>
+            <p class="text-sm text-gray-600">Qty: ${item.quantity || 1}</p>
+            <p class="text-sm font-medium">₹${item.price?.toFixed(2) || '0.00'}</p>
+          </div>
+          <button class="text-xs text-red-500 hover:text-red-700 remove-item" data-index="${index}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </button>
+        `;
+        cartItems.appendChild(itemElement);
+      });
+      
+      // Add event listeners to remove buttons
+      document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const index = parseInt(e.target.closest('.remove-item').getAttribute('data-index'));
+          cart.splice(index, 1);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartCount();
+          updateCartDisplay();
+          showNotification('Item removed from cart');
+        });
+      });
+      
+      // Update total
+      if (cartTotal && cartTotalAmount) {
+        cartTotalAmount.textContent = `₹${total.toFixed(2)}`;
+        cartTotal.classList.remove('hidden');
+      }
+    }
+    
+    // Show notification
+    function showNotification(message, isError = false) {
+      // Remove any existing notifications
+      document.querySelectorAll('.notification').forEach(el => el.remove());
+      
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.innerHTML = `
+        <div style="position: fixed; bottom: 20px; right: 20px; background: ${isError ? '#f87171' : '#4CAF50'}; color: white; padding: 12px 24px; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000; animation: slideIn 0.3s ease-out; display: flex; align-items: center; gap: 8px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            ${isError ? '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>' : '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>'}
+          </svg>
+          ${message}
+        </div>
+      `;
+      document.body.appendChild(notification);
+      
+      // Auto-remove notification after delay
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+    
+    // Add CSS for notifications and cart
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateY(100px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(100px); opacity: 0; }
+      }
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #8b5cf6;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hidden {
+        display: none !important;
+      }
+    `;
+    document.head.appendChild(style);
 
   // Toggle cart dropdown
   if (cartButton) {
@@ -560,6 +915,27 @@
       else if(sortSel==='discount_desc') withDisc.sort((a,b)=>b._disc-a._disc);
       else if(sortSel==='rating_desc') withDisc.sort((a,b)=> (b.rating||0)-(a.rating||0));
       grid.innerHTML = withDisc.map(cardHTML).join('');
+      
+      // Attach click handlers to newly rendered buttons
+      grid.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const json = this.getAttribute('data-product');
+          if (json) {
+            try {
+              const item = JSON.parse(decodeURIComponent(json));
+              item.quantity = item.quantity || 1;
+              cart.push(item);
+              localStorage.setItem('cart', JSON.stringify(cart));
+              updateCartCount();
+              showNotification('✨ Item added to cart!');
+            } catch (err) {
+              console.error('Parse error:', err);
+            }
+          }
+        });
+      });
     }
     render('all');
     document.getElementById('shopFilters')?.addEventListener('click', (e)=>{
@@ -597,18 +973,53 @@
     document.body.addEventListener('click', (e)=>{
       const btn = e.target.closest('[data-product], .add-to-cart');
       if(!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
       try{
         const json = btn.getAttribute('data-product');
-        let item = json ? JSON.parse(json) : null;
+        let item = json ? JSON.parse(decodeURIComponent(json)) : null;
         if(!item){ // fallback minimal data
           item = { name: btn.getAttribute('data-name')||'Item', price: Number(btn.getAttribute('data-price')||0), image: btn.getAttribute('data-image')||'' };
         }
         item.quantity = item.quantity || 1;
         cart.push(item);
+        localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
-      }catch(err){ /* ignore */ }
+        showNotification('Item added to cart!');
+      }catch(err){ console.error('Add to cart error:', err); }
     });
   });
+  </script>
+  
+  <script>
+    // Cart Dropdown Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const cartButton = document.getElementById('cartButton');
+      const cartDropdown = document.getElementById('cartDropdown');
+      
+      if (cartButton && cartDropdown) {
+        // Toggle cart dropdown on button click
+        cartButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          cartDropdown.classList.toggle('show');
+        });
+        
+        // Close cart when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!cartDropdown.contains(e.target) && !cartButton.contains(e.target)) {
+            cartDropdown.classList.remove('show');
+          }
+        });
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('.buy-now-btn');
+      if (!btn) return;
+      // ... handle click
+      console.log('✅ DIRECT LISTENER: Button clicked!');
+    }, true); // ← Capture phase = catches ALL clicks!
   </script>
 </body>
 </html>

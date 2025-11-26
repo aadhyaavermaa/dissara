@@ -1,11 +1,11 @@
 // Enhanced Knowledge Base for Perry the Jewelry Assistant
 const jewelryKnowledge = {
   greetings: [
-    "Namaste! 🙏 I'm Perry, your personal jewelry assistant at Dissara. It's wonderful to meet you! I'm here to help you discover our exquisite collection of fine jewelry. How may I assist you today?",
-    "Hello and welcome! 👋 I'm Perry, your friendly jewelry expert at Dissara. Whether you're looking for traditional Indian jewelry or contemporary designs, I'm here to help. What would you like to explore today?",
-    "Greetings! ✨ I'm Perry, your personal jewelry consultant at Dissara. I can help you find anything from stunning gold necklaces to elegant diamond rings. What brings you in today?",
-    "Hi there! 💎 I'm Perry, your go-to jewelry specialist at Dissara. I'd love to help you find something special. What kind of jewelry are you interested in?",
-    "Namaskar! 🌺 I'm Perry, your jewelry guide at Dissara. Whether it's for a special occasion or just because, I'm here to help you find the perfect piece. How can I assist you today?"
+    "Hi there! I'm your personal shopping assistant. How can I help you find the perfect gift today? 😊",
+    "Namaste! Looking for something special? I'm here to help you choose the best gifts. What can I help you with? 🙏",
+    "Hello! Welcome to our store. What kind of gift are you looking for today? I'm here to help! ✨",
+    "Hey! I see you're browsing our collection. Need help finding the perfect gift? Let me know what you're looking for! 💝",
+    "Namaskar! How can I assist you today? Whether it's for a special occasion or just because, I'm here to help! 🌺"
   ],
   aboutDissara: [
     "Dissara is a premier jewelry brand that celebrates India's rich heritage of jewelry-making. We specialize in handcrafted pieces that blend traditional Indian craftsmanship with modern designs. Our collections feature 22K gold, kundan, polki, and diamond jewelry that's perfect for weddings, festivals, and special occasions.",
@@ -40,16 +40,16 @@ const jewelryKnowledge = {
     "💎 Get In Touch With Us 💎\n\nFor Inquiries:\n• Call/WhatsApp: +91 98765 43210\n• Email: info@dissara.com\n\nCustomer Support:\n• Returns & Exchanges: support@dissara.com\n• Custom Orders: custom@dissara.com\n• Wholesale Inquiries: wholesale@dissara.com\n\nVisit our showroom for a personal consultation and to view our latest collections in person!"
   ],
   compliments: [
-    "Thank you for your kind words! I'm here to help you find or create the perfect jewelry piece. What would you like to explore today?",
-    "I truly appreciate your appreciation! At Dissara, we pour our heart into every piece. How may I assist you further in your jewelry journey?",
-    "Your kind words mean the world to us! Is there a particular collection or type of jewelry you'd like to know more about?",
-    "Thank you for your lovely compliment! It's our pleasure to help you find something special. What are you looking for today?"
+    "You're welcome! It's my pleasure to help. What else can I assist you with today? 😊",
+    "Thank you! I'm here whenever you need help. Is there anything specific you'd like to know more about? 🙏",
+    "I'm so glad I could help! Would you like to see more of our collection or need help with anything else? ✨",
+    "Happy to help! Your satisfaction means everything to us. What would you like to explore next? 💝"
   ],
   farewell: [
-    "Thank you for visiting Dissara! May your day sparkle as brightly as our diamonds. Feel free to return if you have more questions or need assistance.",
-    "It was a pleasure assisting you today! Wishing you a day as beautiful as the jewelry we create. Come back soon!",
-    "Dhanyavaad for choosing Dissara! May your life be as radiant as the gems we work with. Until next time! 🙏✨",
-    "Thank you for your time! Remember, every piece of jewelry tells a story - we'd love to help you write yours. Have a wonderful day ahead!"
+    "Thank you for visiting! Hope to see you again soon. Have a wonderful day! 😊",
+    "Happy gifting! Come back if you need any more help. Take care! 🙏",
+    "Thank you for shopping with us! Wishing you a beautiful day ahead. ✨",
+    "It was a pleasure helping you! Don't hesitate to return if you need anything else. 💝"
   ]
 };
 
