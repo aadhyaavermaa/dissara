@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dissara - Gift Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
+
     <!-- Add Didot font -->
     <link href="https://fonts.googleapis.com/css2?family=Didot:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -14,10 +17,11 @@
           --offwhite: #f8f6f3;
           --gray: #e5e7eb;
           --dark: #111827;
+          --bg: #1a2238;
+          --ink: #fff;
         }
-        body {
-          background: var(--offwhite);
-        }
+        body { background: var(--bg); color: var(--ink); }
+
         .navbar-font {
           font-family: 'Cormorant Garamond', serif;
           letter-spacing: 0.02em;
@@ -25,24 +29,18 @@
         .didot {
           font-family: 'Didot', 'Didot LT STD', 'Didot Italic', serif;
           letter-spacing: 0.01em;
-        }
-        .gold-text {
-          color: var(--gold);
-        }
-        .gold-bg {
-          background: var(--gold);
-          color: var(--dark);
+          color: var(--ink);
         }
         .gold-border {
           border-color: var(--gold);
         }
-        .navy-bg {
-          background: var(--navy);
-          color: #fff;
-        }
-        .navy-text {
-          color: var(--navy);
-        }
+        .gold-text { color: var(--gold); }
+        .gold-bg { background: var(--gold); color:#0a0d10; }
+        .navy-bg { background: transparent; color: var(--ink); }
+
+        .navy-text { color: var(--ink); }
+        .on-light { color: #1a2238; }
+
         .card-hover {
           transition: box-shadow 0.3s, transform 0.3s;
         }
@@ -82,58 +80,47 @@
         .nav-link.active {
           color: var(--gold);
         }
+
+        .gold-border {
+          border-color: var(--gold);
+        }
+        .navy-bg { background: transparent; color: var(--ink); }
+
+        .navy-text { color: var(--ink); }
+        .on-light { color: #1a2238; }
+        /* Force dark text inside light panels */
+        .light .navy-text, .light .didot { color:#1a2238 !important; }
+        .light .text-muted { color:#374151 !important; }
     </style>
 </head>
-<body class="bg-[var(--offwhite)] text-[var(--dark)]">
-    <!-- Navigation -->
-    <nav class="navbar-font navy-bg shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center">
-                    <img src="logo.png" alt="Dissara Logo" class="h-12 w-auto mr-4 align-middle" />
-                </div>
-                <div class="hidden md:flex items-center space-x-2">
-                    <a href="gift-store.html" class="nav-link px-4 py-2 text-lg didot font-normal active">Gift Store</a>
-                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Sale</a>
-                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">ShopBy</a>
-                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Best Sellers</a>
-                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">New Arrivals</a>
-                    <div class="relative ml-4">
-                        <button id="cartButton" class="text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            <span id="cartCount" class="absolute -top-2 -right-2 bg-[var(--gold)] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                        </button>
-                        <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 border border-[var(--gold)]">
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-[var(--navy)] mb-2">Your Cart</h3>
-                                <div id="cartItems" class="max-h-60 overflow-y-auto">
-                                    <!-- Cart items will be added here dynamically -->
-                                    <p class="text-center text-gray-500 py-4">Your cart is empty</p>
-                                </div>
-                                <div id="cartTotal" class="border-t border-gray-200 pt-3 mt-3 hidden">
-                                    <div class="flex justify-between items-center">
-                                        <span class="font-medium">Total:</span>
-                                        <span id="cartTotalAmount" class="font-bold">₹0.00</span>
-                                    </div>
-                                    <button id="checkoutBtn" class="w-full mt-2 py-2 bg-[var(--gold)] text-white rounded-lg hover:bg-opacity-90 transition">
-                                        Proceed to Checkout
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Track order</a>
-                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">About us</a>
-                    <a href="#" class="nav-link px-4 py-2 text-lg didot font-normal">Return & Exchange</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body>
+    <!-- Floating Navigation (unified) -->
+    <header class="floating-nav">
+      <div class="brand">
+        <a href="index.html" aria-label="Home">
+          <img src="logo.png" alt="Dissara" class="logo" />
+        </a>
+      </div>
+      <nav class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="gift-store.html">Gift Store</a>
+        <a href="collections.html">Collections</a>
+        <a href="index.html#newarrivals">New Arrivals</a>
+        <a href="index.html#shopby">Shop By</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#about">About Us</a>
+        <span id="authSlot"></span>
+        <button id="cartButton" class="text-[var(--ink)] hover:text-[var(--gold)] focus:outline-none relative ml-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span id="cartCount" class="absolute -top-2 -right-2 bg-[var(--gold)] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </button>
+      </nav>
+    </header>
 
     <!-- Gift Store Section -->
-    <section class="py-16 bg-[#fff7e6] min-h-screen">
+    <section class="py-16" style="background: radial-gradient(900px 500px at 10% 110%, rgba(212,175,55,.05), transparent 60%), var(--bg)">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="didot text-5xl md:text-6xl font-normal gold-text mb-12 text-center tracking-wide leading-tight">Find the best gift for your loved ones</h2>
         <div class="flex flex-col md:flex-row gap-8 mb-16 justify-center items-center">
@@ -147,7 +134,7 @@
                   <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </span>
               </button>
-              <ul id="occasionDropdown" tabindex="-1" class="hidden absolute left-0 top-full w-full bg-[#fff7e6] border border-[var(--gold)] rounded-xl shadow-lg z-20 py-2 mt-2 didot text-lg text-[var(--navy)] font-medium text-center">
+              <ul id="occasionDropdown" tabindex="-1" class="hidden absolute left-0 top-full w-full bg-[#1a2238] border border-[var(--gold)] rounded-xl shadow-lg z-20 py-2 mt-2 didot text-lg text-[var(--ink)] font-medium text-center">
                 <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Birthday">Birthday</li>
                 <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Anniversary">Anniversary</li>
                 <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Wedding">Wedding</li>
@@ -166,7 +153,7 @@
                   <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </span>
               </button>
-              <ul id="giftTypeDropdown" tabindex="-1" class="hidden absolute left-0 top-full w-full bg-[#fff7e6] border border-[var(--gold)] rounded-xl shadow-lg z-20 py-2 mt-2 didot text-lg text-[var(--navy)] font-medium text-center">
+              <ul id="giftTypeDropdown" tabindex="-1" class="hidden absolute left-0 top-full w-full bg-[#1a2238] border border-[var(--gold)] rounded-xl shadow-lg z-20 py-2 mt-2 didot text-lg text-[var(--ink)] font-medium text-center">
                 <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Rings">Rings</li>
                 <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Necklaces">Necklaces</li>
                 <li class="px-6 py-2 hover:bg-[var(--gold)] hover:text-[var(--dark)] cursor-pointer rounded transition" data-value="Earrings">Earrings</li>
@@ -228,35 +215,36 @@ document.addEventListener('click', function(e) {
             <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
               <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/NecklaceSet1.jpg?v=1680000000" alt="Radiant Sunburst Necklace & Earring Set" class="object-contain max-h-32 max-w-32" />
             </div>
-            <div class="didot text-lg font-medium navy-text mb-3 text-center leading-snug">Radiant Sunburst Necklace & Earring Set</div>
+            <div class="didot text-lg font-medium on-light mb-3 text-center leading-snug">Radiant Sunburst Necklace & Earring Set</div>
             <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn">Buy now</button>
           </div>
           <div class="flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
             <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
               <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/GoldBracelet1.jpg?v=1680000000" alt="Floral Cutout Gold Bracelet" class="object-contain max-h-32 max-w-32" />
             </div>
-            <div class="didot text-lg font-medium navy-text mb-3 text-center leading-snug">Floral Cutout Gold Bracelet</div>
+            <div class="didot text-lg font-medium on-light mb-3 text-center leading-snug">Floral Cutout Gold Bracelet</div>
             <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn">Buy now</button>
           </div>
           <div class="flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
             <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
               <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/EvilEyeBracelet.jpg?v=1680000000" alt="Evil Eye Rose Gold Bracelet" class="object-contain max-h-32 max-w-32" />
             </div>
-            <div class="didot text-lg font-medium navy-text mb-3 text-center leading-snug">Evil Eye Rose Gold Bracelet</div>
+            <div class="didot text-lg font-medium on-light mb-3 text-center leading-snug">Evil Eye Rose Gold Bracelet</div>
             <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn">Buy now</button>
           </div>
           <div class="flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
             <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
               <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/DualPearlEarrings.jpg?v=1680000000" alt="Dual Pearl Gold-Toned Drop Earrings" class="object-contain max-h-32 max-w-32" />
             </div>
-            <div class="didot text-lg font-medium navy-text mb-3 text-center leading-snug">Dual Pearl Gold-Toned Drop Earrings</div>
+            <div class="didot text-lg font-medium on-light mb-3 text-center leading-snug">Dual Pearl Gold-Toned Drop Earrings</div>
             <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn">Buy now</button>
           </div>
         </div>
 
 <!-- Luxury Modal for Buy Now -->
-<div id="luxuryModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center">
-  <div class="relative bg-[#fffdfa] rounded-3xl shadow-2xl max-w-3xl w-full mx-4 p-14 flex flex-col" style="font-family: 'Didot', serif; min-width:380px;">
+<div id="luxuryModalOverlay" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center" style="z-index:2000">
+
+  <div class="relative bg-[#fffdfa] rounded-3xl shadow-2xl max-w-3xl w-full mx-4 p-14 flex flex-col light" style="font-family: 'Didot', serif; min-width:380px;">
     <div class="flex items-center justify-between mb-2">
       <button id="backLuxuryModal" class="text-2xl text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none flex items-center gap-1">
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -281,18 +269,18 @@ document.addEventListener('click', function(e) {
     <div class="text-base navy-text mb-4 flex items-center gap-2 cursor-pointer" id="showDescriptionBtn">
       <span class="underline decoration-1 underline-offset-4 hover:text-[var(--gold)] transition">Item Description</span>
     </div>
-    <div id="productDescription" class="hidden text-base navy-text mb-4 bg-[#f8f6f3] rounded-xl p-4 border border-[var(--gold)]">This elegant gold tone circular charm necklace features sparkling pave stones, perfect for adding a touch of luxury to any outfit. Hypoallergenic, lightweight, and beautifully crafted for all occasions. <br><br>• Gold-tone finish<br>• Pave stone detailing<br>• Adjustable chain<br>• Hypoallergenic & skin safe<br>• Comes in a luxury gift box</div>
+    <div id="productDescription" class="hidden text-base on-light mb-4 bg-[#f8f6f3] rounded-xl p-4 border border-[var(--gold)]">This elegant gold tone circular charm necklace features sparkling pave stones, perfect for adding a touch of luxury to any outfit. Hypoallergenic, lightweight, and beautifully crafted for all occasions. <br><br>• Gold-tone finish<br>• Pave stone detailing<br>• Adjustable chain<br>• Hypoallergenic & skin safe<br>• Comes in a luxury gift box</div>
     
     <!-- Customization Options -->
     <div class="mb-6 border border-[var(--gold)] rounded-xl p-4">
-      <h3 class="text-lg font-medium navy-text mb-3">Customization Options</h3>
+      <h3 class="text-lg font-medium on-light mb-3">Customization Options</h3>
       
       <!-- Add a Note Option -->
       <div class="mb-4">
         <div class="flex items-center justify-between mb-2">
           <label class="flex items-center cursor-pointer">
             <input type="checkbox" id="addNoteCheckbox" class="h-4 w-4 text-[var(--gold)] rounded border-gray-300 focus:ring-[var(--gold)]">
-            <span class="ml-2 text-base navy-text">Add a note with it</span>
+            <span class="ml-2 text-base on-light">Add a note with it</span>
           </label>
           <span class="text-base font-medium">₹30.00</span>
         </div>
@@ -307,7 +295,7 @@ document.addEventListener('click', function(e) {
         <div class="flex items-center justify-between">
           <label class="flex items-center cursor-pointer">
             <input type="checkbox" id="giftWrapCheckbox" class="h-4 w-4 text-[var(--gold)] rounded border-gray-300 focus:ring-[var(--gold)]">
-            <span class="ml-2 text-base navy-text">Gift wrap it</span>
+            <span class="ml-2 text-base on-light">Gift wrap it</span>
           </label>
           <span class="text-base font-medium">₹50.00</span>
         </div>
@@ -325,7 +313,7 @@ document.addEventListener('click', function(e) {
         <button id="qtyPlus" class="px-4 py-3 text-xl text-[var(--navy)] hover:bg-[var(--gray)] transition">+</button>
       </div>
     </div>
-    <div class="flex items-center justify-between text-base text-[var(--navy)] mb-4">
+    <div class="flex items-center justify-between text-base on-light mb-4">
       <span class="flex items-center gap-2 cursor-pointer" id="wishlistBtn"><span class="text-red-500">&#9825;</span> ADD TO WISHLIST</span>
       <span class="flex items-center gap-2 cursor-pointer" id="compareBtn"><span>&#9878;</span> ADD TO COMPARE</span>
       <span class="flex items-center gap-2 cursor-pointer" id="reviewsBtn"><span>&#128172;</span> CHECK REVIEWS</span>
@@ -450,22 +438,6 @@ document.addEventListener('click', function(e) {
                 <p id="checkoutProductVariant" class="text-sm text-gray-600">with Pave stones</p>
                 <div class="flex items-center justify-between mt-1">
                   <span class="text-sm">Qty: <span id="checkoutProductQty">1</span></span>
-                  <span id="checkoutProductPrice" class="font-medium">₹799.00</span>
-                </div>
-                
-                <div id="checkoutCustomizations" class="mt-2 space-y-1">
-                  <!-- Customization options will be added here -->
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="border-t border-gray-200 pt-4 space-y-3">
-            <div class="flex justify-between text-sm">
-              <span>Subtotal</span>
-              <span id="subtotal">₹799.00</span>
-            </div>
-            <div class="flex justify-between text-sm">
               <span>Shipping</span>
               <span>Free</span>
             </div>

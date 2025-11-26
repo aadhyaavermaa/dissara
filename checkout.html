@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Dissara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
+  <style>
+    .checkout{padding:100px 0}
+    .layout{width:min(1100px,92%); margin:0 auto; display:grid; grid-template-columns: 1.1fr .9fr; gap:24px}
+    .panel{background: rgba(16,23,32,.85); border:1px solid rgba(212,175,55,.28); border-radius:16px; padding:16px}
+    .h{font-family:"Playfair Display"; font-size:1.4rem; margin:0 0 10px}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .field{display:grid; gap:6px}
+    .input{background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.3); border-radius:10px; padding:10px}
+    .input::placeholder{color:#9aa4b2}
+    .sum-item{display:grid; grid-template-columns:72px 1fr auto; gap:12px; align-items:center}
+    .sum-item img{width:72px; height:72px; border-radius:12px; object-fit:cover; border:1px solid rgba(212,175,55,.25)}
+    .muted{color:var(--muted)}
+    .totals{display:grid; gap:8px; margin-top:10px}
+    .line{display:flex; justify-content:space-between}
+    .pay{display:grid; gap:8px}
+    .pay .opt{display:flex; gap:8px; align-items:center}
+    .btn-primary{background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; padding:12px 16px; border-radius:12px; font-weight:800; cursor:pointer}
+    .btn-ghost{background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer}
+    .err{color:#f87171; font-weight:700; display:none}
+  </style>
+</head>
+<body>
+  <header class="floating-nav">
+    <div class="brand">
+      <img src="logo.png" alt="Dissara" class="logo" />
+    </div>
+    <nav class="navlinks">
+      <a href="index.html#shopby">ShopBy</a>
+      <a href="collections.html">Collections</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button class="nav-cta" onclick="location.href='gift-store.html'">Gift Store</button>
+  </header>
+
+  <section class="checkout">
+    <div class="layout">
+      <!-- Left: Details -->
+      <div class="panel">
+        <h2 class="h">Shipping Details</h2>
+        <div class="row">
+          <div class="field"><label>First Name</label><input id="fn" class="input" placeholder="Aadhya"/></div>
+          <div class="field"><label>Last Name</label><input id="ln" class="input" placeholder="Verma"/></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Email</label><input id="email" class="input" placeholder="you@example.com"/></div>
+          <div class="field"><label>Phone</label><input id="phone" class="input" placeholder="99999 99999"/></div>
+        </div>
+        <div class="field"><label>Address</label><input id="addr" class="input" placeholder="House/Street"/></div>
+        <div class="row">
+          <div class="field"><label>City</label><input id="city" class="input" placeholder="Delhi"/></div>
+          <div class="field"><label>Pincode</label><input id="pin" class="input" placeholder="110001"/></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>State</label><input id="state" class="input" placeholder="Delhi"/></div>
+          <div class="field"><label>Country</label><input id="country" class="input" placeholder="India"/></div>
+        </div>
+        <div id="formErr" class="err" style="margin-top:8px">Please fill the mandatory fields.</div>
+      </div>
+
+      <!-- Right: Summary -->
+      <div class="panel">
+        <h2 class="h">Order Summary</h2>
+        <div id="summary"></div>
+        <div class="totals">
+          <div class="line"><span>Subtotal</span><span id="subTotal">₹0</span></div>
+          <div class="line"><span>Shipping</span><span>Free</span></div>
+          <div class="line"><strong>Total</strong><strong id="sumTotal">₹0</strong></div>
+        </div>
+        <div class="pay" style="margin-top:12px">
+          <div class="opt"><input type="radio" name="pay" id="cod" checked/><label for="cod">Cash on Delivery</label></div>
+          <div class="opt"><input type="radio" name="pay" id="upi"/><label for="upi">UPI (placeholder)</label></div>
+          <div class="opt"><input type="radio" name="pay" id="card"/><label for="card">Card (placeholder)</label></div>
+        </div>
+        <div class="line" style="gap:10px; margin-top:12px">
+          <button id="placeOrder" class="btn-primary" style="flex:1">Place Order</button>
+          <button class="btn-ghost" onclick="location.href='collections.html'">Back to Collections</button>
+        </div>
+        <div id="orderMsg" style="margin-top:10px; display:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function currency(n){ return '₹' + Number(n||0).toLocaleString('en-IN'); }
+    const summary = document.getElementById('summary');
+    const subTotal = document.getElementById('subTotal');
+    const sumTotal = document.getElementById('sumTotal');
+    const orderMsg = document.getElementById('orderMsg');
+
+    // Load item
+    const item = JSON.parse(localStorage.getItem('checkoutItem')||'null');
+    if(!item){
+      // if direct access, redirect to collections
+      window.location.replace('collections.html');
+    } else {
+      const img = document.createElement('img');
+      img.src = item.image; img.alt = item.name; img.onerror = ()=>{ if(item.fallback) img.src = item.fallback; };
+      const wrap = document.createElement('div'); wrap.className='sum-item';
+      const info = document.createElement('div');
+      info.innerHTML = `<div style="font-weight:700">${item.name}</div>
+        <div class="muted">Size: ${item.size}${item.color?`, Color: ${item.color}`:''}</div>
+        <div class="muted">Qty: <span id="qty">${item.quantity||1}</span></div>`;
+      const price = document.createElement('div'); price.innerHTML = `<strong>${currency(item.price)}</strong>`;
+      wrap.appendChild(img); wrap.appendChild(info); wrap.appendChild(price);
+      summary.appendChild(wrap);
+      subTotal.textContent = currency(item.price * (item.quantity||1));
+      sumTotal.textContent = subTotal.textContent;
+    }
+
+    // Place order (no backend)
+    document.getElementById('placeOrder').addEventListener('click', ()=>{
+      const req = ['fn','ln','email','phone','addr','city','pin'];
+      let ok = true;
+      req.forEach(id=>{ if(!document.getElementById(id).value.trim()) ok=false; });
+      const formErr = document.getElementById('formErr');
+      if(!ok){ formErr.style.display='block'; return; } else { formErr.style.display='none'; }
+
+      const orderId = 'DSR' + Math.floor(100000 + Math.random()*900000);
+      const order = { id: orderId, status: 'Processing', item, when: new Date().toISOString(), shipTo: {
+        fn: fn.value, ln: ln.value, email: email.value, phone: phone.value,
+        addr: addr.value, city: city.value, pin: pin.value, state: state.value, country: country.value
+      }, pay: document.querySelector('input[name="pay"]:checked').id };
+      // Persist minimal order for demo
+      const orders = JSON.parse(localStorage.getItem('orders')||'[]');
+      orders.push(order); localStorage.setItem('orders', JSON.stringify(orders));
+
+      // Clear checkout item
+      localStorage.removeItem('checkoutItem');
+
+      orderMsg.style.display='block';
+      orderMsg.innerHTML = `<div class="panel" style="margin-top:10px">Thank you! Your order <strong>${orderId}</strong> has been placed. We will contact you shortly.</div>`;
+      // Optionally navigate to a track-order page
+      setTimeout(()=>{ window.location.href = 'track-order.html'; }, 1200);
+    });
+  </script>
+</body>
+</html>

@@ -6,31 +6,63 @@
   <title>Dissara Luxury | Fine Jewellery</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
+  <style>
+    /* Themed select for Sort By */
+    #shopSort{
+      background: rgba(16,23,32,.9);
+      color: var(--ink);
+      border:1px solid rgba(212,175,55,.35);
+      padding:8px 10px; border-radius:10px;
+      appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+                        linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+      background-position: calc(100% - 18px) calc(50% + 2px), calc(100% - 12px) calc(50% + 2px);
+      background-size: 6px 6px, 6px 6px; background-repeat:no-repeat;
+    }
+    #shopSort:focus{ outline:none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(212,175,55,.25); }
+    #shopSort option{ background:#101720; color:#e8eaee; }
+  </style>
 </head>
 <body>
   <!-- Floating Navigation -->
   <header class="floating-nav">
     <div class="brand">
-      <img src="logo.png" alt="Dissara" class="logo" />
+      <a href="index.html" aria-label="Home">
+        <img src="logo.png" alt="Dissara" class="logo" />
+      </a>
     </div>
     <nav class="navlinks">
-      <a href="gift-store.html"><span>Gift<br/>Store</span></a>
-      <a href="#sale">Sale</a>
-      <a href="#shopby">ShopBy</a>
-      <a href="#bestsellers"><span>Best<br/>Sellers</span></a>
-      <a href="#newarrivals"><span>New<br/>Arrivals</span></a>
-      <a href="#collections">Collections</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#about">About</a>
+      <a href="index.html">Home</a>
+      <a href="gift-store.html">Gift Store</a>
+      <a href="collections.html">Collections</a>
+      <a href="#newarrivals">New Arrivals</a>
+      <span id="shopbyWrap" style="position:relative; display:flex; align-items:center">
+        <a href="#shopby" id="shopbyLink" style="display:inline-block; padding:8px 12px; border-radius:12px">Shop By ▾</a>
+        <div id="shopbyMenu" style="position:absolute; left:0; top:calc(100% + 8px); background:rgba(16,23,32,.96); border:1px solid rgba(212,175,55,.35); border-radius:12px; padding:8px; display:none; z-index:1300; min-width:180px">
+          <button class="btn-ghost" data-sel="all" style="width:100%; text-align:left; margin:4px 0">All</button>
+          <div style="height:1px; background:rgba(212,175,55,.25); margin:6px 0"></div>
+          <button class="btn-ghost" data-sel="rings" style="width:100%; text-align:left; margin:4px 0">Rings</button>
+          <button class="btn-ghost" data-sel="earrings" style="width:100%; text-align:left; margin:4px 0">Earrings</button>
+          <button class="btn-ghost" data-sel="necklaces" style="width:100%; text-align:left; margin:4px 0">Necklaces</button>
+          <button class="btn-ghost" data-sel="bracelets" style="width:100%; text-align:left; margin:4px 0">Bracelets</button>
+          <div style="height:1px; background:rgba(212,175,55,.25); margin:6px 0"></div>
+          <button class="btn-ghost" data-sel="men" style="width:100%; text-align:left; margin:4px 0">Men</button>
+          <button class="btn-ghost" data-sel="women" style="width:100%; text-align:left; margin:4px 0">Women</button>
+        </div>
+      </span>
       <a href="#contact">Contact</a>
-      <button id="cartButton" class="text-[var(--navy)] hover:text-[var(--gold)] focus:outline-none relative ml-4">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-        <span id="cartCount" class="absolute -top-2 -right-2 bg-[var(--gold)] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
-      </button>
+      <a href="#about">About Us</a>
+      <span id="authSlot"></span>
+      <div class="relative ml-4">
+        <button id="cartButton" class="text-[var(--ink)] hover:text-[var(--gold)] focus:outline-none relative">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span id="cartCount" class="absolute -top-2 -right-2 bg-[var(--gold)] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </button>
+      </div>
     </nav>
-    <button class="nav-cta">Book Consultation</button>
+    
   </header>
 
   <!-- Hero with Parallax and Animated Gold Accents -->
@@ -43,7 +75,7 @@
         </h1>
         <p class="lead">Timeless craftsmanship meets modern allure. Discover pieces that shimmer with a story—made to be adored, forever.</p>
         <div class="hero-cta">
-          <button class="btn-primary">Explore Collection</button>
+          <a class="btn-primary" href="collections.html">Explore Collection</a>
           <button class="btn-ghost">Our Heritage</button>
         </div>
       </div>
@@ -99,28 +131,39 @@
   </section>
 
   <div class="divider" aria-hidden="true"></div>
+  <div class="divider" aria-hidden="true"></div>
 
   <!-- Shop By / Products -->
   <section id="shopby" class="products">
     <div class="container">
       <h2 class="section-title">Curated Picks</h2>
-      <p class="lead" style="margin-bottom:18px">Explore handpicked designs with dazzling brilliance and irresistible value.</p>
+      <p class="lead" style="margin-bottom:12px">Explore handpicked designs with dazzling brilliance and irresistible value.</p>
+      <div id="shopFilters" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px">
+        <button class="btn-ghost" data-filter="all">All</button>
+        <button class="btn-ghost" data-filter="rings">Rings</button>
+        <button class="btn-ghost" data-filter="earrings">Earrings</button>
+        <button class="btn-ghost" data-filter="necklaces">Necklaces</button>
+        <button class="btn-ghost" data-filter="bracelets">Bracelets</button>
+      </div>
+      <div style="display:flex; justify-content:flex-end; margin-bottom:16px">
+        <label style="display:flex; align-items:center; gap:8px">
+          <span class="lead" style="font-size:.95rem">Sort By</span>
+          <select id="shopSort" style="background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:8px 10px; border-radius:10px">
+            <option value="popular">Popular</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="discount_desc">Discount</option>
+            <option value="rating_desc">Rating</option>
+          </select>
+        </label>
+      </div>
       <div class="grid" id="productGrid"></div>
     </div>
   </section>
 
   <div class="divider" aria-hidden="true"></div>
 
-  <!-- Best Sellers -->
-  <section id="bestsellers" class="products">
-    <div class="container">
-      <h2 class="section-title">Best Sellers</h2>
-      <p class="lead" style="margin-bottom:18px">Most-loved designs with top ratings.</p>
-      <div class="grid" id="productBest"></div>
-    </div>
-  </section>
 
-  <div class="divider" aria-hidden="true"></div>
 
   <!-- New Arrivals -->
   <section id="newarrivals" class="products">
@@ -135,10 +178,10 @@
   <section id="about" class="section">
     <div class="container">
       <div style="display:grid; grid-template-columns:1.1fr .9fr; gap:26px; align-items:center">
-        <div>
+        <!-- <div>
           <h2 class="section-title">Crafted to Captivate</h2>
           <p class="lead">For over two decades, Dissara has united artisanal mastery with ethically sourced diamonds and precious metals. Every facet is polished for brilliance, every curve drawn for grace.</p>
-          <div style="display:flex; gap:28px; margin-top:20px">
+          <div style="display:flex; gap:28px; margin-top:20px"> -->
             <div>
               <div style="color:var(--gold); font-weight:700; font-size:1.6rem">25+</div>
               Years of Excellence
@@ -149,9 +192,9 @@
             </div>
           </div>
         </div>
-        <div class="hero-card" data-parallax="0.08">
-          <img src="mainpagepic.png" alt="Atelier craftsmanship" />
-        </div>
+        <!-- <div class="hero-card" data-parallax="0.08">
+           <img src="mainpagepic.png" alt="Atelier craftsmanship" /> 
+        </div>   -->
       </div>
     </div>
   </section>
@@ -168,7 +211,7 @@
         </div>
         <div>
           <strong style="color:var(--ink)">Explore</strong><br/>
-          <a href="#collections">Collections</a><br/>
+          <a href="collections.html">Collections</a><br/>
           <a href="#gallery">Gallery</a><br/>
           <a href="#about">About</a><br/>
         </div>
@@ -316,6 +359,255 @@
   document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
     updateCartDisplay();
+    // Profile side panel
+    const side = document.createElement('div');
+    side.id = 'profileSide';
+    side.setAttribute('aria-hidden','true');
+    side.style.cssText = 'position:fixed;top:0;right:-340px;height:100vh;width:min(320px,92vw);background:var(--panel);border-left:1px solid rgba(212,175,55,.35);box-shadow: -20px 0 60px rgba(0,0,0,.5);z-index:1400;transition:right .25s ease; padding:16px; display:flex; flex-direction:column; gap:10px';
+    side.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <div style="font-weight:800">Your Profile</div>
+        <button id="sideClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px">Close</button>
+      </div>
+      <a href="my-orders.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">My Orders</a>
+      <a href="collections.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">Collections</a>
+      <a href="#contact" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">Contact</a>
+      <a href="#about" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">About Us</a>
+    `;
+    document.body.appendChild(side);
+    const openSide = ()=>{ side.style.right='0'; side.setAttribute('aria-hidden','false'); };
+    const closeSide = ()=>{ side.style.right='-340px'; side.setAttribute('aria-hidden','true'); };
+    document.addEventListener('click', (e)=>{ if(side.getAttribute('aria-hidden')==='false' && !side.contains(e.target) && !e.target.closest('#authSlot')){ closeSide(); } });
+    document.getElementById('sideClose')?.addEventListener('click', closeSide);
+
+    // Auth: render profile if signed in, else Login button
+    function renderAuth(){
+      const slot = document.getElementById('authSlot');
+      const user = JSON.parse(localStorage.getItem('user')||'null');
+      if(!slot) return;
+      if(user){
+        slot.innerHTML = '<button id="profileBtn" title="Profile" style="background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 8px 22px rgba(212,175,55,.25)">👤</button>';
+        document.getElementById('profileBtn').addEventListener('click', (e)=>{ e.stopPropagation(); openSide(); });
+        // Inject Logout into side panel if not present
+        if(!document.getElementById('logoutBtn')){
+          const btn = document.createElement('button');
+          btn.id='logoutBtn'; btn.textContent='Log out';
+          btn.style.cssText='margin-top:6px; background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:10px 12px; border-radius:12px; font-weight:700; cursor:pointer';
+          document.getElementById('profileSide').appendChild(btn);
+          btn.addEventListener('click', ()=>{ localStorage.removeItem('user'); closeSide(); renderAuth(); });
+        }
+      } else {
+        slot.innerHTML = '<button id="loginBtn" title="Login" style="background:transparent; border:1px solid rgba(212,175,55,.45); color:var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; font-weight:800">Login</button>';
+        document.getElementById('loginBtn').addEventListener('click', (e)=>{ e.preventDefault(); openAuthModal(); });
+        const logout = document.getElementById('logoutBtn'); if(logout) logout.remove();
+      }
+    }
+
+    // Auth modal with users registry and improved UI
+    function openAuthModal(){
+      let backdrop = document.getElementById('authBackdrop');
+      if(!backdrop){
+        backdrop = document.createElement('div'); backdrop.id='authBackdrop';
+        backdrop.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1600';
+        const panel = document.createElement('div');
+        panel.style.cssText='width:min(640px,94%);background:linear-gradient(180deg, rgba(16,23,32,.97), rgba(11,15,20,.98));border:1px solid rgba(212,175,55,.34);border-radius:20px;box-shadow:0 40px 120px rgba(0,0,0,.7);overflow:hidden';
+        panel.innerHTML = `
+          <div style="background:linear-gradient(90deg, var(--gstart), var(--gend)); padding:16px; color:#0a0d10; display:flex; justify-content:space-between; align-items:center">
+            <div style="font-weight:900; letter-spacing:.04em">Welcome to Dissara</div>
+            <button id="authClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px; border-color:rgba(0,0,0,.2); color:#0a0d10">Close</button>
+          </div>
+          <div style="padding:16px">
+            <div id="authTabs" style="display:flex;gap:10px;margin-bottom:14px">
+              <button id="tabLogin" style="padding:8px 14px; border-radius:999px; border:1px solid rgba(212,175,55,.35); background:transparent; color:var(--ink); font-weight:800">Login</button>
+              <button id="tabSignup" style="padding:8px 14px; border-radius:999px; border:1px solid rgba(212,175,55,.35); background:transparent; color:var(--ink); font-weight:800">Sign Up</button>
+            </div>
+            <div id="authForms"></div>
+            <div id="authErr" style="color:#f87171;font-weight:700;display:none;margin-top:8px"></div>
+            <div id="authHint" class="lead" style="color:var(--muted); margin-top:6px"></div>
+          </div>
+        `;
+        backdrop.appendChild(panel);
+        document.body.appendChild(backdrop);
+        backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) backdrop.remove(); });
+        document.getElementById('authClose').addEventListener('click', ()=>backdrop.remove());
+        // Tabs
+        const forms = document.getElementById('authForms');
+        const tabs = { login: document.getElementById('tabLogin'), signup: document.getElementById('tabSignup') };
+        function setActive(which){
+          [tabs.login,tabs.signup].forEach(b=>{ b.style.background='transparent'; b.style.color='var(--ink)'; });
+          const active = which==='login'? tabs.login: tabs.signup;
+          active.style.background='linear-gradient(90deg, var(--gstart), var(--gend))';
+          active.style.color='#0a0d10';
+        }
+        function renderLogin(){
+          setActive('login');
+          forms.innerHTML = `
+            <div style="display:grid;gap:12px; grid-template-columns:1fr 1fr; align-items:start">
+              <div style="display:grid; gap:10px">
+                <label>Email</label>
+                <input id="liEmail" class="input" placeholder="you@example.com" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Password</label>
+                <input id="liPass" class="input" type="password" placeholder="••••••••" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <button id="doLogin" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Login</button>
+              </div>
+              <div style="border-left:1px solid rgba(212,175,55,.18); padding-left:14px; color:var(--muted)">
+                <div style="font-weight:800; margin-bottom:6px">New here?</div>
+                Create an account to track orders, save cart and get offers.
+              </div>
+            </div>`;
+          document.getElementById('doLogin').onclick = ()=>{
+            const email = document.getElementById('liEmail').value.trim();
+            const pass = document.getElementById('liPass').value.trim();
+            const ebox=document.getElementById('authErr'); const hint=document.getElementById('authHint');
+            if(!email || !pass){ ebox.textContent='Enter email and password.'; ebox.style.display='block'; return; }
+            const users = JSON.parse(localStorage.getItem('users')||'[]');
+            const found = users.find(u=>u.email.toLowerCase()===email.toLowerCase());
+            if(!found){ ebox.textContent='No account found. Please sign up first.'; ebox.style.display='block'; tabs.signup.click(); return; }
+            if(found.pass !== pass){ ebox.textContent='Incorrect password. Try again.'; ebox.style.display='block'; return; }
+            localStorage.setItem('user', JSON.stringify({email, name: found.name||email.split('@')[0]}));
+            document.getElementById('authErr').style.display='none';
+            backdrop.remove(); renderAuth();
+          };
+        }
+        function renderSignup(){
+          setActive('signup');
+          forms.innerHTML = `
+            <div style="display:grid;gap:12px; grid-template-columns:1fr 1fr; align-items:start">
+              <div style="display:grid; gap:10px">
+                <label>Full Name</label>
+                <input id="suName" class="input" placeholder="Aadhya Verma" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Email</label>
+                <input id="suEmail" class="input" placeholder="you@example.com" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Password</label>
+                <input id="suPass" class="input" type="password" placeholder="Create a password" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <button id="doSignup" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Create Account</button>
+              </div>
+              <div style="border-left:1px solid rgba(212,175,55,.18); padding-left:14px; color:var(--muted)">
+                <div style="font-weight:800; margin-bottom:6px">Why join?</div>
+                Access faster checkout, order tracking and exclusive offers.
+              </div>
+            </div>`;
+          document.getElementById('doSignup').onclick = ()=>{
+            const name=document.getElementById('suName').value.trim();
+            const email=document.getElementById('suEmail').value.trim();
+            const pass=document.getElementById('suPass').value.trim();
+            const ebox=document.getElementById('authErr');
+            if(!name||!email||!pass){ ebox.textContent='Please fill all fields.'; ebox.style.display='block'; return; }
+            const users = JSON.parse(localStorage.getItem('users')||'[]');
+            if(users.find(u=>u.email.toLowerCase()===email.toLowerCase())){ ebox.textContent='Account already exists. Please login.'; ebox.style.display='block'; tabs.login.click(); return; }
+            users.push({name, email, pass});
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('user', JSON.stringify({name, email}));
+            document.getElementById('authErr').style.display='none';
+            backdrop.remove(); renderAuth();
+          };
+        }
+        tabs.login.onclick = renderLogin;
+        tabs.signup.onclick = renderSignup;
+        renderLogin();
+      }
+    }
+
+    renderAuth();
+  
+    // Shop By: data + renderer
+    const PRODUCTS = [
+      {id:101, name:'Auric Radiance Necklace', image:'mainpagepic.png', price:12999, mrp:18999, category:'necklaces', gender:'women'},
+      {id:102, name:'Celestial Drop Earrings', image:'jewel11.webp', fallback:'jewel1.webp', price:8999, mrp:12999, category:'earrings', gender:'women'},
+      {id:103, name:'Gilded Halo Ring', image:'jewel1.webp', price:7499, mrp:10499, category:'rings', gender:'women'},
+      {id:104, name:'Midnight Tennis Bracelet', image:'mainpagepic.png', price:15999, mrp:21999, category:'bracelets', gender:'men'},
+      {id:105, name:'Luna Pendant', image:'mainpagepic.png', price:5999, mrp:8999, category:'necklaces', gender:'women'},
+      {id:106, name:'Aurora Studs', image:'jewel11.webp', fallback:'jewel1.webp', price:4499, mrp:6499, category:'earrings', gender:'women'}
+    ];
+    const grid = document.getElementById('productGrid');
+    function currency(n){ return '₹' + Number(n||0).toLocaleString('en-IN'); }
+    function cardHTML(p){
+      const dp = Math.max(0, Math.round((1 - p.price/p.mrp)*100));
+      const data = {
+        id:p.id, name:p.name, price:p.price, image:p.image, quantity:1
+      };
+      const json = encodeURIComponent(JSON.stringify(data));
+      return `
+        <div class="card">
+          <div class="media">
+            <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='${p.fallback||p.image}'"/>
+            <span class="badge">-${dp}%</span>
+          </div>
+          <div class="content">
+            <div class="title">${p.name}</div>
+            <div class="price"><span class="now">${currency(p.price)}</span> <span class="mrp">${currency(p.mrp)}</span></div>
+            <div class="actions">
+              <button class="btn-link add-to-cart" data-product="${decodeURIComponent(json)}">Add to Cart</button>
+              <a class="btn-link" href="collections.html">View</a>
+            </div>
+          </div>
+        </div>`;
+    }
+    function render(filter){
+      let list = PRODUCTS.slice();
+      if(filter && filter!=='all'){
+        if(filter==='men' || filter==='women'){
+          list = list.filter(p=>p.gender===filter);
+        } else {
+          list = list.filter(p=>p.category===filter);
+        }
+      }
+      // apply sorting
+      const sortSel = document.getElementById('shopSort')?.value || 'popular';
+      const withDisc = list.map(p=>({ ...p, _disc: Math.max(0, Math.round((1 - p.price/p.mrp)*100)) }));
+      if(sortSel==='price_asc') withDisc.sort((a,b)=>a.price-b.price);
+      else if(sortSel==='price_desc') withDisc.sort((a,b)=>b.price-a.price);
+      else if(sortSel==='discount_desc') withDisc.sort((a,b)=>b._disc-a._disc);
+      else if(sortSel==='rating_desc') withDisc.sort((a,b)=> (b.rating||0)-(a.rating||0));
+      grid.innerHTML = withDisc.map(cardHTML).join('');
+    }
+    render('all');
+    document.getElementById('shopFilters')?.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-filter]');
+      if(!btn) return;
+      render(btn.getAttribute('data-filter'));
+    });
+    document.getElementById('shopSort')?.addEventListener('change', ()=>{
+      render(currentFilter || 'all');
+    });
+
+    // Navbar Shop By dropdown behavior
+    const sbLink = document.getElementById('shopbyLink');
+    const sbMenu = document.getElementById('shopbyMenu');
+    const sbWrap = document.getElementById('shopbyWrap');
+    let currentFilter = 'all';
+    if(sbLink && sbMenu){
+      sbLink.addEventListener('click', (e)=>{
+        e.preventDefault();
+        sbMenu.style.display = sbMenu.style.display==='block' ? 'none' : 'block';
+      });
+      sbMenu.addEventListener('click', (e)=>{
+        const b = e.target.closest('button[data-sel]');
+        if(!b) return;
+        const sel = b.getAttribute('data-sel');
+        // Redirect to Collections page with filter param
+        window.location.href = `collections.html?filter=${encodeURIComponent(sel)}`;
+      });
+      document.addEventListener('click', (e)=>{
+        if(!sbWrap.contains(e.target)) sbMenu.style.display='none';
+      });
+    }
+
+    // Global delegated Add to Cart (buttons with data-product JSON or .add-to-cart)
+    document.body.addEventListener('click', (e)=>{
+      const btn = e.target.closest('[data-product], .add-to-cart');
+      if(!btn) return;
+      try{
+        const json = btn.getAttribute('data-product');
+        let item = json ? JSON.parse(json) : null;
+        if(!item){ // fallback minimal data
+          item = { name: btn.getAttribute('data-name')||'Item', price: Number(btn.getAttribute('data-price')||0), image: btn.getAttribute('data-image')||'' };
+        }
+        item.quantity = item.quantity || 1;
+        cart.push(item);
+        updateCartCount();
+      }catch(err){ /* ignore */ }
+    });
   });
   </script>
 </body>

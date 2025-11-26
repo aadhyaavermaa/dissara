@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders | Dissara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
+  <style>
+    .wrap{padding:100px 0}
+    .container{width:min(1100px,92%); margin:0 auto}
+    .order{background: rgba(16,23,32,.85); border:1px solid rgba(212,175,55,.28); border-radius:16px; padding:14px; display:grid; grid-template-columns:72px 1fr auto; gap:12px; align-items:center}
+    .order + .order{margin-top:12px}
+    .order img{width:72px; height:72px; border-radius:10px; object-fit:cover; border:1px solid rgba(212,175,55,.25)}
+    .muted{color:var(--muted)}
+    .badge{padding:6px 10px; border-radius:999px; border:1px solid rgba(212,175,55,.35); color:var(--ink)}
+    /* Horizontal progress line */
+    .track{position:relative; margin-top:10px; padding-top:18px}
+    .track-line{position:absolute; left:0; right:0; top:10px; height:6px; background:rgba(212,175,55,.18); border-radius:999px; overflow:hidden}
+    .track-line .progress{height:100%; background:linear-gradient(90deg, var(--gstart), var(--gend)); width:0%; transition:width .35s ease}
+    .milestones{display:flex; justify-content:space-between}
+    .ms{position:relative; text-align:center; width:25%}
+    .dot{position:absolute; left:50%; top:-18px; transform:translateX(-50%); width:14px; height:14px; border-radius:50%; background:#374151; border:2px solid rgba(212,175,55,.4)}
+    .ms.done .dot{background:linear-gradient(90deg, var(--gstart), var(--gend)); border-color:transparent}
+    .label{font-size:.8rem; color:var(--muted)}
+    .ms.done .label{color:var(--ink); font-weight:700}
+  </style>
+</head>
+<body>
+  <header class="floating-nav">
+    <div class="brand">
+      <a href="index.html" aria-label="Home">
+        <img src="logo.png" alt="Dissara" class="logo" />
+      </a>
+    </div>
+    <nav class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="gift-store.html">Gift Store</a>
+      <a href="collections.html">Collections</a>
+      <a href="index.html#newarrivals">New Arrivals</a>
+      <a href="index.html#shopby">Shop By</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="index.html#about">About Us</a>
+      <span id="authSlot"></span>
+    </nav>
+  </header>
+
+  <section class="wrap">
+    <div class="container">
+      <h1 class="section-title">My Orders</h1>
+      <div id="ordersList"></div>
+      <div id="noOrders" class="muted" style="display:none">No orders yet. Place an order to see it here.</div>
+    </div>
+  </section>
+
+  <script>
+    function currency(n){ return '₹' + Number(n||0).toLocaleString('en-IN'); }
+    const orders = JSON.parse(localStorage.getItem('orders')||'[]');
+    const wrap = document.getElementById('ordersList');
+    const empty = document.getElementById('noOrders');
+
+    if(!orders.length){ empty.style.display='block'; }
+
+    const stepsMap = {
+      'Order Placed': 0,
+      'Processing': 0,
+      'Packed': 1,
+      'Dispatched': 1,
+      'Shipped': 2,
+      'Out for Delivery': 3,
+      'Delivered': 3
+    };
+    const milestones = ['Order Placed','Dispatched','Shipped','Delivered'];
+
+    orders.slice().reverse().forEach(o=>{
+      const el = document.createElement('div'); el.className='order';
+      const img = document.createElement('img'); img.src = o.item.image; img.alt=o.item.name; img.onerror = ()=>{ if(o.item.fallback) img.src=o.item.fallback; };
+      const info = document.createElement('div');
+      const currentIdx = stepsMap[o.status] ?? 0;
+      info.innerHTML = `
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+          <div style="font-weight:800">${o.item.name}</div>
+          <span class="badge">Order ${o.id}</span>
+          <span class="badge">${currency(o.item.price)}</span>
+          <span class="badge">Size: ${o.item.size || '-'}</span>
+          ${o.item.color ? `<span class="badge">Color: ${o.item.color}</span>` : ''}
+        </div>
+        <div class="muted">Placed on ${new Date(o.when).toLocaleString()}</div>
+        <div class="track">
+          <div class="track-line"><div class="progress" style="width:${(currentIdx/3)*100}%"></div></div>
+          <div class="milestones">
+            ${milestones.map((m,i)=>`<div class="ms ${i<=currentIdx?'done':''}"><span class="dot"></span><div class="label">${m}</div></div>`).join('')}
+          </div>
+        </div>
+      `;
+      const total = document.createElement('div'); total.innerHTML = `<strong>${currency(o.item.price*(o.item.quantity||1))}</strong>`;
+      el.appendChild(img); el.appendChild(info); el.appendChild(total);
+      wrap.appendChild(el);
+    });
+
+    // Profile side panel (gold/white UI)
+    const side = document.createElement('div');
+    side.id = 'profileSide';
+    side.setAttribute('aria-hidden','true');
+    side.style.cssText = 'position:fixed;top:0;right:-340px;height:100vh;width:min(320px,92vw);background:var(--panel);border-left:1px solid rgba(212,175,55,.35);box-shadow: -20px 0 60px rgba(0,0,0,.5);z-index:1400;transition:right .25s ease; padding:16px; display:flex; flex-direction:column; gap:10px';
+    side.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <div style="font-weight:800">Your Profile</div>
+        <button id="sideClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px">Close</button>
+      </div>
+      <a href="my-orders.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">My Orders</a>
+      <a href="collections.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">Collections</a>
+      <a href="index.html#contact" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">Contact</a>
+      <a href="index.html#about" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">About Us</a>
+    `;
+    document.body.appendChild(side);
+    const openSide = ()=>{ side.style.right='0'; side.setAttribute('aria-hidden','false'); };
+    const closeSide = ()=>{ side.style.right='-340px'; side.setAttribute('aria-hidden','true'); };
+    document.addEventListener('click', (e)=>{ if(side.getAttribute('aria-hidden')==='false' && !side.contains(e.target) && !e.target.closest('#authSlot')){ closeSide(); } });
+    document.getElementById('sideClose')?.addEventListener('click', closeSide);
+
+    // Auth: render profile if signed in, else Login button
+    function renderAuth(){
+      const slot = document.getElementById('authSlot');
+      const user = JSON.parse(localStorage.getItem('user')||'null');
+      if(!slot) return;
+      if(user){
+        slot.innerHTML = '<button id="profileBtn" title="Profile" style="background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 8px 22px rgba(212,175,55,.25)">👤</button>';
+        document.getElementById('profileBtn').addEventListener('click', (e)=>{ e.stopPropagation(); openSide(); });
+        if(!document.getElementById('logoutBtn')){
+          const btn = document.createElement('button');
+          btn.id='logoutBtn'; btn.textContent='Log out';
+          btn.style.cssText='margin-top:6px; background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:10px 12px; border-radius:12px; font-weight:700; cursor:pointer';
+          document.getElementById('profileSide').appendChild(btn);
+          btn.addEventListener('click', ()=>{ localStorage.removeItem('user'); closeSide(); renderAuth(); });
+        }
+      } else {
+        slot.innerHTML = '<button id="loginBtn" title="Login" style="background:transparent; border:1px solid rgba(212,175,55,.45); color:var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; font-weight:800">Login</button>';
+        document.getElementById('loginBtn').addEventListener('click', (e)=>{ e.preventDefault(); openAuthModal(); });
+        const logout = document.getElementById('logoutBtn'); if(logout) logout.remove();
+      }
+    }
+
+    // Simple Login/Signup modal
+    function openAuthModal(){
+      let backdrop = document.getElementById('authBackdrop');
+      if(!backdrop){
+        backdrop = document.createElement('div'); backdrop.id='authBackdrop';
+        backdrop.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1600';
+        const panel = document.createElement('div');
+        panel.style.cssText='width:min(520px,92%);background:linear-gradient(180deg, rgba(16,23,32,.96), rgba(11,15,20,.98));border:1px solid rgba(212,175,55,.28);border-radius:18px;box-shadow:0 30px 100px rgba(0,0,0,.6);padding:16px';
+        panel.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div class="section-title" style="margin:0;font-size:1.3rem">Welcome</div>
+            <button id="authClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px">Close</button>
+          </div>
+          <div id="authTabs" style="display:flex;gap:8px;margin-bottom:10px">
+            <button id="tabLogin" class="btn-ghost" style="padding:8px 12px">Login</button>
+            <button id="tabSignup" class="btn-ghost" style="padding:8px 12px">Sign Up</button>
+          </div>
+          <div id="authForms"></div>
+          <div id="authErr" style="color:#f87171;font-weight:700;display:none;margin-top:8px"></div>
+        `;
+        backdrop.appendChild(panel);
+        document.body.appendChild(backdrop);
+        backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) backdrop.remove(); });
+        document.getElementById('authClose').addEventListener('click', ()=>backdrop.remove());
+        // Tabs
+        const forms = document.getElementById('authForms');
+        function renderLogin(){
+          forms.innerHTML = `
+            <div style="display:grid;gap:10px">
+              <input id="liEmail" class="input" placeholder="Email" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+              <input id="liPass" class="input" type="password" placeholder="Password" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+              <button id="doLogin" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Login</button>
+            </div>`;
+          document.getElementById('doLogin').onclick = ()=>{
+            const email = document.getElementById('liEmail').value.trim();
+            const pass = document.getElementById('liPass').value.trim();
+            if(!email || !pass){ const e=document.getElementById('authErr'); e.textContent='Enter email and password.'; e.style.display='block'; return; }
+            localStorage.setItem('user', JSON.stringify({email, name: email.split('@')[0]}));
+            document.getElementById('authErr').style.display='none';
+            backdrop.remove(); renderAuth();
+          };
+        }
+        function renderSignup(){
+          forms.innerHTML = `
+            <div style="display:grid;gap:10px">
+              <input id="suName" class="input" placeholder="Full Name" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+              <input id="suEmail" class="input" placeholder="Email" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+              <input id="suPass" class="input" type="password" placeholder="Password" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+              <button id="doSignup" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Create Account</button>
+            </div>`;
+          document.getElementById('doSignup').onclick = ()=>{
+            const name=document.getElementById('suName').value.trim();
+            const email=document.getElementById('suEmail').value.trim();
+            const pass=document.getElementById('suPass').value.trim();
+            if(!name||!email||!pass){ const e=document.getElementById('authErr'); e.textContent='Please fill all fields.'; e.style.display='block'; return; }
+            localStorage.setItem('user', JSON.stringify({name, email}));
+            document.getElementById('authErr').style.display='none';
+            backdrop.remove(); renderAuth();
+          };
+        }
+        document.getElementById('tabLogin').onclick = renderLogin;
+        document.getElementById('tabSignup').onclick = renderSignup;
+        renderLogin();
+      }
+    }
+
+    renderAuth();
+  </script>
+</body>
+</html>

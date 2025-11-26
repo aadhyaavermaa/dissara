@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dissara | Collections</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
+  <style>
+    .products{padding:60px 0}
+    .grid{display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:20px}
+    .card{background:rgba(12,16,22,.55); border:1px solid rgba(212,175,55,.35); border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.4)}
+    .card img{width:100%; height:220px; object-fit:cover}
+    .card-body{padding:12px 14px}
+    .price-row{display:flex; align-items:center; gap:10px; margin-top:6px}
+    .price{font-weight:700; color:var(--gold)}
+    .mrp{color:var(--muted); text-decoration:line-through; font-size:.9rem}
+    .off{color:#4ade80; font-weight:700; font-size:.85rem}
+    .badge{position:absolute; top:10px; left:10px; background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; font-weight:700; padding:6px 10px; border-radius:999px; font-size:.8rem}
+    .card-inner{position:relative}
+    .card button{margin-top:10px}
+
+    /* Product Modal (scoped to avoid global .modal) */
+    .modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:2000}
+    .product-modal{background:#0b0f14; border:1px solid rgba(212,175,55,.35); border-radius:18px; width:min(920px,92%); max-height:90vh; overflow:auto; box-shadow:0 20px 60px rgba(0,0,0,.6)}
+    .product-modal-header{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid rgba(212,175,55,.25)}
+    .product-modal-body{display:grid; grid-template-columns: 1fr 1fr; gap:18px; padding:16px}
+    .product-modal-body img{width:100%; height:100%; object-fit:cover; border-radius:12px}
+    .meta{display:grid; gap:10px}
+    .rating{color:#fbbf24; font-weight:700}
+    .options{display:grid; gap:8px}
+    .row{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{border:1px solid rgba(212,175,55,.45); background:#f3f4f6; color:#0b0f14; padding:6px 12px; border-radius:10px; cursor:pointer; font-weight:700; box-shadow:0 1px 0 rgba(0,0,0,.08)}
+    .chip:hover{border-color:var(--gold);}
+    .chip.active{background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border-color:transparent}
+    .chip:focus{outline:2px solid var(--gold); outline-offset:2px}
+    .actions{display:flex; gap:10px; margin-top:10px}
+    .btn{cursor:pointer; border:none; border-radius:12px; padding:10px 14px; font-weight:700}
+    .btn-primary{background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10}
+    .btn-ghost{background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35)}
+    .reviews{margin-top:10px; border-top:1px solid rgba(212,175,55,.2); padding-top:10px}
+    .close-x{background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:6px 10px; border-radius:10px; cursor:pointer}
+    @media (max-width: 900px){.modal-body{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="floating-nav">
+    <div class="brand">
+      <a href="index.html" aria-label="Home">
+        <img src="logo.png" alt="Dissara" class="logo" />
+      </a>
+    </div>
+    <nav class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="gift-store.html">Gift Store</a>
+      <a href="collections.html" aria-current="page">Collections</a>
+      <a href="index.html#newarrivals">New Arrivals</a>
+      <a href="index.html#shopby">Shop By</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="index.html#about">About Us</a>
+      <span id="authSlot"></span>
+    </nav>
+  </header>
+
+  <section class="section" style="padding-top:130px">
+    <div class="container">
+      <h1 class="section-title">Explore Collections</h1>
+      <p class="lead" style="margin-bottom:20px">Discover our handpicked pieces. Click a card to view full product details.</p>
+      <div class="grid" id="collectionsGrid">
+        <!-- Product 1 -->
+        <div class="card" data-cat="necklaces" data-gender="women" data-product='{"id":1,"name":"Auric Radiance Necklace","price":12999,"mrp":18999,"discount":32,"rating":4.7,"image":"mainpagepic.png","sizes":["14","16","18"],"colors":["Gold","Rose Gold"],"details":"Handcrafted 18K gold necklace with brilliant-cut stones.","reviews":[{"user":"Aarav","text":"Stunning shine and great finish!"},{"user":"Meera","text":"Gifted it to mom—she loved it."}]}' >
+          <div class="card-inner">
+            <span class="badge">32% OFF</span>
+            <img src="mainpagepic.png" alt="Auric Radiance Necklace" />
+          </div>
+          <div class="card-body">
+            <div style="font-weight:700">Auric Radiance Necklace</div>
+            <div class="price-row">
+              <span class="price">₹12,999</span>
+              <span class="mrp">₹18,999</span>
+              <span class="off">32% off</span>
+            </div>
+            <button class="btn btn-ghost view-btn">View details</button>
+          </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="card" data-cat="earrings" data-gender="women" data-product='{"id":2,"name":"Celestial Drop Earrings","price":8999,"mrp":12999,"discount":31,"rating":4.5,"image":"jewel11.webp","fallback":"jewel1.webp","sizes":["S","M"],"colors":["Gold","White Gold"],"details":"Elegant drops with mirror-polish finish and secure clasps.","reviews":[{"user":"Riya","text":"Comfortable and classy."},{"user":"Kabir","text":"Perfect for special occasions."}]}' >
+          <div class="card-inner">
+            <span class="badge">31% OFF</span>
+            <img src="jewel11.webp" alt="Celestial Drop Earrings" onerror="this.onerror=null; this.src='jewel1.webp'" />
+          </div>
+          <div class="card-body">
+            <div style="font-weight:700">Celestial Drop Earrings</div>
+            <div class="price-row">
+              <span class="price">₹8,999</span>
+              <span class="mrp">₹12,999</span>
+              <span class="off">31% off</span>
+            </div>
+            <button class="btn btn-ghost view-btn">View details</button>
+          </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="card" data-cat="rings" data-gender="women" data-product='{"id":3,"name":"Gilded Halo Ring","price":7499,"mrp":10499,"discount":29,"rating":4.6,"image":"jewel1.webp","sizes":["10","12","14"],"colors":["Gold","Rose Gold"],"details":"Classic halo ring with handset stones and smooth inner band.","reviews":[{"user":"Ishaan","text":"Perfect everyday sparkle."}]}' >
+          <div class="card-inner">
+            <span class="badge">29% OFF</span>
+            <img src="jewel1.webp" alt="Gilded Halo Ring" />
+          </div>
+          <div class="card-body">
+            <div style="font-weight:700">Gilded Halo Ring</div>
+            <div class="price-row">
+              <span class="price">₹7,499</span>
+              <span class="mrp">₹10,499</span>
+              <span class="off">29% off</span>
+            </div>
+            <button class="btn btn-ghost view-btn">View details</button>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="card" data-cat="bracelets" data-gender="men" data-product='{"id":4,"name":"Midnight Tennis Bracelet","price":15999,"mrp":21999,"discount":27,"rating":4.8,"image":"mainpagepic.png","sizes":["S","M","L"],"colors":["White Gold","Gold"],"details":"Streamlined bracelet with continuous brilliance.","reviews":[{"user":"Anika","text":"Elegant and comfortable."}]}' >
+          <div class="card-inner">
+            <span class="badge">27% OFF</span>
+            <img src="mainpagepic.png" alt="Midnight Tennis Bracelet" />
+          </div>
+          <div class="card-body">
+            <div style="font-weight:700">Midnight Tennis Bracelet</div>
+            <div class="price-row">
+              <span class="price">₹15,999</span>
+              <span class="mrp">₹21,999</span>
+              <span class="off">27% off</span>
+            </div>
+            <button class="btn btn-ghost view-btn">View details</button>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="card" data-cat="necklaces" data-gender="women" data-product='{"id":5,"name":"Luna Pendant","price":5999,"mrp":8999,"discount":33,"rating":4.4,"image":"mainpagepic.png","sizes":["16","18"],"colors":["Gold"],"details":"Minimal crescent pendant with mirror polish.","reviews":[{"user":"Diya","text":"Cute and subtle."}]}' >
+          <div class="card-inner">
+            <span class="badge">33% OFF</span>
+            <img src="mainpagepic.png" alt="Luna Pendant" />
+          </div>
+          <div class="card-body">
+            <div style="font-weight:700">Luna Pendant</div>
+            <div class="price-row">
+              <span class="price">₹5,999</span>
+              <span class="mrp">₹8,999</span>
+              <span class="off">33% off</span>
+            </div>
+            <button class="btn btn-ghost view-btn">View details</button>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="card" data-cat="earrings" data-gender="women" data-product='{"id":6,"name":"Aurora Studs","price":4499,"mrp":6499,"discount":31,"rating":4.3,"image":"jewel11.webp","fallback":"jewel1.webp","sizes":["Std"],"colors":["Gold","White Gold"],"details":"Everyday studs with secure screw-back.","reviews":[{"user":"Rohan","text":"Good value for money."}]}' >
+          <div class="card-inner">
+            <span class="badge">31% OFF</span>
+            <img src="jewel11.webp" alt="Aurora Studs" onerror="this.onerror=null; this.src='jewel1.webp'" />
+          </div>
+          <div class="card-body">
+            <div style="font-weight:700">Aurora Studs</div>
+            <div class="price-row">
+              <span class="price">₹4,499</span>
+              <span class="mrp">₹6,499</span>
+              <span class="off">31% off</span>
+            </div>
+            <button class="btn btn-ghost view-btn">View details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="productModalBackdrop" aria-hidden="true">
+    <div class="product-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="product-modal-header">
+        <div id="modalTitle" class="section-title" style="margin:0; font-size:1.4rem">Product</div>
+        <button class="close-x" id="modalClose">Close</button>
+      </div>
+      <div class="product-modal-body">
+        <div>
+          <img id="modalImage" src="" alt="Product image" />
+        </div>
+        <div class="meta">
+          <div class="rating" id="modalRating">★ 4.8</div>
+          <div class="price-row">
+            <span class="price" id="modalPrice">₹0</span>
+            <span class="mrp" id="modalMrp">₹0</span>
+            <span class="off" id="modalOff">0% off</span>
+          </div>
+          <div id="modalDetails" class="lead"></div>
+          <div class="options">
+            <div><strong>Size</strong></div>
+            <div class="row" id="sizeRow"></div>
+            <div><strong>Color</strong></div>
+            <div class="row" id="colorRow"></div>
+          </div>
+          <div id="selectionError" style="margin-top:6px; color:#f87171; font-weight:700; display:none">Please select a size to continue.</div>
+          <div class="actions">
+            <button class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
+            <button class="btn btn-ghost" id="buyNowBtn">Buy Now</button>
+          </div>
+          <div class="reviews" id="reviews">
+            <strong>Reviews</strong>
+            <div id="reviewsList"></div>
+          </div>
+          <div class="reviews">
+            <strong>Comments</strong>
+            <div style="display:grid; gap:8px">
+              <input id="commentName" placeholder="Your name" style="background:transparent; border:1px solid rgba(212,175,55,.25); color:var(--ink); padding:8px 10px; border-radius:10px" />
+              <textarea id="commentText" placeholder="Write a comment" rows="3" style="background:transparent; border:1px solid rgba(212,175,55,.25); color:var(--ink); padding:8px 10px; border-radius:10px"></textarea>
+              <button class="btn btn-ghost" id="postComment">Post Comment</button>
+              <div id="commentFeed" style="display:grid; gap:8px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentProduct = null;
+    let selectedSize = null;
+    let selectedColor = null;
+    const backdrop = document.getElementById('productModalBackdrop');
+    const mTitle = document.getElementById('modalTitle');
+    const mImg = document.getElementById('modalImage');
+    const mRating = document.getElementById('modalRating');
+    const mPrice = document.getElementById('modalPrice');
+    const mMrp = document.getElementById('modalMrp');
+    const mOff = document.getElementById('modalOff');
+    const mDetails = document.getElementById('modalDetails');
+    const sizeRow = document.getElementById('sizeRow');
+    const colorRow = document.getElementById('colorRow');
+    const reviewsList = document.getElementById('reviewsList');
+    const commentFeed = document.getElementById('commentFeed');
+
+    function currency(n){ return '₹' + n.toLocaleString('en-IN'); }
+
+    function openModal(product){
+      currentProduct = product;
+      mTitle.textContent = product.name;
+      mImg.src = product.image;
+      mImg.onerror = () => { if (product.fallback) mImg.src = product.fallback; };
+      mRating.textContent = `★ ${product.rating}`;
+      mPrice.textContent = currency(product.price);
+      mMrp.textContent = currency(product.mrp);
+      mOff.textContent = `${product.discount}% off`;
+      mDetails.textContent = product.details;
+      // sizes
+      sizeRow.innerHTML = '';
+      (product.sizes||[]).forEach(s=>{
+        const el = document.createElement('button'); el.type='button'; el.className='chip'; el.textContent=s; el.dataset.value=s; sizeRow.appendChild(el);
+      });
+      // colors
+      colorRow.innerHTML = '';
+      (product.colors||[]).forEach(c=>{
+        const el = document.createElement('button'); el.type='button'; el.className='chip'; el.textContent=c; el.dataset.value=c; colorRow.appendChild(el);
+      });
+      selectedSize = null; selectedColor = null; document.getElementById('selectionError').style.display='none';
+      // reviews
+      reviewsList.innerHTML = '';
+      (product.reviews||[]).forEach(r=>{
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>${r.user}</strong>: ${r.text}`;
+        reviewsList.appendChild(div);
+      });
+      // comments (simple, in-memory)
+      commentFeed.innerHTML = '';
+      backdrop.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Delegated click handler for robust behavior
+    const grid = document.getElementById('collectionsGrid');
+    grid.addEventListener('click', (e)=>{
+      const card = e.target.closest('.card');
+      if(!card || !grid.contains(card)) return;
+      const data = card.getAttribute('data-product');
+      if(!data) return;
+      const product = JSON.parse(data);
+      openModal(product);
+    });
+
+    // Size/Color selection handlers
+    function activateChip(container, chip){
+      container.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+    }
+    sizeRow.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.chip');
+      if(!btn) return;
+      selectedSize = btn.dataset.value;
+      activateChip(sizeRow, btn);
+      document.getElementById('selectionError').style.display='none';
+    });
+    colorRow.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.chip');
+      if(!btn) return;
+      selectedColor = btn.dataset.value;
+      activateChip(colorRow, btn);
+    });
+
+    document.getElementById('modalClose').addEventListener('click', ()=>{
+      backdrop.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+    backdrop.addEventListener('click', (e)=>{
+      if(e.target === backdrop){
+        backdrop.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+    // Keyboard close
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        backdrop.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.getElementById('postComment').addEventListener('click', ()=>{
+      const name = document.getElementById('commentName').value.trim() || 'Guest';
+      const text = document.getElementById('commentText').value.trim();
+      if(!text) return;
+      const div = document.createElement('div');
+      div.innerHTML = `<strong>${name}</strong>: ${text}`;
+      commentFeed.prepend(div);
+      document.getElementById('commentText').value = '';
+    });
+
+    function addToCart(prod){
+      if(!prod) return;
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const item = {
+        id: prod.id,
+        name: prod.name,
+        price: prod.price,
+        image: prod.image,
+        quantity: 1,
+        size: selectedSize || null,
+        color: selectedColor || null
+      };
+      cart.push(item);
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    document.getElementById('addToCartBtn').addEventListener('click', ()=>{
+      addToCart(currentProduct);
+      // lightweight feedback
+      const old = mTitle.textContent;
+      mTitle.textContent = 'Added to cart ✓';
+      setTimeout(()=>{ mTitle.textContent = old; }, 1200);
+    });
+    document.getElementById('buyNowBtn').addEventListener('click', ()=>{
+      if(!selectedSize){
+        const err = document.getElementById('selectionError');
+        err.style.display = 'block';
+        err.textContent = 'Please select a size to continue.';
+        err.scrollIntoView({behavior:'smooth', block:'nearest'});
+        return;
+      }
+      const checkoutItem = {
+        id: currentProduct.id,
+        name: currentProduct.name,
+        price: currentProduct.price,
+        mrp: currentProduct.mrp,
+        discount: currentProduct.discount,
+        image: currentProduct.image,
+        fallback: currentProduct.fallback,
+        size: selectedSize,
+        color: selectedColor || null,
+        quantity: 1
+      };
+      localStorage.setItem('checkoutItem', JSON.stringify(checkoutItem));
+      window.location.href = 'checkout.html';
+    });
+
+    // Profile side panel (same pattern as index)
+    const side = document.createElement('div');
+    side.id = 'profileSide';
+    side.setAttribute('aria-hidden','true');
+    side.style.cssText = 'position:fixed;top:0;right:-340px;height:100vh;width:min(320px,92vw);background:var(--panel);border-left:1px solid rgba(212,175,55,.35);box-shadow: -20px 0 60px rgba(0,0,0,.5);z-index:1400;transition:right .25s ease; padding:16px; display:flex; flex-direction:column; gap:10px';
+    side.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <div style="font-weight:800">Your Profile</div>
+        <button id="sideClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px">Close</button>
+      </div>
+      <a href="my-orders.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">My Orders</a>
+      <a href="index.html#contact" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">Contact</a>
+      <a href="index.html#about" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">About</a>
+      <a href="collections.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">Collections</a>
+    `;
+    document.body.appendChild(side);
+    const profileBtn = document.getElementById('profileBtn');
+    const openSide = ()=>{ side.style.right='0'; side.setAttribute('aria-hidden','false'); };
+    const closeSide = ()=>{ side.style.right='-340px'; side.setAttribute('aria-hidden','true'); };
+    document.addEventListener('click', (e)=>{ if(side.getAttribute('aria-hidden')==='false' && !side.contains(e.target) && !e.target.closest('#authSlot')){ closeSide(); } });
+    document.getElementById('sideClose')?.addEventListener('click', closeSide);
+
+    // Auth: render profile if signed in, else Login button
+    function renderAuth(){
+      const slot = document.getElementById('authSlot');
+      const user = JSON.parse(localStorage.getItem('user')||'null');
+      if(!slot) return;
+      if(user){
+        slot.innerHTML = '<button id="profileBtn" title="Profile" style="background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 8px 22px rgba(212,175,55,.25)">👤</button>';
+        document.getElementById('profileBtn').addEventListener('click', (e)=>{ e.stopPropagation(); openSide(); });
+        if(!document.getElementById('logoutBtn')){
+          const btn = document.createElement('button');
+          btn.id='logoutBtn'; btn.textContent='Log out';
+          btn.style.cssText='margin-top:6px; background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:10px 12px; border-radius:12px; font-weight:700; cursor:pointer';
+          document.getElementById('profileSide').appendChild(btn);
+          btn.addEventListener('click', ()=>{ localStorage.removeItem('user'); closeSide(); renderAuth(); });
+        }
+      } else {
+        slot.innerHTML = '<button id="loginBtn" title="Login" style="background:transparent; border:1px solid rgba(212,175,55,.45); color:var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; font-weight:800">Login</button>';
+        document.getElementById('loginBtn').addEventListener('click', (e)=>{ e.preventDefault(); openAuthModal(); });
+        const logout = document.getElementById('logoutBtn'); if(logout) logout.remove();
+      }
+    }
+
+    // Auth modal with users registry and improved UI
+    function openAuthModal(){
+      let backdrop = document.getElementById('authBackdrop');
+      if(!backdrop){
+        backdrop = document.createElement('div'); backdrop.id='authBackdrop';
+        backdrop.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1600';
+        const panel = document.createElement('div');
+        panel.style.cssText='width:min(640px,94%);background:linear-gradient(180deg, rgba(16,23,32,.97), rgba(11,15,20,.98));border:1px solid rgba(212,175,55,.34);border-radius:20px;box-shadow:0 40px 120px rgba(0,0,0,.7);overflow:hidden';
+        panel.innerHTML = `
+          <div style="background:linear-gradient(90deg, var(--gstart), var(--gend)); padding:16px; color:#0a0d10; display:flex; justify-content:space-between; align-items:center">
+            <div style="font-weight:900; letter-spacing:.04em">Welcome to Dissara</div>
+            <button id="authClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px; border-color:rgba(0,0,0,.2); color:#0a0d10">Close</button>
+          </div>
+          <div style="padding:16px">
+            <div id="authTabs" style="display:flex;gap:10px;margin-bottom:14px">
+              <button id="tabLogin" style="padding:8px 14px; border-radius:999px; border:1px solid rgba(212,175,55,.35); background:transparent; color:var(--ink); font-weight:800">Login</button>
+              <button id="tabSignup" style="padding:8px 14px; border-radius:999px; border:1px solid rgba(212,175,55,.35); background:transparent; color:var(--ink); font-weight:800">Sign Up</button>
+            </div>
+            <div id="authForms"></div>
+            <div id="authErr" style="color:#f87171;font-weight:700;display:none;margin-top:8px"></div>
+            <div id="authHint" class="lead" style="color:var(--muted); margin-top:6px"></div>
+          </div>
+        `;
+        backdrop.appendChild(panel);
+        document.body.appendChild(backdrop);
+        backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) backdrop.remove(); });
+        document.getElementById('authClose').addEventListener('click', ()=>backdrop.remove());
+        // Tabs
+        const forms = document.getElementById('authForms');
+        const tabs = { login: document.getElementById('tabLogin'), signup: document.getElementById('tabSignup') };
+        function setActive(which){
+          [tabs.login,tabs.signup].forEach(b=>{ b.style.background='transparent'; b.style.color='var(--ink)'; });
+          const active = which==='login'? tabs.login: tabs.signup;
+          active.style.background='linear-gradient(90deg, var(--gstart), var(--gend))';
+          active.style.color='#0a0d10';
+        }
+        function renderLogin(){
+          setActive('login');
+          forms.innerHTML = `
+            <div style="display:grid;gap:12px; grid-template-columns:1fr 1fr; align-items:start">
+              <div style="display:grid; gap:10px">
+                <label>Email</label>
+                <input id="liEmail" class="input" placeholder="you@example.com" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Password</label>
+                <input id="liPass" class="input" type="password" placeholder="••••••••" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <button id="doLogin" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Login</button>
+              </div>
+              <div style="border-left:1px solid rgba(212,175,55,.18); padding-left:14px; color:var(--muted)">
+                <div style="font-weight:800; margin-bottom:6px">New here?</div>
+                Create an account to track orders, save cart and get offers.
+              </div>
+            </div>`;
+          document.getElementById('doLogin').onclick = ()=>{
+            const email = document.getElementById('liEmail').value.trim();
+            const pass = document.getElementById('liPass').value.trim();
+            const ebox=document.getElementById('authErr');
+            if(!email || !pass){ ebox.textContent='Enter email and password.'; ebox.style.display='block'; return; }
+            const users = JSON.parse(localStorage.getItem('users')||'[]');
+            const found = users.find(u=>u.email.toLowerCase()===email.toLowerCase());
+            if(!found){ ebox.textContent='No account found. Please sign up first.'; ebox.style.display='block'; tabs.signup.click(); return; }
+            if(found.pass !== pass){ ebox.textContent='Incorrect password. Try again.'; ebox.style.display='block'; return; }
+            localStorage.setItem('user', JSON.stringify({email, name: found.name||email.split('@')[0]}));
+            document.getElementById('authErr').style.display='none';
+            backdrop.remove(); renderAuth();
+          };
+        }
+        function renderSignup(){
+          setActive('signup');
+          forms.innerHTML = `
+            <div style="display:grid;gap:12px; grid-template-columns:1fr 1fr; align-items:start">
+              <div style="display:grid; gap:10px">
+                <label>Full Name</label>
+                <input id="suName" class="input" placeholder="Aadhya Verma" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Email</label>
+                <input id="suEmail" class="input" placeholder="you@example.com" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Password</label>
+                <input id="suPass" class="input" type="password" placeholder="Create a password" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <button id="doSignup" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Create Account</button>
+              </div>
+              <div style="border-left:1px solid rgba(212,175,55,.18); padding-left:14px; color:var(--muted)">
+                <div style="font-weight:800; margin-bottom:6px">Why join?</div>
+                Access faster checkout, order tracking and exclusive offers.
+              </div>
+            </div>`;
+          document.getElementById('doSignup').onclick = ()=>{
+            const name=document.getElementById('suName').value.trim();
+            const email=document.getElementById('suEmail').value.trim();
+            const pass=document.getElementById('suPass').value.trim();
+            const ebox=document.getElementById('authErr');
+            if(!name||!email||!pass){ ebox.textContent='Please fill all fields.'; ebox.style.display='block'; return; }
+            const users = JSON.parse(localStorage.getItem('users')||'[]');
+            if(users.find(u=>u.email.toLowerCase()===email.toLowerCase())){ ebox.textContent='Account already exists. Please login.'; ebox.style.display='block'; tabs.login.click(); return; }
+            users.push({name, email, pass});
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('user', JSON.stringify({name, email}));
+            document.getElementById('authErr').style.display='none';
+            backdrop.remove(); renderAuth();
+          };
+        }
+        tabs.login.onclick = renderLogin;
+        tabs.signup.onclick = renderSignup;
+        renderLogin();
+      }
+    }
+
+    renderAuth();
+
+    // Apply filter from query string (?filter=rings / men / women / etc.)
+    (function(){
+      const qs = new URLSearchParams(window.location.search);
+      const sel = (qs.get('filter')||'').toLowerCase();
+      if(!sel) return;
+      const cards = document.querySelectorAll('.grid .card');
+      cards.forEach(c=>{
+        const cat = c.getAttribute('data-cat');
+        const gen = c.getAttribute('data-gender');
+        const match = sel==='all' || sel===cat || sel===gen;
+        c.style.display = match ? '' : 'none';
+      });
+      document.querySelector('h1.section-title')?.scrollIntoView({behavior:'smooth'});
+    })();
+  </script>
+</body>
+</html>
