@@ -101,6 +101,7 @@
           ${o.item.color ? `<span class="badge">Color: ${o.item.color}</span>` : ''}
         </div>
         <div class="muted">Placed on ${new Date(o.when).toLocaleString()}</div>
+        ${o.shipTo ? `<div class="muted" style="margin-top: 4px;">📍 ${o.shipTo.fn} ${o.shipTo.ln}, ${o.shipTo.city}, ${o.shipTo.state} ${o.shipTo.pin}</div>` : ''}
         <div class="track">
           <div class="track-line"><div class="progress" style="width:${(currentIdx/3)*100}%"></div></div>
           <div class="milestones">

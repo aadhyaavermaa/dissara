@@ -211,62 +211,114 @@
     </nav>
   </header>
   <!-- Track Order Section -->
-  <div class="track-order-container">
-    <div class="order-title">Order #123456</div>
-    <div>Ordered on July 25, 2025 at 9:00 am</div>
+  <div class="track-order-container" id="trackOrderContainer">
+    <div class="order-title" id="orderTitle">Loading...</div>
+    <div id="orderDate"></div>
     
     <!-- Shipping Timeline -->
-    <div class="shipping-timeline" style="margin: 2rem 0;">
+    <div class="shipping-timeline" style="margin: 2rem 0;" id="shippingTimeline">
       <div class="timeline-step completed">
         <span class="dot"></span>
         <span class="label">Order Placed</span>
-        <span class="date">Jul 25, 2025</span>
+        <span class="date" id="placedDate"></span>
       </div>
       <div class="timeline-step completed">
         <span class="dot"></span>
         <span class="label">Shipped</span>
-        <span class="date">Jul 26, 2025</span>
+        <span class="date" id="shippedDate"></span>
       </div>
       <div class="timeline-step active">
         <span class="dot"></span>
         <span class="label">Out for Delivery</span>
-        <span class="date">Jul 29, 2025</span>
+        <span class="date" id="deliveryDate"></span>
       </div>
       <div class="timeline-step">
         <span class="dot"></span>
         <span class="label">Delivered</span>
-        <span class="date">Expected: Jul 30, 2025</span>
+        <span class="date" id="expectedDate"></span>
       </div>
       <div class="timeline-bar"></div>
     </div>
     
-    <div>Estimated delivery: July 30, 2025</div>
+    <div id="estimatedDelivery"></div>
     <div class="order-section-title">Shipping Address</div>
-    <div>Testla Carter<br>123 Main Street<br>Anytown, CA 95124</div>
+    <div id="shippingAddress"></div>
     <div class="order-section-title">Billing Address</div>
-    <div>Testla Carter<br>123 Main Street<br>Anytown, CA 95124</div>
+    <div id="billingAddress"></div>
     <div class="order-section-title">Payment Method</div>
-    <div>Visa ending in 4242</div>
+    <div id="paymentMethod"></div>
     <div class="order-section-title">Order Summary</div>
-    <div class="order-summary">
-      <div class="order-summary-item">
-        <img src="https://via.placeholder.com/48" alt="Product Image" />
-        <div class="order-summary-details">
-          <h4>Product Name 1</h4>
-          <p>Size: M</p>
-          <p>Color: Red</p>
-        </div>
-      </div>
-      <div class="order-summary-item">
-        <img src="https://via.placeholder.com/48" alt="Product Image" />
-        <div class="order-summary-details">
-          <h4>Product Name 2</h4>
-          <p>Size: L</p>
-          <p>Color: Blue</p>
-        </div>
-      </div>
-      <div class="order-total">Total: $99.99</div>
+    <div class="order-summary" id="orderSummary">
+      <!-- Order items will be populated here -->
     </div>
   </div>
+
+  <script>
+    function currency(n){ return '₹' + Number(n||0).toLocaleString('en-IN'); }
+    
+    // Get the most recent order from localStorage
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    const latestOrder = orders.length > 0 ? orders[orders.length - 1] : null;
+    
+    if (latestOrder) {
+      // Update order information
+      document.getElementById('orderTitle').textContent = `Order #${latestOrder.id}`;
+      document.getElementById('orderDate').textContent = `Ordered on ${new Date(latestOrder.when).toLocaleDateString()} at ${new Date(latestOrder.when).toLocaleTimeString()}`;
+      
+      // Update timeline dates based on order date
+      const orderDate = new Date(latestOrder.when);
+      document.getElementById('placedDate').textContent = orderDate.toLocaleDateString();
+      document.getElementById('shippedDate').textContent = new Date(orderDate.getTime() + 24 * 60 * 60 * 1000).toLocaleDateString();
+      document.getElementById('deliveryDate').textContent = new Date(orderDate.getTime() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString();
+      document.getElementById('expectedDate').textContent = `Expected: ${new Date(orderDate.getTime() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString()}`;
+      document.getElementById('estimatedDelivery').textContent = `Estimated delivery: ${new Date(orderDate.getTime() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString()}`;
+      
+      // Reset all timeline steps to remove 'completed' and 'active' classes
+      document.querySelectorAll('.timeline-step').forEach(step => {
+        step.classList.remove('completed', 'active');
+      });
+
+      // Only mark 'Order Placed' as completed (black dot)
+      document.querySelector('.timeline-step:nth-child(1)').classList.add('completed');
+      
+      // Update shipping address
+      const shipTo = latestOrder.shipTo;
+      const shippingAddr = `${shipTo.fn} ${shipTo.ln}<br>${shipTo.addr}<br>${shipTo.city}, ${shipTo.state} ${shipTo.pin}<br>${shipTo.country}`;
+      document.getElementById('shippingAddress').innerHTML = shippingAddr;
+      document.getElementById('billingAddress').innerHTML = shippingAddr; // Same as shipping for now
+      
+      // Update payment method
+      const paymentMethod = latestOrder.pay === 'cod' ? 'Cash on Delivery' : 
+                           latestOrder.pay === 'upi' ? 'UPI' : 
+                           latestOrder.pay === 'card' ? 'Card' : 'Unknown';
+      document.getElementById('paymentMethod').textContent = paymentMethod;
+      
+      // Update order summary
+      const orderSummary = document.getElementById('orderSummary');
+      const item = latestOrder.item;
+      
+      orderSummary.innerHTML = `
+        <div class="order-summary-item">
+          <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/48'" />
+          <div class="order-summary-details">
+            <h4>${item.name}</h4>
+            ${item.size ? `<p>Size: ${item.size}</p>` : ''}
+            ${item.color ? `<p>Color: ${item.color}</p>` : ''}
+            ${item.quantity && item.quantity > 1 ? `<p>Quantity: ${item.quantity}</p>` : ''}
+          </div>
+        </div>
+        <div class="order-total">Total: ${currency(item.price * (item.quantity || 1))}</div>
+      `;
+    } else {
+      // No orders found
+      document.getElementById('trackOrderContainer').innerHTML = `
+        <div style="text-align: center; padding: 3rem;">
+          <h2>No Orders Found</h2>
+          <p>You haven't placed any orders yet.</p>
+          <a href="collections.html" style="display: inline-block; margin-top: 1rem; padding: 12px 24px; background: #111827; color: white; text-decoration: none; border-radius: 8px;">Start Shopping</a>
+        </div>
+      `;
+    }
+  </script>
 </body>
 </html>
