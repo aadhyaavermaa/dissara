@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dissara | Collections</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
   <style>
     .products{padding:60px 0}
@@ -50,43 +51,110 @@
         <img src="logo.png" alt="Dissara" class="logo" />
       </a>
     </div>
-    <nav class="navlinks">
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <nav class="navlinks" id="navlinks">
       <a href="index.html">Home</a>
       <a href="gift-store.html">Gift Store</a>
       <a href="collections.html" aria-current="page">Collections</a>
       <a href="index.html#newarrivals">New Arrivals</a>
-      <a href="index.html#shopby">Shop By</a>
+      <!-- <a href="index.html#shopby">Shop By</a> -->
       <a href="index.html#contact">Contact</a>
       <a href="index.html#about">About Us</a>
       <span id="authSlot"></span>
-      <div class="nav-actions">
-        <button id="wishlistIconButton" class="nav-icon-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
-          </svg>
-          <span id="wishlistCount" class="nav-icon-badge" style="display:none;">0</span>
-        </button>
-        <button id="cartButton" class="nav-icon-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-          <span id="cartCount" class="nav-icon-badge" style="display:none;">0</span>
-        </button>
-      </div>
     </nav>
+    <div class="nav-actions">
+      <button id="wishlistIconButton" class="nav-icon-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
+        </svg>
+        <span id="wishlistCount" class="nav-icon-badge" style="display:none;">0</span>
+      </button>
+      <button id="cartButton" class="nav-icon-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span id="cartCount" class="nav-icon-badge" style="display:none;">0</span>
+      </button>
+    </div>
   </header>
 
   <section class="section" style="padding-top:130px">
     <div class="container">
       <h1 class="section-title">Explore Collections</h1>
       <p class="lead" style="margin-bottom:20px">Discover our handpicked pieces. Click a card to view full product details.</p>
-      <div class="grid" id="collectionsGrid">
+      
+      <!-- Shop Dropdown Feature -->
+      <div class="shop-dropdown-container" style="text-align: center; margin: 40px 0;">
+        <div class="shop-dropdown" style="position: relative; display: inline-block;">
+          <button class="shop-btn" id="shopBtn" style="background: linear-gradient(135deg, var(--gold), #d4af37); color: var(--navy); border: none; padding: 15px 30px; font-size: 16px; font-weight: 600; border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212,175,55,0.3);">
+            <i class="fas fa-shopping-bag"></i> Shop by Category
+            <i class="fas fa-chevron-down" style="transition: transform 0.3s ease;"></i>
+          </button>
+          <div class="shop-menu" id="shopMenu" style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: var(--panel); border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 20px; margin-top: 10px; display: none; grid-template-columns: repeat(3, 1fr); gap: 30px; min-width: 600px; z-index: 1003; border: 1px solid rgba(212,175,55,.3);">
+            <div class="shop-category">
+              <h3 style="margin: 0 0 15px 0; color: var(--gold); font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-male"></i> Men
+              </h3>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin: 8px 0;"><a href="#" data-category="men-bracelets" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Bracelets</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="men-chains" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Chains</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="men-rings" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Rings</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="men-watches" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Watches</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="men-accessories" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Accessories</a></li>
+              </ul>
+            </div>
+            <div class="shop-category">
+              <h3 style="margin: 0 0 15px 0; color: var(--gold); font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-female"></i> Women
+              </h3>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin: 8px 0;"><a href="#" data-category="women-bracelets" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Bracelets</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="women-necklaces" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Necklaces</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="women-earrings" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Earrings</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="women-rings" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Rings</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="women-sets" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Jewelry Sets</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="women-bangles" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Bangles</a></li>
+              </ul>
+            </div>
+            <div class="shop-category">
+              <h3 style="margin: 0 0 15px 0; color: var(--gold); font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-gem"></i> All Collections
+              </h3>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin: 8px 0;"><a href="#" data-category="gold" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Gold Collection</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="silver" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Silver Collection</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="diamond" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Diamond Collection</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="pearl" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Pearl Collection</a></li>
+                <li style="margin: 8px 0;"><a href="#" data-category="custom" style="text-decoration: none; color: var(--ink); font-size: 14px; padding: 8px 12px; border-radius: 8px; display: block; transition: all 0.2s ease;">Custom Designs</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Collections Display -->
+        <div class="collections-container" id="collectionsContainer" style="display: none; margin-top: 40px; background: var(--panel); border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid rgba(212,175,55,.3);">
+          <div class="collections-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid rgba(212,175,55,.3);">
+            <h2 id="collectionTitle" style="margin: 0; color: var(--ink); font-size: 24px;">Collections</h2>
+            <button class="close-collections" id="closeCollections" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--ink); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">&times;</button>
+          </div>
+          <div class="collections-grid" id="collectionsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+            <!-- Products will be dynamically loaded here -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid" id="originalCollectionsGrid">
         <!-- Product 1 -->
-        <div class="card" data-cat="necklaces" data-gender="women" data-product='{"id":1,"name":"Auric Radiance Necklace","price":12999,"mrp":18999,"discount":32,"rating":4.7,"image":"mainpagepic.png","sizes":["14","16","18"],"colors":["Gold","Rose Gold"],"details":"Handcrafted 18K gold necklace with brilliant-cut stones.","reviews":[{"user":"Aarav","text":"Stunning shine and great finish!"},{"user":"Meera","text":"Gifted it to mom—she loved it."}]}' >
+        <div class="card" data-cat="necklaces" data-gender="women" data-product='{"id":1,"name":"Auric Radiance Necklace","price":12999,"mrp":18999,"discount":32,"rating":4.7,"image":"necklace1.jpg","sizes":["14","16","18"],"colors":["Gold","Rose Gold"],"details":"Handcrafted 18K gold necklace with brilliant-cut stones.","reviews":[{"user":"Aarav","text":"Stunning shine and great finish!"},{"user":"Meera","text":"Gifted it to mom—she loved it."}]}' >
           <div class="card-inner">
             <span class="badge">32% OFF</span>
-            <img src="mainpagepic.png" alt="Auric Radiance Necklace" />
-          </div>
+            <div class="card-img">
+              <img src="necklace1.jpg" alt="Auric Radiance Necklace" />
+            </div>
           <div class="card-body">
             <div style="font-weight:700">Auric Radiance Necklace</div>
             <div class="price-row">
@@ -99,10 +167,10 @@
         </div>
         
         <!-- Product 2 -->
-        <div class="card" data-cat="earrings" data-gender="women" data-product='{"id":2,"name":"Celestial Drop Earrings","price":8999,"mrp":12999,"discount":31,"rating":4.5,"image":"jewel11.webp","fallback":"jewel1.webp","sizes":["S","M"],"colors":["Gold","White Gold"],"details":"Elegant drops with mirror-polish finish and secure clasps.","reviews":[{"user":"Riya","text":"Comfortable and classy."},{"user":"Kabir","text":"Perfect for special occasions."}]}' >
+        <div class="card" data-cat="earrings" data-gender="women" data-product='{"id":2,"name":"Celestial Drop Earrings","price":8999,"mrp":12999,"discount":31,"rating":4.5,"image":"earrings1.jpg","fallback":"earrings2.jpg","sizes":["S","M"],"colors":["Gold","White Gold"],"details":"Elegant drops with mirror-polish finish and secure clasps.","reviews":[{"user":"Riya","text":"Comfortable and classy."},{"user":"Kabir","text":"Perfect for special occasions."}]}' >
           <div class="card-inner">
             <span class="badge">31% OFF</span>
-            <img src="jewel11.webp" alt="Celestial Drop Earrings" onerror="this.onerror=null; this.src='jewel1.webp'" />
+            <img src="earings1.jpg" alt="Celestial Drop Earrings" onerror="this.onerror=null; this.src='earrings2.jpg'" />
           </div>
           <div class="card-body">
             <div style="font-weight:700">Celestial Drop Earrings</div>
@@ -116,10 +184,10 @@
         </div>
         
         <!-- Product 3 -->
-        <div class="card" data-cat="rings" data-gender="women" data-product='{"id":3,"name":"Gilded Halo Ring","price":7499,"mrp":10499,"discount":29,"rating":4.6,"image":"jewel1.webp","sizes":["10","12","14"],"colors":["Gold","Rose Gold"],"details":"Classic halo ring with handset stones and smooth inner band.","reviews":[{"user":"Ishaan","text":"Perfect everyday sparkle."}]}' >
+        <div class="card" data-cat="rings" data-gender="women" data-product='{"id":3,"name":"Gilded Halo Ring","price":7499,"mrp":10499,"discount":29,"rating":4.6,"image":"ring1.jpg","sizes":["10","12","14"],"colors":["Gold","Rose Gold"],"details":"Classic halo ring with handset stones and smooth inner band.","reviews":[{"user":"Ishaan","text":"Perfect everyday sparkle."}]}' >
           <div class="card-inner">
             <span class="badge">29% OFF</span>
-            <img src="jewel1.webp" alt="Gilded Halo Ring" />
+            <img src="ring1.jpg" alt="Gilded Halo Ring" />
           </div>
           <div class="card-body">
             <div style="font-weight:700">Gilded Halo Ring</div>
@@ -133,10 +201,10 @@
         </div>
 
         <!-- Product 4 -->
-        <div class="card" data-cat="bracelets" data-gender="men" data-product='{"id":4,"name":"Midnight Tennis Bracelet","price":15999,"mrp":21999,"discount":27,"rating":4.8,"image":"mainpagepic.png","sizes":["S","M","L"],"colors":["White Gold","Gold"],"details":"Streamlined bracelet with continuous brilliance.","reviews":[{"user":"Anika","text":"Elegant and comfortable."}]}' >
+        <div class="card" data-cat="bracelets" data-gender="men" data-product='{"id":4,"name":"Midnight Tennis Bracelet","price":15999,"mrp":21999,"discount":27,"rating":4.8,"image":"bracelet1.jpg","sizes":["S","M","L"],"colors":["White Gold","Gold"],"details":"Streamlined bracelet with continuous brilliance.","reviews":[{"user":"Anika","text":"Elegant and comfortable."}]}' >
           <div class="card-inner">
             <span class="badge">27% OFF</span>
-            <img src="mainpagepic.png" alt="Midnight Tennis Bracelet" />
+            <img src="bracelet1.jpg" alt="Midnight Tennis Bracelet" />
           </div>
           <div class="card-body">
             <div style="font-weight:700">Midnight Tennis Bracelet</div>
@@ -150,10 +218,10 @@
         </div>
 
         <!-- Product 5 -->
-        <div class="card" data-cat="necklaces" data-gender="women" data-product='{"id":5,"name":"Luna Pendant","price":5999,"mrp":8999,"discount":33,"rating":4.4,"image":"mainpagepic.png","sizes":["16","18"],"colors":["Gold"],"details":"Minimal crescent pendant with mirror polish.","reviews":[{"user":"Diya","text":"Cute and subtle."}]}' >
+        <div class="card" data-cat="necklaces" data-gender="women" data-product='{"id":5,"name":"Luna Pendant","price":5999,"mrp":8999,"discount":33,"rating":4.4,"image":"necklace2.jpg","sizes":["16","18"],"colors":["Gold"],"details":"Minimal crescent pendant with mirror polish.","reviews":[{"user":"Diya","text":"Cute and subtle."}]}' >
           <div class="card-inner">
             <span class="badge">33% OFF</span>
-            <img src="mainpagepic.png" alt="Luna Pendant" />
+            <img src="necklace2.jpg" alt="Luna Pendant" />
           </div>
           <div class="card-body">
             <div style="font-weight:700">Luna Pendant</div>
@@ -167,10 +235,10 @@
         </div>
 
         <!-- Product 6 -->
-        <div class="card" data-cat="earrings" data-gender="women" data-product='{"id":6,"name":"Aurora Studs","price":4499,"mrp":6499,"discount":31,"rating":4.3,"image":"jewel11.webp","fallback":"jewel1.webp","sizes":["Std"],"colors":["Gold","White Gold"],"details":"Everyday studs with secure screw-back.","reviews":[{"user":"Rohan","text":"Good value for money."}]}' >
+        <div class="card" data-cat="earrings" data-gender="women" data-product='{"id":6,"name":"Aurora Studs","price":4499,"mrp":6499,"discount":31,"rating":4.3,"image":"earrings2.jpg","fallback":"earrings3.jpg","sizes":["Std"],"colors":["Gold","White Gold"],"details":"Everyday studs with secure screw-back.","reviews":[{"user":"Rohan","text":"Good value for money."}]}' >
           <div class="card-inner">
             <span class="badge">31% OFF</span>
-            <img src="jewel11.webp" alt="Aurora Studs" onerror="this.onerror=null; this.src='jewel1.webp'" />
+            <img src="earings2.jpg" alt="Aurora Studs" onerror="this.onerror=null; this.src='earrings3.jpg'" />
           </div>
           <div class="card-body">
             <div style="font-weight:700">Aurora Studs</div>
@@ -287,16 +355,31 @@
       document.body.style.overflow = 'hidden';
     }
 
-    // Delegated click handler for robust behavior
+    // Delegated click handler for original collections grid
+    const originalGrid = document.getElementById('originalCollectionsGrid');
+    if (originalGrid) {
+      originalGrid.addEventListener('click', (e)=>{
+        const card = e.target.closest('.card');
+        if(!card || !originalGrid.contains(card)) return;
+        const data = card.getAttribute('data-product');
+        if(!data) return;
+        const product = JSON.parse(data);
+        openModal(product);
+      });
+    }
+
+    // Delegated click handler for filtered collections grid
     const grid = document.getElementById('collectionsGrid');
-    grid.addEventListener('click', (e)=>{
-      const card = e.target.closest('.card');
-      if(!card || !grid.contains(card)) return;
-      const data = card.getAttribute('data-product');
-      if(!data) return;
-      const product = JSON.parse(data);
-      openModal(product);
-    });
+    if (grid) {
+      grid.addEventListener('click', (e)=>{
+        const card = e.target.closest('.card');
+        if(!card || !grid.contains(card)) return;
+        const data = card.getAttribute('data-product');
+        if(!data) return;
+        const product = JSON.parse(data);
+        openModal(product);
+      });
+    }
 
     // Size/Color selection handlers
     function activateChip(container, chip){
@@ -577,6 +660,216 @@
     } else {
       updateWishlistCount();
     }
+
+    // Shop Feature JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+      const shopBtn = document.getElementById('shopBtn');
+      const shopMenu = document.getElementById('shopMenu');
+      const collectionsContainer = document.getElementById('collectionsContainer');
+      const collectionsGrid = document.getElementById('collectionsGrid');
+      const collectionTitle = document.getElementById('collectionTitle');
+      const closeCollections = document.getElementById('closeCollections');
+      const categoryLinks = document.querySelectorAll('.shop-category a');
+
+      // Category mapping for filtering existing products
+      const categoryMapping = {
+        'men-bracelets': { gender: 'men', category: 'bracelets' },
+        'men-chains': { gender: 'men', category: 'necklaces' },
+        'men-rings': { gender: 'men', category: 'rings' },
+        'men-watches': { gender: 'men', category: 'watches' },
+        'men-accessories': { gender: 'men', category: 'accessories' },
+        'women-bracelets': { gender: 'women', category: 'bracelets' },
+        'women-necklaces': { gender: 'women', category: 'necklaces' },
+        'women-earrings': { gender: 'women', category: 'earrings' },
+        'women-rings': { gender: 'women', category: 'rings' },
+        'women-sets': { gender: 'women', category: 'sets' },
+        'women-bangles': { gender: 'women', category: 'bangles' },
+        'gold': { category: 'gold' },
+        'silver': { category: 'silver' },
+        'diamond': { category: 'diamond' },
+        'pearl': { category: 'pearl' },
+        'custom': { category: 'custom' }
+      };
+
+      // Toggle shop dropdown
+      if (shopBtn) {
+        shopBtn.addEventListener('click', () => {
+          shopMenu.style.display = shopMenu.style.display === 'grid' ? 'none' : 'grid';
+          shopBtn.querySelector('.fa-chevron-down').style.transform = shopMenu.style.display === 'grid' ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (shopBtn && shopMenu && !shopBtn.contains(e.target) && !shopMenu.contains(e.target)) {
+          shopMenu.style.display = 'none';
+          shopBtn.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+        }
+      });
+
+      // Handle category clicks
+      categoryLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const category = link.getAttribute('data-category');
+          showCollection(category);
+        });
+      });
+
+      // Show collection function
+      function showCollection(category) {
+        const filterCriteria = categoryMapping[category];
+        if (!filterCriteria) return;
+        
+        // Update title
+        const categoryLink = document.querySelector(`[data-category="${category}"]`);
+        if (categoryLink && collectionTitle) {
+          collectionTitle.textContent = categoryLink.textContent;
+        }
+        
+        // Get all existing product cards
+        const allProductCards = document.querySelectorAll('#originalCollectionsGrid .card');
+        
+        // Clear existing products in collections grid
+        if (collectionsGrid) {
+          collectionsGrid.innerHTML = '';
+          
+          // Filter and clone matching products
+          allProductCards.forEach(card => {
+            const cardGender = card.getAttribute('data-gender');
+            const cardCategory = card.getAttribute('data-cat');
+            
+            let shouldShow = false;
+            
+            // Check if product matches the filter criteria
+            if (filterCriteria.gender && filterCriteria.category) {
+              // For gender-specific categories (men/women)
+              shouldShow = cardGender === filterCriteria.gender && cardCategory === filterCriteria.category;
+            } else if (filterCriteria.category) {
+              // For collection categories (gold, silver, etc.)
+              // Show products that contain the category keyword in name or details
+              const productName = card.querySelector('.card-body div').textContent.toLowerCase();
+              const productData = JSON.parse(card.getAttribute('data-product') || '{}');
+              const details = (productData.details || '').toLowerCase();
+              
+              shouldShow = productName.includes(filterCriteria.category) || 
+                          details.includes(filterCriteria.category) ||
+                          cardCategory === filterCriteria.category;
+            }
+            
+            if (shouldShow) {
+              // Clone the matching product card
+              const clonedCard = card.cloneNode(true);
+              
+              // Add hover effect
+              clonedCard.addEventListener('mouseenter', () => {
+                clonedCard.style.transform = 'translateY(-5px)';
+                clonedCard.style.boxShadow = '0 10px 30px rgba(0,0,0,0.25)';
+              });
+              
+              clonedCard.addEventListener('mouseleave', () => {
+                clonedCard.style.transform = 'translateY(0)';
+                clonedCard.style.boxShadow = '0 10px 30px rgba(0,0,0,0.4)';
+              });
+              
+              // Add click handler to the "View details" button in cloned card
+              const clonedViewBtn = clonedCard.querySelector('.view-btn');
+              if (clonedViewBtn) {
+                clonedViewBtn.addEventListener('click', () => {
+                  const data = clonedCard.getAttribute('data-product');
+                  if (!data) return;
+                  const product = JSON.parse(data);
+                  openModal(product);
+                });
+              }
+              
+              collectionsGrid.appendChild(clonedCard);
+            }
+          });
+          
+          // If no products found, show a message
+          if (collectionsGrid.children.length === 0) {
+            const noProductsMsg = document.createElement('div');
+            noProductsMsg.style.cssText = 'text-align: center; padding: 40px; color: var(--muted); font-size: 18px;';
+            noProductsMsg.innerHTML = `
+              <i class="fas fa-search" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+              No products found in this category.
+            `;
+            collectionsGrid.appendChild(noProductsMsg);
+          }
+        }
+        
+        // Show collections container
+        if (collectionsContainer) {
+          collectionsContainer.style.display = 'block';
+        }
+        
+        // Hide dropdown
+        if (shopMenu) {
+          shopMenu.style.display = 'none';
+        }
+        if (shopBtn) {
+          shopBtn.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+        }
+        
+        // Scroll to collections
+        if (collectionsContainer) {
+          collectionsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      // Close collections
+      if (closeCollections) {
+        closeCollections.addEventListener('click', () => {
+          if (collectionsContainer) {
+            collectionsContainer.style.display = 'none';
+          }
+        });
+      }
+
+      // Add hover effects for category links
+      categoryLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          link.style.backgroundColor = 'rgba(212,175,55,0.1)';
+          link.style.color = 'var(--gold)';
+          link.style.transform = 'translateX(5px)';
+        });
+        
+        link.addEventListener('mouseleave', () => {
+          link.style.backgroundColor = 'transparent';
+          link.style.color = 'var(--ink)';
+          link.style.transform = 'translateX(0)';
+        });
+      });
+
+      // Mobile menu toggle
+      const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+      const navlinks = document.getElementById('navlinks');
+      
+      if (mobileMenuToggle && navlinks) {
+        mobileMenuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navlinks.classList.toggle('mobile-active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+          if (navlinks.classList.contains('mobile-active') && 
+              !navlinks.contains(e.target) && 
+              !mobileMenuToggle.contains(e.target)) {
+            navlinks.classList.remove('mobile-active');
+          }
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navLinks = navlinks.querySelectorAll('a');
+        navLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            navlinks.classList.remove('mobile-active');
+          });
+        });
+      }
+    });
   </script>
 </body>
 </html>

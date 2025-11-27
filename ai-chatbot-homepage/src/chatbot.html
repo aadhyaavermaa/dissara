@@ -5,8 +5,140 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Simple AI Chatbot</title>
   <link rel="stylesheet" href="chatbot.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Profile Icon */
+    .profile-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #8e44ad;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Side Panel */
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background-color: white;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+      z-index: 1002;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .side-panel.open {
+      right: 0;
+    }
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* Side Panel Content */
+    .side-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .side-panel h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .menu-item {
+      padding: 12px 15px;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: #f5f5f5;
+    }
+
+    .menu-item i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <!-- Profile Icon -->
+  <div class="profile-icon" id="profileIcon">
+    <i class="fas fa-user"></i>
+  </div>
+
+  <!-- Side Panel -->
+  <div class="overlay" id="overlay"></div>
+  <div class="side-panel" id="sidePanel">
+    <div class="side-panel-header">
+      <h2>Profile</h2>
+      <button class="close-btn" id="closePanel">&times;</button>
+    </div>
+    <div class="side-panel-content">
+      <div class="profile-info">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <div style="width: 80px; height: 80px; border-radius: 50%; background-color: #8e44ad; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 30px;">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Guest User</h3>
+          <p>guest@example.com</p>
+        </div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <i class="fas fa-cog"></i> Settings
+        </div>
+        <div class="menu-item">
+          <i class="fas fa-question-circle"></i> Help
+        </div>
+        <div class="menu-item">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="chat-container">
     <div class="chat-header">💬 AI Chatbot</div>
     <div class="chat-box" id="chat-box"></div>
@@ -21,6 +153,27 @@
   <script type="module" src="openai.js"></script>
   <script>
     document.getElementById("sendButton").addEventListener("click", sendMessage);
+
+    // Side Panel Toggle
+    const profileIcon = document.getElementById('profileIcon');
+    const sidePanel = document.getElementById('sidePanel');
+    const overlay = document.getElementById('overlay');
+    const closePanel = document.getElementById('closePanel');
+
+    profileIcon.addEventListener('click', () => {
+      sidePanel.classList.add('open');
+      overlay.classList.add('active');
+    });
+
+    closePanel.addEventListener('click', () => {
+      sidePanel.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidePanel.classList.remove('open');
+      overlay.classList.remove('active');
+    });
   </script>
 </body>
 </html>

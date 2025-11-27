@@ -140,6 +140,219 @@
           background-color: #c0a97a;
           border-radius: 3px;
         }
+
+        /* Cart Dropdown Styles */
+        .cart-dropdown {
+          position: fixed;
+          top: 60px;
+          right: 20px;
+          width: 380px;
+          max-height: 500px;
+          background: linear-gradient(145deg, rgba(16,23,32,0.98), rgba(11,15,20,0.99));
+          border: 1px solid rgba(212,175,55,0.4);
+          border-radius: 16px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212,175,55,0.1);
+          z-index: 10000;
+          overflow: hidden;
+          backdrop-filter: blur(10px);
+        }
+        
+        .cart-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px;
+          border-bottom: 1px solid rgba(212,175,55,0.3);
+          background: rgba(212,175,55,0.05);
+        }
+        
+        .cart-header h3 {
+          margin: 0;
+          color: var(--ink);
+          font-size: 1.2rem;
+          font-weight: 700;
+        }
+        
+        .close-cart {
+          background: none;
+          border: none;
+          color: var(--ink);
+          font-size: 24px;
+          cursor: pointer;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+        
+        .close-cart:hover {
+          background: rgba(212,175,55,0.2);
+          color: var(--gold);
+        }
+        
+        .cart-items {
+          max-height: 300px;
+          overflow-y: auto;
+          padding: 10px;
+        }
+        
+        .cart-item {
+          display: flex;
+          gap: 15px;
+          padding: 15px;
+          margin-bottom: 10px;
+          background: rgba(212,175,55,0.03);
+          border-radius: 12px;
+          border: 1px solid rgba(212,175,55,0.1);
+          transition: all 0.2s ease;
+        }
+        
+        .cart-item:hover {
+          background: rgba(212,175,55,0.08);
+          border-color: rgba(212,175,55,0.3);
+        }
+        
+        .cart-item img {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 8px;
+          border: 1px solid rgba(212,175,55,0.2);
+        }
+        
+        .cart-item-details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        
+        .cart-item-name {
+          color: var(--ink);
+          font-weight: 600;
+          font-size: 0.9rem;
+          margin-bottom: 4px;
+          line-height: 1.3;
+        }
+        
+        .cart-item-meta {
+          color: var(--muted);
+          font-size: 0.8rem;
+          margin-bottom: 4px;
+        }
+        
+        .cart-item-price {
+          color: var(--gold);
+          font-weight: 700;
+          font-size: 0.9rem;
+        }
+        
+        .cart-item-remove {
+          background: rgba(255,107,107,0.1);
+          border: 1px solid rgba(255,107,107,0.3);
+          color: #ff6b6b;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 12px;
+          transition: all 0.2s ease;
+        }
+        
+        .cart-item-remove:hover {
+          background: rgba(255,107,107,0.2);
+          border-color: rgba(255,107,107,0.5);
+          transform: scale(1.1);
+        }
+        
+        .empty-cart {
+          text-align: center;
+          padding: 40px 20px;
+          color: var(--muted);
+        }
+        
+        .empty-cart-icon {
+          font-size: 48px;
+          margin-bottom: 15px;
+          opacity: 0.5;
+        }
+        
+        .cart-footer {
+          padding: 20px;
+          border-top: 1px solid rgba(212,175,55,0.3);
+          background: rgba(212,175,55,0.05);
+        }
+        
+        .cart-total {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+          font-size: 1.1rem;
+          font-weight: 700;
+        }
+        
+        .cart-total span:first-child {
+          color: var(--ink);
+        }
+        
+        .cart-total span:last-child {
+          color: var(--gold);
+          font-size: 1.3rem;
+        }
+        
+        .checkout-btn {
+          width: 100%;
+          background: linear-gradient(135deg, var(--gold), #d4af37);
+          color: #0a0d10;
+          border: none;
+          padding: 14px;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 0.95rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+        }
+        
+        .checkout-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(212,175,55,0.4);
+        }
+        
+        /* Scrollbar styling */
+        .cart-items::-webkit-scrollbar {
+          width: 6px;
+        }
+        
+        .cart-items::-webkit-scrollbar-track {
+          background: rgba(212,175,55,0.1);
+          border-radius: 3px;
+        }
+        
+        .cart-items::-webkit-scrollbar-thumb {
+          background: rgba(212,175,55,0.4);
+          border-radius: 3px;
+        }
+        
+        .cart-items::-webkit-scrollbar-thumb:hover {
+          background: rgba(212,175,55,0.6);
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+          .cart-dropdown {
+            width: calc(100vw - 40px);
+            right: 20px;
+            left: 20px;
+          }
+        }
     </style>
 </head>
 <body>
@@ -150,63 +363,71 @@
           <img src="logo.png" alt="Dissara" class="logo" />
         </a>
       </div>
-      <nav class="navlinks">
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <nav class="navlinks" id="navlinks">
         <a href="index.html">Home</a>
         <a href="gift-store.html">Gift Store</a>
         <a href="collections.html">Collections</a>
         <a href="index.html#newarrivals">New Arrivals</a>
-        <a href="index.html#shopby">Shop By</a>
+        <!-- <a href="index.html#shopby">Shop By</a> -->
         <a href="index.html#contact">Contact</a>
         <a href="index.html#about">About Us</a>
         <span id="authSlot"></span>
-        <div class="nav-actions">
-          <button id="wishlistIconButton" class="nav-icon-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
-            </svg>
-            <span id="wishlistCount" class="nav-icon-badge" style="display:none;">0</span>
-          </button>
-          <button id="cartButton" class="nav-icon-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <span id="cartCount" class="nav-icon-badge" style="display:none;">0</span>
-          </button>
+      </nav>
+      <div class="nav-actions">
+        <button id="wishlistIconButton" class="nav-icon-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
+          </svg>
+          <span id="wishlistCount" class="nav-icon-badge" style="display:none;">0</span>
+        </button>
+        <button id="cartButton" class="nav-icon-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span id="cartCount" class="nav-icon-badge" style="display:none;">0</span>
+        </button>
 
-          <!-- Cart Dropdown -->
-          <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 border border-gray-200" style="min-width: 320px;">
-            <div class="p-4 border-b border-gray-200">
-              <h3 class="text-lg font-semibold text-gray-800">Your Cart</h3>
+        <!-- Cart Dropdown -->
+        <div id="cartDropdown" class="cart-dropdown" style="display: none;">
+          <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button id="closeCart" class="close-cart">&times;</button>
+          </div>
+          <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+          </div>
+          <div class="cart-footer">
+            <div class="cart-total">
+              <span>Total:</span>
+              <span id="cartTotal">₹0</span>
             </div>
-            <div id="cartItems" class="max-h-96 overflow-y-auto">
-              <!-- Cart items will be added here dynamically -->
-              <p class="text-center text-gray-500 py-4">Your cart is empty</p>
-            </div>
-            <div id="cartTotal" class="hidden p-4 border-t border-gray-200 bg-gray-50">
-              <div class="flex justify-between items-center mb-2">
-                <span class="font-medium text-gray-700">Total:</span>
-                <span id="cartTotalAmount" class="font-bold text-lg text-gray-900">₹0.00</span>
-              </div>
-              <button id="checkoutBtn" class="w-full bg-[var(--gold)] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">
-                Proceed to Checkout
-              </button>
-            </div>
+            <button id="checkoutBtn" class="checkout-btn">Proceed to Checkout</button>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
 
     <!-- Gift Store Section -->
     <section class="py-16" style="background: radial-gradient(900px 500px at 10% 110%, rgba(212,175,55,.05), transparent 60%), var(--bg)">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="didot text-5xl md:text-6xl font-normal gold-text mb-12 text-center tracking-wide leading-tight">Find the best gift for your loved ones</h2>
+        <!-- <h2 class="didot text-5xl md:text-6xl font-normal gold-text mb-12 text-center tracking-wide leading-tight">Find the best gift for your loved ones</h2> -->
+        <h2 class="didot text-5xl md:text-6xl font-normal gold-text mb-12 text-center tracking-wide leading-tight" 
+    style="margin-top: 40px;">
+    Find the best gift for your loved ones
+        </h2>
+
         <div class="flex flex-col md:flex-row gap-8 mb-16 justify-center items-center">
           <!-- Custom Dropdown: Occasion -->
           <div class="relative flex-1 max-w-xs mx-auto px-8 py-6 flex flex-col items-center rounded-2xl shadow-sm hover:shadow-md transition bg-[#fae6b1] min-w-[320px]">
-            <label class="text-xs md:text-sm tracking-widest uppercase gold-text mb-4 font-medium text-center w-full">Occasion</label>
+            <label class="text-xs md:text-sm tracking-widest uppercase mb-4 font-medium text-center w-full" style="color: #1a2238;">Occasion</label>
             <div class="relative w-full flex flex-col items-center justify-center">
-              <button type="button" id="occasionDropdownBtn" class="w-full flex justify-center items-center gap-2 bg-transparent border-none text-lg md:text-xl navy-text font-medium didot text-center py-2 rounded-xl focus:ring-2 focus:ring-[var(--gold)] focus:border-[var(--gold)] hover:border-[var(--gold)] transition cursor-pointer outline-none" aria-haspopup="listbox" aria-expanded="false">
-                <span id="occasionSelected" class="flex-1 text-center">Birthday</span>
+              <button type="button" id="occasionDropdownBtn" class="w-full flex justify-center items-center gap-2 bg-transparent border-none text-lg md:text-xl font-medium didot text-center py-2 rounded-xl focus:ring-2 focus:ring-[var(--gold)] focus:border-[var(--gold)] hover:border-[var(--gold)] transition cursor-pointer outline-none" style="color: #0a0d10;" aria-haspopup="listbox" aria-expanded="false">
+                <span id="occasionSelected" class="flex-1 text-center" style="color: #0a0d10;">Birthday</span>
                 <span class="text-[var(--gold)] flex items-center justify-center">
                   <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </span>
@@ -222,10 +443,10 @@
           </div>
           <!-- Custom Dropdown: Gift Type -->
           <div class="relative flex-1 max-w-xs mx-auto px-8 py-6 flex flex-col items-center rounded-2xl shadow-sm hover:shadow-md transition bg-[#fae6b1] min-w-[320px]">
-            <label class="text-xs md:text-sm tracking-widest uppercase gold-text mb-4 font-medium text-center w-full">Gift type</label>
+            <label class="text-xs md:text-sm tracking-widest uppercase mb-4 font-medium text-center w-full" style="color: #1a2238;">Gift type</label>
             <div class="relative w-full flex flex-col items-center justify-center">
-              <button type="button" id="giftTypeDropdownBtn" class="w-full flex justify-center items-center gap-2 bg-transparent border-none text-lg md:text-xl navy-text font-medium didot text-center py-2 rounded-xl focus:ring-2 focus:ring-[var(--gold)] focus:border-[var(--gold)] hover:border-[var(--gold)] transition cursor-pointer outline-none" aria-haspopup="listbox" aria-expanded="false">
-                <span id="giftTypeSelected" class="flex-1 text-center">Rings</span>
+              <button type="button" id="giftTypeDropdownBtn" class="w-full flex justify-center items-center gap-2 bg-transparent border-none text-lg md:text-xl font-medium didot text-center py-2 rounded-xl focus:ring-2 focus:ring-[var(--gold)] focus:border-[var(--gold)] hover:border-[var(--gold)] transition cursor-pointer outline-none" style="color: #0a0d10;" aria-haspopup="listbox" aria-expanded="false">
+                <span id="giftTypeSelected" class="flex-1 text-center" style="color: #0a0d10;">Rings</span>
                 <span class="text-[var(--gold)] flex items-center justify-center">
                   <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </span>
@@ -240,32 +461,32 @@
           </div>
         </div>
 
-        <h3 class="didot text-3xl md:text-4xl font-normal navy-text mb-12 text-center tracking-wide">Categories</h3>
+        <h3 class="didot text-3xl md:text-4xl font-normal navy-text mb-12 text-center tracking-wide">CATEGORIES</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
           <div class="product-card flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
             <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
-              <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/NecklaceSet1.jpg?v=1680000000" alt="Radiant Sunburst Necklace & Earring Set" class="object-contain max-h-32 max-w-32" />
+              <img src="necklace2.jpg" alt="Radiant Sunburst Necklace & Earring Set" class="object-contain max-h-32 max-w-32" />
             </div>
             <div class="didot text-lg font-medium on-light mb-3 text-center leading-snug">Radiant Sunburst Necklace & Earring Set</div>
             <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn" data-product-id="1">Buy now</button>
           </div>
           <div class="product-card flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
             <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
-              <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/GoldBracelet1.jpg?v=1680000000" alt="Floral Cutout Gold Bracelet" class="object-contain max-h-32 max-w-32" />
+              <img src="bracelet2.jpg" alt="Floral Cutout Gold Bracelet" class="object-contain max-h-32 max-w-32" />
             </div>
             <div class="didot text-lg font-medium on-light mb-3 text-center leading-snug">Floral Cutout Gold Bracelet</div>
             <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn" data-product-id="2">Buy now</button>
           </div>
           <div class="product-card flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
             <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
-              <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/EvilEyeBracelet.jpg?v=1680000000" alt="Evil Eye Rose Gold Bracelet" class="object-contain max-h-32 max-w-32" />
+              <img src="bracelet1.jpg" alt="Evil Eye Rose Gold Bracelet" class="object-contain max-h-32 max-w-32" />
             </div>
             <div class="didot text-lg font-medium on-light mb-3 text-center leading-snug">Evil Eye Rose Gold Bracelet</div>
             <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn" data-product-id="3">Buy now</button>
           </div>
           <div class="product-card flex flex-col items-center bg-white rounded-2xl border border-[var(--gray)] card-hover p-8 min-h-[370px]">
             <div class="w-36 h-36 flex items-center justify-center mb-6 overflow-hidden rounded-xl bg-[#f8f6f3] border border-[var(--gray)]">
-              <img src="https://cdn.shopify.com/s/files/1/0752/6435/9887/files/DualPearlEarrings.jpg?v=1680000000" alt="Dual Pearl Gold-Toned Drop Earrings" class="object-contain max-h-32 max-w-32" />
+              <img src="earings2.jpg" alt="Dual Pearl Gold-Toned Drop Earrings" class="object-contain max-h-32 max-w-32" />
             </div>
             <div class="didot text-lg font-medium on-light mb-3 text-center leading-snug">Dual Pearl Gold-Toned Drop Earrings</div>
             <button class="mt-auto w-full gold-bg font-medium py-2 rounded-lg text-base didot shadow hover:shadow-lg transition buy-now-btn" data-product-id="4">Buy now</button>
@@ -573,29 +794,32 @@
   });
 }
 
-// Compare modal
+// Compare modal (guarded to avoid early ReferenceError)
 const compareModal = document.getElementById('compareModal');
 const compareBtn = document.getElementById('compareBtn');
-compareBtn.addEventListener('click', function(e) {
-  e.stopPropagation();
-  compareModal.classList.remove('hidden');
-  compareModal.classList.add('flex');
-});
-closeCompareModal.addEventListener('click', function() {
-  compareModal.classList.add('hidden');
-  compareModal.classList.remove('flex');
-});
-compareModal.addEventListener('click', function(e) {
-  if (e.target === compareModal) {
+const closeCompareModal = document.getElementById('closeCompareModal');
+if (compareBtn && compareModal) {
+  compareBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    compareModal.classList.remove('hidden');
+    compareModal.classList.add('flex');
+  });
+}
+if (closeCompareModal && compareModal) {
+  closeCompareModal.addEventListener('click', function() {
     compareModal.classList.add('hidden');
     compareModal.classList.remove('flex');
-  }
-});
-</script>
-      </div>
-    </section>
+  });
+}
+if (compareModal) {
+  compareModal.addEventListener('click', function(e) {
+    if (e.target === compareModal) {
+      compareModal.classList.add('hidden');
+      compareModal.classList.remove('flex');
+    }
+  });
+}
 
-    <!-- Footer -->
     <footer class="navy-bg py-12 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -663,334 +887,20 @@ function handleBuyNowClick(event) {
   const imgEl = card.querySelector('img');
   const titleEl = card.querySelector('.didot');
 
-  currentProduct = {
+  const payload = {
     id: titleEl ? titleEl.textContent.trim() : 'gift-item',
     name: titleEl ? titleEl.textContent.trim() : 'Gift Item',
     price: 799,
-    image: imgEl ? imgEl.src : ''
+    image: imgEl ? imgEl.src : '',
+    quantity: 1
   };
-
-  const modalOverlay = document.getElementById('luxuryModalOverlay');
-  if (modalOverlay) {
-    modalOverlay.classList.remove('hidden');
-    modalOverlay.classList.add('flex');
-  }
+  try { localStorage.setItem('checkoutItem', JSON.stringify(payload)); } catch {}
+  window.location.href = 'checkout-gift.html';
 }
 
 // Quantity, note and gift wrap controls inside modal
 const qtyMinus = document.getElementById('qtyMinus');
 const qtyPlus = document.getElementById('qtyPlus');
-const qtyValue = document.getElementById('qtyValue');
-const buyNowBtn = document.getElementById('buyNowBtn');
-const luxuryModalOverlay = document.getElementById('luxuryModalOverlay');
-const checkoutModal = document.getElementById('checkoutModal');
-
-// Handle BUY NOW button in modal
-if (buyNowBtn) {
-  buyNowBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Close the product modal
-    if (luxuryModalOverlay) {
-      luxuryModalOverlay.classList.add('hidden');
-      luxuryModalOverlay.classList.remove('flex');
-    }
-    
-    // Open the checkout modal
-    if (checkoutModal) {
-      checkoutModal.classList.remove('hidden');
-      checkoutModal.classList.add('flex');
-    }
-  });
-}
-
-const addNoteCheckbox = document.getElementById('addNoteCheckbox');
-const noteInputContainer = document.getElementById('noteInputContainer');
-const giftWrapCheckbox = document.getElementById('giftWrapCheckbox');
-const addToCartBtn = document.getElementById('addToCartBtn');
-const backLuxuryModal = document.getElementById('backLuxuryModal');
-const shareLuxuryModal = document.getElementById('shareLuxuryModal');
-
-if (qtyMinus && qtyPlus && qtyValue) {
-  qtyMinus.addEventListener('click', () => {
-    let val = parseInt(qtyValue.textContent || '1', 10) || 1;
-    if (val > 1) val--;
-    qtyValue.textContent = String(val);
-  });
-  qtyPlus.addEventListener('click', () => {
-    let val = parseInt(qtyValue.textContent || '1', 10) || 1;
-    qtyValue.textContent = String(val + 1);
-  });
-}
-
-if (addNoteCheckbox && noteInputContainer) {
-  addNoteCheckbox.addEventListener('change', () => {
-    noteInputContainer.classList.toggle('hidden', !addNoteCheckbox.checked);
-  });
-}
-
-if (addToCartBtn) {
-  addToCartBtn.addEventListener('click', () => {
-    if (!currentProduct || typeof window.addToCart !== 'function') return;
-
-    const quantity = parseInt(qtyValue?.textContent || '1', 10) || 1;
-    const note = addNoteCheckbox?.checked ? (document.getElementById('noteInput')?.value || '') : '';
-    const giftWrap = !!(giftWrapCheckbox && giftWrapCheckbox.checked);
-
-    const extra = (addNoteCheckbox?.checked ? 30 : 0) + (giftWrap ? 50 : 0);
-    const price = (currentProduct.price || 0) + extra;
-
-    window.addToCart({
-      ...currentProduct,
-      quantity,
-      price,
-      note,
-      giftWrap
-    });
-  });
-}
-
-// Back button: close the luxury modal
-if (backLuxuryModal) {
-  backLuxuryModal.addEventListener('click', (e) => {
-    e.preventDefault();
-    const modalOverlay = document.getElementById('luxuryModalOverlay');
-    if (modalOverlay) {
-      modalOverlay.classList.add('hidden');
-      modalOverlay.classList.remove('flex');
-    }
-  });
-}
-
-// Share button: generate sharable URL and copy to clipboard
-if (shareLuxuryModal) {
-  shareLuxuryModal.addEventListener('click', async (e) => {
-    e.preventDefault();
-    if (!currentProduct) return;
-
-    const url = `${window.location.origin}${window.location.pathname}?product=${encodeURIComponent(currentProduct.id)}`;
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(url);
-        if (typeof window.showNotification === 'function') {
-          window.showNotification('Share link copied to clipboard');
-        }
-      }
-    } catch (err) {
-      console.error('Failed to copy share URL', err);
-    }
-  });
-}
-
-// Custom Dropdown: Occasion
-const occasionBtn = document.getElementById('occasionDropdownBtn');
-const occasionDropdown = document.getElementById('occasionDropdown');
-const occasionSelected = document.getElementById('occasionSelected');
-occasionBtn.addEventListener('click', function(e) {
-  e.stopPropagation();
-  occasionDropdown.classList.toggle('hidden');
-  occasionBtn.setAttribute('aria-expanded', !occasionDropdown.classList.contains('hidden'));
-});
-document.querySelectorAll('#occasionDropdown li').forEach(item => {
-  item.addEventListener('click', function() {
-    occasionSelected.textContent = this.getAttribute('data-value');
-    occasionDropdown.classList.add('hidden');
-    occasionBtn.setAttribute('aria-expanded', 'false');
-  });
-});
-document.addEventListener('click', function(e) {
-  if (!occasionDropdown.classList.contains('hidden')) {
-    occasionDropdown.classList.add('hidden');
-    occasionBtn.setAttribute('aria-expanded', 'false');
-  }
-});
-
-// Custom Dropdown: Gift Type
-const giftTypeBtn = document.getElementById('giftTypeDropdownBtn');
-const giftTypeDropdown = document.getElementById('giftTypeDropdown');
-const giftTypeSelected = document.getElementById('giftTypeSelected');
-giftTypeBtn.addEventListener('click', function(e) {
-  e.stopPropagation();
-  giftTypeDropdown.classList.toggle('hidden');
-  giftTypeBtn.setAttribute('aria-expanded', !giftTypeDropdown.classList.contains('hidden'));
-});
-document.querySelectorAll('#giftTypeDropdown li').forEach(item => {
-  item.addEventListener('click', function() {
-    giftTypeSelected.textContent = this.getAttribute('data-value');
-    giftTypeDropdown.classList.add('hidden');
-    giftTypeBtn.setAttribute('aria-expanded', 'false');
-  });
-});
-document.addEventListener('click', function(e) {
-  if (!giftTypeDropdown.classList.contains('hidden')) {
-    giftTypeDropdown.classList.add('hidden');
-    giftTypeBtn.setAttribute('aria-expanded', 'false');
-  }
-});
-
-// If page is opened with a ?product=... parameter, auto-open that item's modal
-(function openProductFromUrl() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get('product');
-    if (!productId) return;
-
-    const cards = document.querySelectorAll('.product-card');
-    for (const card of cards) {
-      const titleEl = card.querySelector('.didot');
-      const title = titleEl ? titleEl.textContent.trim() : '';
-      if (title === productId) {
-        const btn = card.querySelector('.buy-now-btn');
-        if (btn) {
-          handleBuyNowClick.call(btn, new Event('click'));
-        }
-        break;
-      }
-    }
-  } catch (e) {
-    console.error('Error opening product from URL', e);
-  }
-})();
-
-// Initialize wishlist badge on load
-updateWishlistCount();
-
-// Wishlist data (persisted in localStorage)
-let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-
-function updateWishlistCount() {
-  const badge = document.getElementById('wishlistCount');
-  if (!badge) return;
-  const count = Array.isArray(wishlist) ? wishlist.length : 0;
-  badge.textContent = count > 99 ? '99+' : String(count);
-  badge.style.display = count > 0 ? 'flex' : 'none';
-}
-
-function saveWishlist() {
-  localStorage.setItem('wishlist', JSON.stringify(wishlist));
-  updateWishlistCount();
-}
-
-function renderWishlist() {
-  const list = document.getElementById('wishlistItems');
-  const emptyState = document.getElementById('emptyWishlist');
-  if (!list) return;
-
-  if (!wishlist.length) {
-    list.innerHTML = '';
-    if (emptyState) emptyState.style.display = 'block';
-    return;
-  }
-
-  if (emptyState) emptyState.style.display = 'none';
-
-  list.innerHTML = wishlist.map(item => `
-    <li class="flex items-center justify-between bg-[#f8f6f3] rounded-xl p-4">
-      <div class="flex items-center gap-3">
-        ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover"/>` : ''}
-        <span class="navy-text text-sm">${item.name}</span>
-      </div>
-      <span class="text-xs gold-text">₹${(item.price || 0).toFixed(2)}</span>
-    </li>
-  `).join('');
-}
-
-function addToWishlist(product) {
-  if (!product) return false;
-  
-  // Get existing wishlist or initialize empty array
-  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  
-  // Check if product already exists in wishlist
-  const exists = wishlist.some(item => item.id === product.id);
-  
-  if (!exists) {
-    // Add to wishlist
-    wishlist.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image || ''
-    });
-    
-    // Save back to localStorage
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    
-    // Update wishlist count in navbar
-    updateWishlistCount();
-    
-    // Show notification if available
-    if (typeof window.showNotification === 'function') {
-      window.showNotification('Added to wishlist!');
-    }
-    
-    return true;
-  }
-  return false;
-}
-
-// Wishlist modal + navbar heart icon
-const wishlistModal = document.getElementById('wishlistModal');
-const wishlistBtn = document.getElementById('wishlistBtn');
-const wishlistIconButton = document.getElementById('wishlistIconButton');
-const closeWishlistModal = document.getElementById('closeWishlistModal');
-
-function openWishlistModal(e) {
-  if (e) e.stopPropagation();
-  renderWishlist();
-  wishlistModal.classList.remove('hidden');
-  wishlistModal.classList.add('flex');
-}
-
-// Initialize wishlist button
-if (wishlistBtn && wishlistModal && closeWishlistModal) {
-  wishlistBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    if (!currentProduct) return;
-    
-    // Add to wishlist and show feedback
-    const added = addToWishlist(currentProduct);
-    
-    // Visual feedback
-    const heart = wishlistBtn.querySelector('span:first-child');
-    if (heart) {
-      heart.textContent = added ? '❤️' : '♡';
-      if (added) {
-        wishlistBtn.classList.add('text-red-500');
-        // Show notification
-        if (window.showNotification) {
-          window.showNotification('Added to wishlist!');
-        }
-      }
-    }
-  });
-  
-  // Open wishlist modal from navbar icon
-  if (wishlistIconButton) {
-    wishlistIconButton.addEventListener('click', function(e) {
-      e.preventDefault();
-      openWishlistModal(e);
-    });
-  }
-  
-  // Close wishlist modal
-  closeWishlistModal.addEventListener('click', function(e) {
-    e.stopPropagation();
-    wishlistModal.classList.add('hidden');
-    wishlistModal.classList.remove('flex');
-  });
-  
-  // Close when clicking outside
-  wishlistModal.addEventListener('click', function(e) {
-    if (e.target === wishlistModal) {
-      wishlistModal.classList.add('hidden');
-      wishlistModal.classList.remove('flex');
-    }
-  });
-}
 
 // Initialize wishlist count on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -1016,24 +926,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const imgEl = card.querySelector('img');
     const titleEl = card.querySelector('.didot');
     
-    currentProduct = {
+    const payload = {
       id: titleEl ? titleEl.textContent.trim() : 'gift-item',
       name: titleEl ? titleEl.textContent.trim() : 'Gift Item',
       price: 799,
-      image: imgEl ? imgEl.src : ''
+      image: imgEl ? imgEl.src : '',
+      quantity: 1
     };
-    
-    console.log('📦 Product selected:', currentProduct);
-    
-    // Show the modal
-    const modalOverlay = document.getElementById('luxuryModalOverlay');
-    if (modalOverlay) {
-      modalOverlay.classList.remove('hidden');
-      modalOverlay.classList.add('flex');
-      console.log('✅ Modal opened successfully!');
-    } else {
-      console.error('❌ Modal overlay not found');
-    }
+    console.log('📦 Product selected:', payload);
+    try { localStorage.setItem('checkoutItem', JSON.stringify(payload)); } catch {}
+    window.location.href = 'checkout-gift.html';
   }, true); // Use capture phase
 });
 
@@ -1056,5 +958,160 @@ compareModal.addEventListener('click', function(e) {
     compareModal.classList.remove('flex');
   }
 });
+
+// Cart Dropdown Functions
+function displayCart() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartItems = document.getElementById('cartItems');
+  const cartTotal = document.getElementById('cartTotal');
+  
+  if (cart.length === 0) {
+    cartItems.innerHTML = `
+      <div class="empty-cart">
+        <div class="empty-cart-icon">🛒</div>
+        <p>Your cart is empty</p>
+        <p style="font-size: 0.9rem; margin-top: 8px;">Add some beautiful jewelry to get started!</p>
+      </div>
+    `;
+    cartTotal.textContent = '₹0';
+    return;
+  }
+  
+  let total = 0;
+  let cartHTML = '';
+  
+  cart.forEach((item, index) => {
+    const itemTotal = item.price * (item.quantity || 1);
+    total += itemTotal;
+    
+    cartHTML += `
+      <div class="cart-item" data-index="${index}">
+        <img src="${item.image}" alt="${item.name}" />
+        <div class="cart-item-details">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-meta">
+            Size: ${item.selectedSize || 'One Size'} | Color: ${item.selectedColor || 'Gold'} | Qty: ${item.quantity || 1}
+          </div>
+          <div class="cart-item-price">₹${itemTotal.toLocaleString('en-IN')}</div>
+        </div>
+        <div class="cart-item-remove" onclick="removeFromCart(${index})">×</div>
+      </div>
+    `;
+  });
+  
+  cartItems.innerHTML = cartHTML;
+  cartTotal.textContent = `₹${total.toLocaleString('en-IN')}`;
+}
+
+function removeFromCart(index) {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  displayCart();
+}
+
+function toggleCartDropdown() {
+  const cartDropdown = document.getElementById('cartDropdown');
+  const cartButton = document.getElementById('cartButton');
+  const isVisible = cartDropdown.style.display !== 'none';
+  
+  if (isVisible) {
+    cartDropdown.style.display = 'none';
+  } else {
+    // Get cart button position
+    const cartRect = cartButton.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Position dropdown near the cart button
+    cartDropdown.style.top = (cartRect.bottom + scrollTop + 10) + 'px';
+    cartDropdown.style.right = (window.innerWidth - cartRect.right) + 'px';
+    
+    displayCart();
+    cartDropdown.style.display = 'block';
+  }
+}
+
+// Update cart count
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCount = document.getElementById('cartCount');
+  if (cartCount) {
+    cartCount.textContent = cart.length;
+    cartCount.style.display = cart.length > 0 ? 'flex' : 'none';
+  }
+}
+
+// Cart event listeners
+document.addEventListener('DOMContentLoaded', function() {
+  // Cart button click
+  const cartButton = document.getElementById('cartButton');
+  if (cartButton) {
+    cartButton.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleCartDropdown();
+    });
+  }
+  
+  // Close cart button
+  const closeCart = document.getElementById('closeCart');
+  if (closeCart) {
+    closeCart.addEventListener('click', function() {
+      document.getElementById('cartDropdown').style.display = 'none';
+    });
+  }
+  
+  // Checkout button
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', function() {
+      window.location.href = 'checkout.html';
+    });
+  }
+  
+  // Close cart when clicking outside
+  document.addEventListener('click', function(e) {
+    const cartDropdown = document.getElementById('cartDropdown');
+    const cartButton = document.getElementById('cartButton');
+    
+    if (cartDropdown.style.display !== 'none' && 
+        !cartDropdown.contains(e.target) && 
+        !cartButton.contains(e.target)) {
+      cartDropdown.style.display = 'none';
+    }
+  });
+  
+  // Update cart count on load
+  updateCartCount();
+  
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+  const navlinks = document.getElementById('navlinks');
+  
+  if (mobileMenuToggle && navlinks) {
+    mobileMenuToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navlinks.classList.toggle('mobile-active');
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (navlinks.classList.contains('mobile-active') && 
+          !navlinks.contains(e.target) && 
+          !mobileMenuToggle.contains(e.target)) {
+        navlinks.classList.remove('mobile-active');
+      }
+    });
+    
+    // Close mobile menu when clicking on a link
+    const navLinks = navlinks.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        navlinks.classList.remove('mobile-active');
+      });
+    });
+  }
+});
+
 </script>
-</html> 
+</html>

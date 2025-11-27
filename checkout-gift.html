@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy Now | Dissara Gift Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
+  <style>
+    .checkout{padding:100px 0}
+    .layout{width:min(1100px,92%); margin:0 auto; display:grid; grid-template-columns:1.1fr .9fr; gap:24px}
+    .panel{background: rgba(16,23,32,.85); border:1px solid rgba(212,175,55,.28); border-radius:16px; padding:16px}
+    .h{font-family:"Playfair Display"; font-size:1.4rem; margin:0 0 10px}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .field{display:grid; gap:6px}
+    .input{background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.3); border-radius:10px; padding:10px}
+    .input::placeholder{color:#9aa4b2}
+    .sum-item{display:grid; grid-template-columns:72px 1fr auto; gap:12px; align-items:center}
+    .sum-item img{width:72px; height:72px; border-radius:12px; object-fit:cover; border:1px solid rgba(212,175,55,.25)}
+    .muted{color:var(--muted)}
+    .totals{display:grid; gap:8px; margin-top:10px}
+    .line{display:flex; justify-content:space-between}
+    .btn-primary{background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; padding:12px 16px; border-radius:12px; font-weight:800; cursor:pointer}
+    .btn-ghost{background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer}
+    .err{color:#f87171; font-weight:700; display:none}
+    .chip{border:1px solid rgba(212,175,55,.35); padding:8px 10px; border-radius:10px}
+  </style>
+</head>
+<body>
+  <header class="floating-nav">
+    <div class="brand">
+      <img src="logo.png" alt="Dissara" class="logo" />
+    </div>
+    <nav class="navlinks">
+      <a href="index.html#shopby">ShopBy</a>
+      <a href="collections.html">Collections</a>
+      <a href="gift-store.html">Gift Store</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="checkout">
+    <div class="layout">
+      <!-- Left: Customization + Shipping Details -->
+      <div class="panel">
+        <h2 class="h">Customize Your Gift</h2>
+        <div class="field" style="margin-bottom:10px">
+          <label>Quantity</label>
+          <div style="display:flex; align-items:center; gap:8px">
+            <button id="qMinus" class="btn-ghost" style="padding:6px 10px">-</button>
+            <div id="qVal" class="chip" style="min-width:44px; text-align:center">1</div>
+            <button id="qPlus" class="btn-ghost" style="padding:6px 10px">+</button>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <label><input type="checkbox" id="optNote"/> Add a note with the gift <span class="muted">(+₹30)</span></label>
+          <textarea id="noteTxt" class="input" placeholder="Type your note..." rows="3" style="display:none"></textarea>
+        </div>
+        <div class="field" style="margin-bottom:18px">
+          <label><input type="checkbox" id="optWrap"/> Gift wrap <span class="muted">(+₹50)</span></label>
+        </div>
+
+        <h2 class="h" style="margin-top:16px">Shipping Details</h2>
+        <div class="row">
+          <div class="field"><label>First Name</label><input id="fn" class="input" placeholder="Aadhya"/></div>
+          <div class="field"><label>Last Name</label><input id="ln" class="input" placeholder="Verma"/></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Email</label><input id="email" class="input" placeholder="you@example.com"/></div>
+          <div class="field"><label>Phone</label><input id="phone" class="input" placeholder="99999 99999"/></div>
+        </div>
+        <div class="field"><label>Address</label><input id="addr" class="input" placeholder="House/Street"/></div>
+        <div class="row">
+          <div class="field"><label>City</label><input id="city" class="input" placeholder="Delhi"/></div>
+          <div class="field"><label>Pincode</label><input id="pin" class="input" placeholder="110001"/></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>State</label><input id="state" class="input" placeholder="Delhi"/></div>
+          <div class="field"><label>Country</label><input id="country" class="input" placeholder="India"/></div>
+        </div>
+        <div id="formErr" class="err" style="margin-top:8px">Please fill the mandatory fields.</div>
+      </div>
+
+      <!-- Right: Order Summary -->
+      <div class="panel">
+        <h2 class="h">Order Summary</h2>
+        <div id="summary"></div>
+        <div class="totals">
+          <div class="line"><span>Subtotal</span><span id="subTotal">₹0</span></div>
+          <div class="line" id="lineNote" style="display:none"><span>Add note</span><span>+₹30</span></div>
+          <div class="line" id="lineWrap" style="display:none"><span>Gift wrap</span><span>+₹50</span></div>
+          <div class="line"><span>Shipping</span><span>Free</span></div>
+          <div class="line"><strong>Total</strong><strong id="sumTotal">₹0</strong></div>
+        </div>
+        <div class="row" style="gap:10px; margin-top:12px">
+          <button id="placeOrder" class="btn-primary" style="flex:1">Place Order</button>
+          <button class="btn-ghost" onclick="location.href='gift-store.html'">Back to Gift Store</button>
+        </div>
+        <div id="orderMsg" style="margin-top:10px; display:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function currency(n){ return '₹' + Number(n||0).toLocaleString('en-IN'); }
+
+    const summary = document.getElementById('summary');
+    const subTotal = document.getElementById('subTotal');
+    const sumTotal = document.getElementById('sumTotal');
+    const lineNote = document.getElementById('lineNote');
+    const lineWrap = document.getElementById('lineWrap');
+
+    const qMinus = document.getElementById('qMinus');
+    const qPlus = document.getElementById('qPlus');
+    const qVal = document.getElementById('qVal');
+    const optNote = document.getElementById('optNote');
+    const noteTxt = document.getElementById('noteTxt');
+    const optWrap = document.getElementById('optWrap');
+
+    let item = JSON.parse(localStorage.getItem('checkoutItem')||'null');
+    if(!item){
+      // If direct access, go back to Gift Store
+      window.location.replace('gift-store.html');
+    }
+
+    // Render item
+    const img = document.createElement('img');
+    img.src = item.image; img.alt = item.name; img.onerror = ()=>{ if(item.fallback) img.src = item.fallback; };
+    const wrap = document.createElement('div'); wrap.className='sum-item';
+    const info = document.createElement('div');
+    info.innerHTML = `<div style="font-weight:700">${item.name||'Gift Item'}</div>`;
+    const priceBox = document.createElement('div'); priceBox.innerHTML = `<strong id="unitPrice">${currency(Number(item.price||0))}</strong>`;
+    wrap.appendChild(img); wrap.appendChild(info); wrap.appendChild(priceBox);
+    summary.appendChild(wrap);
+
+    // Initialize customization from item if present
+    qVal.textContent = String(item.quantity || 1);
+    if (item.addNote) { optNote.checked = true; noteTxt.style.display = 'block'; noteTxt.value = item.noteText||''; }
+    if (item.giftWrap) { optWrap.checked = true; }
+
+    function recalc(){
+      const qty = Math.max(1, parseInt(qVal.textContent||'1',10)||1);
+      const base = Number(item.price||0) * qty;
+      const noteCost = optNote.checked ? 30 * qty : 0;
+      const wrapCost = optWrap.checked ? 50 * qty : 0;
+      subTotal.textContent = currency(base);
+      lineNote.style.display = optNote.checked ? '' : 'none';
+      lineWrap.style.display = optWrap.checked ? '' : 'none';
+      sumTotal.textContent = currency(base + noteCost + wrapCost);
+    }
+
+    // Event bindings
+    qMinus.addEventListener('click', ()=>{ let v = parseInt(qVal.textContent||'1',10)||1; if(v>1) v--; qVal.textContent = String(v); recalc(); });
+    qPlus.addEventListener('click', ()=>{ let v = parseInt(qVal.textContent||'1',10)||1; qVal.textContent = String(v+1); recalc(); });
+    optNote.addEventListener('change', ()=>{ noteTxt.style.display = optNote.checked ? 'block' : 'none'; recalc(); });
+    optWrap.addEventListener('change', recalc);
+
+    recalc();
+
+    // Place order (demo)
+    document.getElementById('placeOrder').addEventListener('click', ()=>{
+      const req = ['fn','ln','email','phone','addr','city','pin'];
+      let ok = true;
+      req.forEach(id=>{ if(!document.getElementById(id).value.trim()) ok=false; });
+      const formErr = document.getElementById('formErr');
+      if(!ok){ formErr.style.display='block'; return; } else { formErr.style.display='none'; }
+
+      // Persist order
+      const orderId = 'DSR' + Math.floor(100000 + Math.random()*900000);
+      const order = {
+        id: orderId,
+        status: 'Processing',
+        item: {
+          id: item.id,
+          name: item.name,
+          image: item.image,
+          price: Number(item.price||0),
+          quantity: Math.max(1, parseInt(qVal.textContent||'1',10)||1),
+          addNote: optNote.checked,
+          noteText: optNote.checked ? (noteTxt.value||'') : '',
+          giftWrap: optWrap.checked
+        },
+        when: new Date().toISOString(),
+        shipTo: {
+          fn: fn.value, ln: ln.value, email: email.value, phone: phone.value,
+          addr: addr.value, city: city.value, pin: pin.value, state: state.value, country: country.value
+        }
+      };
+      const orders = JSON.parse(localStorage.getItem('orders')||'[]');
+      orders.push(order); localStorage.setItem('orders', JSON.stringify(orders));
+
+      localStorage.removeItem('checkoutItem');
+
+      const orderMsg = document.getElementById('orderMsg');
+      orderMsg.style.display='block';
+      orderMsg.innerHTML = `<div class="panel" style="margin-top:10px">Thank you! Your order <strong>${orderId}</strong> has been placed. We will contact you shortly.</div>`;
+      setTimeout(()=>{ window.location.href = 'track-order.html'; }, 1200);
+    });
+  </script>
+</body>
+</html>

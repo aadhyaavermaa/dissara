@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Checkout | Dissara</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
   <style>
     .checkout{padding:100px 0}
@@ -30,14 +31,34 @@
 <body>
   <header class="floating-nav">
     <div class="brand">
-      <img src="logo.png" alt="Dissara" class="logo" />
+      <a href="index.html" aria-label="Home">
+        <img src="logo.png" alt="Dissara" class="logo" />
+      </a>
     </div>
     <nav class="navlinks">
-      <a href="index.html#shopby">ShopBy</a>
+      <a href="index.html">Home</a>
+      <a href="gift-store.html">Gift Store</a>
       <a href="collections.html">Collections</a>
+      <a href="index.html#newarrivals">New Arrivals</a>
+      <a href="index.html#shopby">Shop By</a>
       <a href="index.html#contact">Contact</a>
+      <a href="index.html#about">About Us</a>
+      <span id="authSlot"></span>
+      <div class="nav-actions">
+        <button id="wishlistIconButton" class="nav-icon-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
+          </svg>
+          <span id="wishlistCount" class="nav-icon-badge" style="display:none;">0</span>
+        </button>
+        <button id="cartButton" class="nav-icon-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span id="cartCount" class="nav-icon-badge" style="display:none;">0</span>
+        </button>
+      </div>
     </nav>
-    <button class="nav-cta" onclick="location.href='gift-store.html'">Gift Store</button>
   </header>
 
   <section class="checkout">
@@ -106,12 +127,30 @@
       const wrap = document.createElement('div'); wrap.className='sum-item';
       const info = document.createElement('div');
       info.innerHTML = `<div style="font-weight:700">${item.name}</div>
-        <div class="muted">Size: ${item.size}${item.color?`, Color: ${item.color}`:''}</div>
+        ${item.size ? `<div class="muted">Size: ${item.size}${item.color?`, Color: ${item.color}`:''}</div>` : ''}
+        ${item.color && !item.size ? `<div class=\"muted\">Color: ${item.color}</div>` : ''}
+        ${item.addNote && item.noteText ? `<div class=\"muted\">Note: ${item.noteText}</div>` : ''}
         <div class="muted">Qty: <span id="qty">${item.quantity||1}</span></div>`;
       const price = document.createElement('div'); price.innerHTML = `<strong>${currency(item.price)}</strong>`;
       wrap.appendChild(img); wrap.appendChild(info); wrap.appendChild(price);
       summary.appendChild(wrap);
-      subTotal.textContent = currency(item.price * (item.quantity||1));
+      // Calculate extras per unit
+      const qty = Number(item.quantity||1);
+      const extrasPerUnit = (item.addNote?30:0) + (item.giftWrap?50:0);
+      const extrasTotal = extrasPerUnit * qty;
+      // Render extras lines if any
+      if (extrasPerUnit > 0){
+        const extras = document.createElement('div');
+        extras.style.marginTop = '8px';
+        extras.innerHTML = `
+          ${item.addNote?'<div class="muted">Add note: +₹30</div>':''}
+          ${item.giftWrap?'<div class="muted">Gift wrap: +₹50</div>':''}
+        `;
+        summary.appendChild(extras);
+      }
+      const baseTotal = (Number(item.price)||0) * qty;
+      const totalWithExtras = baseTotal + extrasTotal;
+      subTotal.textContent = currency(totalWithExtras);
       sumTotal.textContent = subTotal.textContent;
     }
 
@@ -139,6 +178,160 @@
       orderMsg.innerHTML = `<div class="panel" style="margin-top:10px">Thank you! Your order <strong>${orderId}</strong> has been placed. We will contact you shortly.</div>`;
       // Optionally navigate to a track-order page
       setTimeout(()=>{ window.location.href = 'track-order.html'; }, 1200);
+    });
+
+    // Navigation functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      // Profile side panel
+      const side = document.createElement('div');
+      side.id = 'profileSide';
+      side.setAttribute('aria-hidden','true');
+      side.style.cssText = 'position:fixed;top:0;right:-340px;height:100vh;width:min(320px,92vw);background:var(--panel);border-left:1px solid rgba(212,175,55,.35);box-shadow: -20px 0 60px rgba(0,0,0,.5);z-index:1400;transition:right .25s ease; padding:16px; display:flex; flex-direction:column; gap:10px';
+      side.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <div style="font-weight:800">Your Profile</div>
+          <button id="sideClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px">Close</button>
+        </div>
+        <a href="my-orders.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">My Orders</a>
+        <a href="collections.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">Collections</a>
+        <a href="#contact" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">Contact</a>
+        <a href="#about" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:10px 12px; border-radius:12px; font-weight:700">About Us</a>
+      `;
+      document.body.appendChild(side);
+      const openSide = ()=>{ side.style.right='0'; side.setAttribute('aria-hidden','false'); };
+      const closeSide = ()=>{ side.style.right='-340px'; side.setAttribute('aria-hidden','true'); };
+      document.addEventListener('click', (e)=>{ if(side.getAttribute('aria-hidden')==='false' && !side.contains(e.target) && !e.target.closest('#authSlot')){ closeSide(); } });
+      document.getElementById('sideClose')?.addEventListener('click', closeSide);
+
+      // Auth: render profile if signed in, else Login button
+      function renderAuth(){
+        const slot = document.getElementById('authSlot');
+        const user = JSON.parse(localStorage.getItem('user')||'null');
+        if(!slot) return;
+        if(user){
+          slot.innerHTML = '<button id="profileBtn" title="Profile" style="background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 8px 22px rgba(212,175,55,.25)">👤</button>';
+          document.getElementById('profileBtn').addEventListener('click', (e)=>{ e.stopPropagation(); openSide(); });
+          // Inject Logout into side panel if not present
+          if(!document.getElementById('logoutBtn')){
+            const btn = document.createElement('button');
+            btn.id='logoutBtn'; btn.textContent='Log out';
+            btn.style.cssText='margin-top:6px; background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:10px 12px; border-radius:12px; font-weight:700; cursor:pointer';
+            document.getElementById('profileSide').appendChild(btn);
+            btn.addEventListener('click', ()=>{ localStorage.removeItem('user'); closeSide(); renderAuth(); });
+          }
+        } else {
+          slot.innerHTML = '<button id="loginBtn" title="Login" style="background:transparent; border:1px solid rgba(212,175,55,.45); color:var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; font-weight:800">Login</button>';
+          document.getElementById('loginBtn').addEventListener('click', (e)=>{ e.preventDefault(); openAuthModal(); });
+          const logout = document.getElementById('logoutBtn'); if(logout) logout.remove();
+        }
+      }
+
+      // Auth modal with users registry and improved UI
+      function openAuthModal(){
+        let backdrop = document.getElementById('authBackdrop');
+        if(!backdrop){
+          backdrop = document.createElement('div'); backdrop.id='authBackdrop';
+          backdrop.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1600';
+          const panel = document.createElement('div');
+          panel.style.cssText='width:min(640px,94%);background:linear-gradient(180deg, rgba(16,23,32,.97), rgba(11,15,20,.98));border:1px solid rgba(212,175,55,.34);border-radius:20px;box-shadow:0 40px 120px rgba(0,0,0,.7);overflow:hidden';
+          panel.innerHTML = `
+            <div style="background:linear-gradient(90deg, var(--gstart), var(--gend)); padding:16px; color:#0a0d10; display:flex; justify-content:space-between; align-items:center">
+              <div style="font-weight:900; letter-spacing:.04em">Welcome to Dissara</div>
+              <button id="authClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px; border-color:rgba(0,0,0,.2); color:#0a0d10">Close</button>
+            </div>
+            <div style="padding:16px">
+              <div id="authTabs" style="display:flex;gap:10px;margin-bottom:14px">
+                <button id="tabLogin" style="padding:8px 14px; border-radius:999px; border:1px solid rgba(212,175,55,.35); background:transparent; color:var(--ink); font-weight:800">Login</button>
+                <button id="tabSignup" style="padding:8px 14px; border-radius:999px; border:1px solid rgba(212,175,55,.35); background:transparent; color:var(--ink); font-weight:800">Sign Up</button>
+              </div>
+              <div id="authForms"></div>
+              <div id="authErr" style="color:#f87171;font-weight:700;display:none;margin-top:8px"></div>
+              <div id="authHint" class="lead" style="color:var(--muted); margin-top:6px"></div>
+            </div>
+          `;
+          backdrop.appendChild(panel);
+          document.body.appendChild(backdrop);
+          backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) backdrop.remove(); });
+          document.getElementById('authClose').addEventListener('click', ()=>backdrop.remove());
+          // Tabs
+          const forms = document.getElementById('authForms');
+          const tabs = { login: document.getElementById('tabLogin'), signup: document.getElementById('tabSignup') };
+          function setActive(which){
+            [tabs.login,tabs.signup].forEach(b=>{ b.style.background='transparent'; b.style.color='var(--ink)'; });
+            const active = which==='login'? tabs.login: tabs.signup;
+            active.style.background='linear-gradient(90deg, var(--gstart), var(--gend))';
+            active.style.color='#0a0d10';
+          }
+          function renderLogin(){
+            setActive('login');
+            forms.innerHTML = `
+              <div style="display:grid;gap:12px; grid-template-columns:1fr 1fr; align-items:start">
+                <div style="display:grid; gap:10px">
+                  <label>Email</label>
+                  <input id="liEmail" class="input" placeholder="you@example.com" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                  <label>Password</label>
+                  <input id="liPass" class="input" type="password" placeholder="••••••••" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                  <button id="doLogin" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Login</button>
+                </div>
+                <div style="border-left:1px solid rgba(212,175,55,.18); padding-left:14px; color:var(--muted)">
+                  <div style="font-weight:800; margin-bottom:6px">New here?</div>
+                  <div style="font-size:14px; margin-bottom:10px">Create an account to enjoy exclusive benefits, faster checkout, and personalized recommendations.</div>
+                  <button id="goSignup" class="btn-ghost" style="padding:8px 12px;border-radius:10px;font-weight:700">Create Account</button>
+                </div>
+              </div>
+            `;
+            document.getElementById('doLogin').onclick=doLogin;
+            document.getElementById('goSignup').onclick=renderSignup;
+          }
+          function renderSignup(){
+            setActive('signup');
+            forms.innerHTML = `
+              <div style="display:grid;gap:12px">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+                  <div><label>First Name</label><input id="suFn" class="input" placeholder="Aadhya" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/></div>
+                  <div><label>Last Name</label><input id="suLn" class="input" placeholder="Verma" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/></div>
+                </div>
+                <label>Email</label><input id="suEmail" class="input" placeholder="you@example.com" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Password</label><input id="suPass" class="input" type="password" placeholder="••••••••" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <button id="doSignup" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Create Account</button>
+                <div style="text-align:center; margin-top:8px"><button id="goLogin" class="btn-ghost" style="padding:6px 12px;border-radius:10px;font-weight:700">Already have an account? Login</button></div>
+              </div>
+            `;
+            document.getElementById('doSignup').onclick=doSignup;
+            document.getElementById('goLogin').onclick=renderLogin;
+          }
+          function doLogin(){
+            const email = document.getElementById('liEmail').value.trim();
+            const pass = document.getElementById('liPass').value.trim();
+            const err = document.getElementById('authErr'); err.style.display='none';
+            if(!email||!pass){ err.textContent='Please fill all fields.'; err.style.display='block'; return; }
+            const users = JSON.parse(localStorage.getItem('users')||'[]');
+            const user = users.find(u=>u.email===email&&u.password===pass);
+            if(user){ localStorage.setItem('user', JSON.stringify(user)); backdrop.remove(); renderAuth(); }
+            else{ err.textContent='Invalid email or password.'; err.style.display='block'; }
+          }
+          function doSignup(){
+            const fn = document.getElementById('suFn').value.trim();
+            const ln = document.getElementById('suLn').value.trim();
+            const email = document.getElementById('suEmail').value.trim();
+            const pass = document.getElementById('suPass').value.trim();
+            const err = document.getElementById('authErr'); err.style.display='none';
+            if(!fn||!ln||!email||!pass){ err.textContent='Please fill all fields.'; err.style.display='block'; return; }
+            const users = JSON.parse(localStorage.getItem('users')||'[]');
+            if(users.find(u=>u.email===email)){ err.textContent='Email already exists.'; err.style.display='block'; return; }
+            users.push({id:Date.now(), fn, ln, email, password:pass, created:new Date().toISOString()});
+            localStorage.setItem('users', JSON.stringify(users));
+            const user = {id:users[users.length-1].id, fn, ln, email};
+            localStorage.setItem('user', JSON.stringify(user));
+            backdrop.remove(); renderAuth();
+          }
+          tabs.login.onclick = renderLogin;
+          tabs.signup.onclick = renderSignup;
+          renderLogin();
+        }
+      }
+
+      renderAuth();
     });
   </script>
 </body>

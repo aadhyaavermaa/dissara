@@ -5,8 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dissara Luxury | Fine Jewellery</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/luxury.css?v=2" />
   <style>
+    /* Complete Navigation CSS - Same as Collections Page */
+    .floating-nav{
+      position:fixed !important; 
+      top:18px !important; 
+      left:50% !important; 
+      transform:translateX(-50%) !important;
+      width:min(1120px,92%) !important;
+      display:flex !important; 
+      align-items:center !important;
+      background:rgba(12,16,22,.55) !important;
+      border:1px solid rgba(212,175,55,.35) !important;
+      border-radius:18px !important; 
+      padding:14px 18px !important; 
+      z-index:9999 !important;
+      backdrop-filter: blur(8px) !important;
+      box-shadow: 0 8px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.03) !important;
+    }
+    .brand{
+      display:flex !important; 
+      align-items:center !important; 
+      font-weight:700 !important; 
+      letter-spacing:.08em !important; 
+      margin-right: 20px !important
+    }
+    .brand img{
+      height:38px !important; 
+      width:auto !important
+    }
+    .navlinks{
+      display:flex !important; 
+      align-items:center !important; 
+      justify-content: space-between !important; 
+      width: 100% !important; 
+      padding: 0 20px !important;
+    }
+    .nav-actions{
+      position:relative !important; 
+      display:flex !important; 
+      align-items:center !important; 
+      gap:20px !important
+    }
+    .nav-icon-btn{
+      color:var(--ink) !important; 
+      background:transparent !important; 
+      border:none !important; 
+      padding:0 !important; 
+      cursor:pointer !important
+    }
+    .nav-icon-btn:hover{
+      color:var(--gold) !important
+    }
+    .nav-icon-badge{
+      position:absolute !important;
+      top:-0.45rem !important;
+      right:-0.45rem !important;
+      background:var(--gold) !important;
+      color:#fff !important;
+      font-size:10px !important;
+      font-weight:700 !important;
+      border-radius:999px !important;
+      width:16px !important;
+      height:16px !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+    }
+    .navlinks a{
+      color:var(--ink) !important; 
+      text-decoration:none !important; 
+      font-weight:600 !important; 
+      letter-spacing:.04em !important;
+      padding:8px 12px !important; 
+      border-radius:12px !important; 
+      position:relative !important;
+    }
+    .navlinks a:hover{
+      color:var(--gold) !important
+    }
+    
     /* Themed select for Sort By */
     #shopSort{
       background: rgba(16,23,32,.9);
@@ -46,6 +126,13 @@
       display: block; /* Show when has .show class */
     }
 
+    /* Ensure navigation is visible */
+    .floating-nav {
+      z-index: 9999 !important;
+      background: rgba(12,16,22,0.95) !important;
+      border: 2px solid #d4af37 !important;
+    }
+    
     .buy-now-btn {
       pointer-events: auto !important;
       cursor: pointer !important;
@@ -56,58 +143,1257 @@
   </style>
 </head>
 <body>
-  <!-- Floating Navigation (unified) -->
-    <header class="floating-nav">
-      <div class="brand">
-        <a href="index.html" aria-label="Home">
-          <img src="logo.png" alt="Dissara" class="logo" />
-        </a>
-      </div>
-      <nav class="navlinks">
-        <a href="index.html">Home</a>
-        <a href="gift-store.html">Gift Store</a>
-        <a href="collections.html">Collections</a>
-        <a href="index.html#newarrivals">New Arrivals</a>
-        <a href="index.html#shopby">Shop By</a>
-        <a href="index.html#contact">Contact</a>
-        <a href="index.html#about">About Us</a>
-        <span id="authSlot"></span>
-        <div class="nav-actions">
-          <button id="wishlistIconButton" class="nav-icon-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
-            </svg>
-            <span id="wishlistCount" class="nav-icon-badge" style="display:none;">0</span>
-          </button>
-          <button id="cartButton" class="nav-icon-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <span id="cartCount" class="nav-icon-badge" style="display:none;">0</span>
-          </button>
+  <header class="floating-nav">
+    <div class="brand">
+      <a href="index.html" aria-label="Home">
+        <img src="logo.png" alt="Dissara" class="logo" />
+      </a>
+    </div>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <nav class="navlinks" id="navlinks">
+      <a href="index.html">Home</a>
+      <a href="gift-store.html">Gift Store</a>
+      <a href="collections.html">Collections</a>
+      <a href="index.html#shopby">New Arrivals</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="index.html#about">About Us</a>
+      <span id="authSlot"></span>
+    </nav>
+    <div class="nav-actions">
+      <button id="wishlistIconButton" class="nav-icon-btn" style="position: relative; padding: 8px; display: flex; align-items: center; justify-content: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width: 20px; height: 20px; z-index: 1;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-4.35-2.43-7.05-5.14C2.24 13.15 2 10.1 4.03 8.07a4.26 4.26 0 0 1 6.02.25L12 10.34l1.95-2.02a4.26 4.26 0 0 1 6.02-.25c2.03 2.03 1.79 5.08-.92 7.79C16.35 18.57 12 21 12 21z" />
+        </svg>
+        <span id="wishlistCount" class="nav-icon-badge" style="display:none; position: absolute; top: -4px; right: -4px; z-index: 2;">0</span>
+      </button>
+      <button id="cartButton" class="nav-icon-btn" style="position: relative; padding: 8px; display: flex; align-items: center; justify-content: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 20px; height: 20px; z-index: 1;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span id="cartCount" class="nav-icon-badge" style="display:none; position: absolute; top: -4px; right: -4px; z-index: 2;">0</span>
+      </button>
+    </div>
+  </header>
 
-          <!-- Cart Dropdown -->
-          <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 border border-gray-200" style="min-width: 320px;">
-            <div class="p-4 border-b border-gray-200">
-              <h3 class="text-lg font-semibold text-gray-800">Your Cart</h3>
-            </div>
-            <div id="cartItems" class="max-h-96 overflow-y-auto">
-              <!-- Cart items will be added here dynamically -->
-              <p class="text-center text-gray-500 py-4">Your cart is empty</p>
-            </div>
-            <div id="cartTotal" class="hidden p-4 border-t border-gray-200 bg-gray-50">
-              <div class="flex justify-between items-center mb-2">
-                <span class="font-medium text-gray-700">Total:</span>
-                <span id="cartTotalAmount" class="font-bold text-lg text-gray-900">₹0.00</span>
+  <!-- Cart Dropdown -->
+  <div id="cartDropdown" class="cart-dropdown" style="display: none;">
+    <div class="cart-header">
+      <h3>Shopping Cart</h3>
+      <button id="closeCart" class="close-cart">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Cart items will be dynamically added here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+      <button id="checkoutBtn" class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Add padding to body to account for fixed navigation -->
+  <div style="padding-top: 80px;">
+
+  <!-- Product Data for Curated Picks -->
+  <script>
+    // Product Data
+    const recentlyAddedProducts = [
+      {
+        id: 201,
+        name: "Celestial Diamond Ring",
+        price: 15999,
+        mrp: 22999,
+        discount: 30,
+        rating: 4.8,
+        image: "ring1.jpg",
+        category: "rings",
+        sizes: ["5", "6", "7", "8"],
+        colors: ["Gold", "White Gold"],
+        details: "Elegant diamond ring with celestial-inspired design and brilliant-cut stones.",
+        reviews: [
+          { user: "Priya", text: "Absolutely stunning! Perfect for engagement." },
+          { user: "Anjali", text: "Beautiful craftsmanship and great quality." }
+        ]
+      },
+      {
+        id: 202,
+        name: "Rose Gold Elegance Necklace",
+        price: 18999,
+        mrp: 27999,
+        discount: 32,
+        rating: 4.9,
+        image: "necklace1.jpg",
+        category: "necklaces",
+        sizes: ["16", "18", "20"],
+        colors: ["Rose Gold"],
+        details: "Delicate rose gold necklace with intricate floral pattern and premium finish.",
+        reviews: [
+          { user: "Sneha", text: "Gorgeous piece! Received so many compliments." },
+          { user: "Kavya", text: "Perfect anniversary gift!" }
+        ]
+      },
+      {
+        id: 203,
+        name: "Royal Blue Sapphire Earrings",
+        price: 21999,
+        mrp: 31999,
+        discount: 31,
+        rating: 4.7,
+        image: "earings1.jpg",
+        category: "earrings",
+        sizes: ["One Size"],
+        colors: ["Gold", "White Gold"],
+        details: "Luxurious sapphire earrings with royal blue stones and gold accents.",
+        reviews: [
+          { user: "Neha", text: "Elegant and sophisticated! Love the color." },
+          { user: "Divya", text: "Perfect for special occasions." }
+        ]
+      },
+      {
+        id: 204,
+        name: "Vintage Charm Bracelet",
+        price: 13999,
+        mrp: 19999,
+        discount: 30,
+        rating: 4.6,
+        image: "bracelet1.jpg",
+        category: "bracelets",
+        sizes: ["7", "7.5", "8"],
+        colors: ["Gold", "Silver"],
+        details: "Vintage-inspired bracelet with intricate charms and detailed craftsmanship.",
+        reviews: [
+          { user: "Rashmi", text: "Beautiful vintage design! Very unique." },
+          { user: "Pooja", text: "Great quality and looks amazing." }
+        ]
+      }
+    ];
+
+    const comingSoonProducts = [
+      {
+        id: 301,
+        name: "Mystic Emerald Collection",
+        price: 24999,
+        mrp: 34999,
+        discount: 29,
+        rating: 0,
+        image: "necklace2.jpg",
+        category: "necklaces",
+        sizes: ["16", "18", "20"],
+        colors: ["Gold", "White Gold"],
+        details: "Coming soon: Exquisite emerald collection with rare gemstones and premium craftsmanship.",
+        releaseDate: "December 15, 2024",
+        reviews: []
+      },
+      {
+        id: 302,
+        name: "Platinum Heritage Ring",
+        price: 32999,
+        mrp: 44999,
+        discount: 27,
+        rating: 0,
+        image: "ring2.jpg",
+        category: "rings",
+        sizes: ["5", "6", "7", "8", "9"],
+        colors: ["Platinum"],
+        details: "Coming soon: Premium platinum heritage ring with timeless design and exceptional quality.",
+        releaseDate: "December 20, 2024",
+        reviews: []
+      },
+      {
+        id: 303,
+        name: "Pearl Cascade Earrings",
+        price: 17999,
+        mrp: 25999,
+        discount: 31,
+        rating: 0,
+        image: "earings2.jpg",
+        category: "earrings",
+        sizes: ["One Size"],
+        colors: ["Gold", "Silver"],
+        details: "Coming soon: Elegant pearl cascade earrings with freshwater pearls and gold accents.",
+        releaseDate: "December 18, 2024",
+        reviews: []
+      },
+      {
+        id: 304,
+        name: "Diamond Tennis Bracelet",
+        price: 45999,
+        mrp: 59999,
+        discount: 23,
+        rating: 0,
+        image: "bracelet2.jpg",
+        category: "bracelets",
+        sizes: ["7", "7.5", "8", "8.5"],
+        colors: ["Gold", "White Gold"],
+        details: "Coming soon: Classic diamond tennis bracelet with brilliant-cut diamonds and secure clasp.",
+        releaseDate: "December 22, 2024",
+        reviews: []
+      }
+    ];
+
+    // Enhanced Product Card Styles
+    const productCardStyles = `
+      <style>
+        .card {
+          background: linear-gradient(145deg, rgba(16,23,32,0.9), rgba(11,15,20,0.95));
+          border: 1px solid rgba(212,175,55,0.3);
+          border-radius: 20px;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        
+        .card:hover {
+          transform: translateY(-8px) scale(1.02);
+          box-shadow: 0 20px 40px rgba(212,175,55,0.2), 0 10px 30px rgba(0,0,0,0.4);
+          border-color: rgba(212,175,55,0.6);
+        }
+        
+        .card-inner {
+          position: relative;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .badge {
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          background: linear-gradient(135deg, var(--gstart), var(--gend));
+          color: #0a0d10;
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 0.75rem;
+          font-weight: 700;
+          z-index: 10;
+          box-shadow: 0 4px 12px rgba(212,175,55,0.4);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        
+        .card-img {
+          position: relative;
+          height: 280px;
+          overflow: hidden;
+          background: radial-gradient(circle at center, rgba(212,175,55,0.05), transparent);
+        }
+        
+        .card-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover .card-img img {
+          transform: scale(1.1);
+        }
+        
+        .card-img::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.3));
+          z-index: 1;
+        }
+        
+        .card-content {
+          padding: 20px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .card-content h3 {
+          color: var(--ink);
+          font-size: 1.1rem;
+          font-weight: 700;
+          margin: 0 0 12px 0;
+          line-height: 1.3;
+          letter-spacing: 0.3px;
+        }
+        
+        .price {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 12px;
+        }
+        
+        .current {
+          color: var(--gold);
+          font-size: 1.4rem;
+          font-weight: 800;
+        }
+        
+        .original {
+          color: var(--muted);
+          text-decoration: line-through;
+          font-size: 1rem;
+          opacity: 0.7;
+        }
+        
+        .rating {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 15px;
+          color: var(--gold);
+          font-size: 0.9rem;
+        }
+        
+        .rating span {
+          color: var(--ink);
+          font-weight: 600;
+        }
+        
+        .card-actions {
+          display: flex;
+          gap: 8px;
+          margin-top: auto;
+          padding-top: 15px;
+        }
+        
+        .view-btn, .add-cart-btn, .buy-now-btn, .notify-btn {
+          flex: 1;
+          padding: 12px 16px;
+          border-radius: 12px;
+          font-weight: 600;
+          font-size: 0.85rem;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .view-btn {
+          background: transparent;
+          color: var(--ink);
+          border: 1px solid rgba(212,175,55,0.3);
+        }
+        
+        .view-btn:hover {
+          background: rgba(212,175,55,0.1);
+          border-color: var(--gold);
+          color: var(--gold);
+        }
+        
+        .add-cart-btn {
+          background: linear-gradient(135deg, var(--gstart), var(--gend));
+          color: #0a0d10;
+          box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+        }
+        
+        .add-cart-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(212,175,55,0.4);
+        }
+        
+        .buy-now-btn {
+          background: transparent;
+          color: var(--gold);
+          border: 2px solid var(--gold);
+        }
+        
+        .buy-now-btn:hover {
+          background: var(--gold);
+          color: #0a0d10;
+          box-shadow: 0 4px 12px rgba(212,175,55,0.4);
+        }
+        
+        .notify-btn {
+          background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+          color: white;
+          box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+        }
+        
+        .notify-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(255,107,107,0.4);
+        }
+        
+        .release-date {
+          color: var(--gold);
+          font-weight: 600;
+          margin-bottom: 8px;
+          font-size: 0.9rem;
+        }
+        
+        .discount-info {
+          color: #ff6b6b;
+          font-weight: 600;
+          margin-bottom: 12px;
+          font-size: 0.85rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .card-img {
+            height: 220px;
+          }
+          
+          .card-content {
+            padding: 15px;
+          }
+          
+          .card-actions {
+            flex-direction: column;
+          }
+          
+          .view-btn, .add-cart-btn, .buy-now-btn, .notify-btn {
+            width: 100%;
+          }
+        }
+      </style>
+    `;
+
+    // Function to create enhanced product card HTML
+    function createProductCard(product, isComingSoon = false) {
+      if (isComingSoon) {
+        return `
+          <div class="card" data-product='${JSON.stringify(product)}'>
+            <div class="card-inner">
+              <span class="badge" style="background: linear-gradient(135deg, #ff6b6b, #ff8e53);">Coming Soon</span>
+              <div class="card-img">
+                <img src="${product.image}" alt="${product.name}" />
               </div>
-              <button id="checkoutBtn" class="w-full bg-[var(--gold)] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition">
-                Proceed to Checkout
-              </button>
+              <div class="card-content">
+                <h3>${product.name}</h3>
+                <div class="release-date">📅 ${product.releaseDate}</div>
+                <div class="price">
+                  <span class="current">₹${product.price.toLocaleString('en-IN')}</span>
+                  <span class="original">₹${product.mrp.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="discount-info">${product.discount}% OFF - Pre-order Now</div>
+                <p style="color: var(--ink); margin-bottom: 15px; font-size: 0.9rem; line-height: 1.4;">${product.details}</p>
+                <div class="card-actions">
+                  <button class="notify-btn">Notify Me</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        return `
+          <div class="card" data-product='${JSON.stringify(product)}'>
+            <div class="card-inner">
+              <span class="badge">${product.discount}% OFF</span>
+              <div class="card-img">
+                <img src="${product.image}" alt="${product.name}" />
+              </div>
+              <div class="card-content">
+                <h3>${product.name}</h3>
+                <div class="price">
+                  <span class="current">₹${product.price.toLocaleString('en-IN')}</span>
+                  <span class="original">₹${product.mrp.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="rating">
+                  ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}
+                  <span>${product.rating}</span>
+                </div>
+                <div class="card-actions">
+                  <button class="view-btn">View Details</button>
+                  <button class="add-cart-btn">Add to Cart</button>
+                  <button class="buy-now-btn">Buy Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Add styles to head
+    document.head.insertAdjacentHTML('beforeend', productCardStyles);
+
+    // Cart Dropdown Styles
+    const cartDropdownStyles = `
+      <style>
+        .cart-dropdown {
+          position: fixed;
+          top: 60px;
+          right: 20px;
+          width: 380px;
+          max-height: 500px;
+          background: linear-gradient(145deg, rgba(16,23,32,0.98), rgba(11,15,20,0.99));
+          border: 1px solid rgba(212,175,55,0.4);
+          border-radius: 16px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212,175,55,0.1);
+          z-index: 10000;
+          overflow: hidden;
+          backdrop-filter: blur(10px);
+        }
+        
+        .cart-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px;
+          border-bottom: 1px solid rgba(212,175,55,0.3);
+          background: rgba(212,175,55,0.05);
+        }
+        
+        .cart-header h3 {
+          margin: 0;
+          color: var(--ink);
+          font-size: 1.2rem;
+          font-weight: 700;
+        }
+        
+        .close-cart {
+          background: none;
+          border: none;
+          color: var(--ink);
+          font-size: 24px;
+          cursor: pointer;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+        
+        .close-cart:hover {
+          background: rgba(212,175,55,0.2);
+          color: var(--gold);
+        }
+        
+        .cart-items {
+          max-height: 300px;
+          overflow-y: auto;
+          padding: 10px;
+        }
+        
+        .cart-item {
+          display: flex;
+          gap: 15px;
+          padding: 15px;
+          margin-bottom: 10px;
+          background: rgba(212,175,55,0.03);
+          border-radius: 12px;
+          border: 1px solid rgba(212,175,55,0.1);
+          transition: all 0.2s ease;
+        }
+        
+        .cart-item:hover {
+          background: rgba(212,175,55,0.08);
+          border-color: rgba(212,175,55,0.3);
+        }
+        
+        .cart-item img {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 8px;
+          border: 1px solid rgba(212,175,55,0.2);
+        }
+        
+        .cart-item-details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        
+        .cart-item-name {
+          color: var(--ink);
+          font-weight: 600;
+          font-size: 0.9rem;
+          margin-bottom: 4px;
+          line-height: 1.3;
+        }
+        
+        .cart-item-meta {
+          color: var(--muted);
+          font-size: 0.8rem;
+          margin-bottom: 4px;
+        }
+        
+        .cart-item-price {
+          color: var(--gold);
+          font-weight: 700;
+          font-size: 0.9rem;
+        }
+        
+        .cart-item-remove {
+          background: rgba(255,107,107,0.1);
+          border: 1px solid rgba(255,107,107,0.3);
+          color: #ff6b6b;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 12px;
+          transition: all 0.2s ease;
+        }
+        
+        .cart-item-remove:hover {
+          background: rgba(255,107,107,0.2);
+          border-color: rgba(255,107,107,0.5);
+          transform: scale(1.1);
+        }
+        
+        .empty-cart {
+          text-align: center;
+          padding: 40px 20px;
+          color: var(--muted);
+        }
+        
+        .empty-cart-icon {
+          font-size: 48px;
+          margin-bottom: 15px;
+          opacity: 0.5;
+        }
+        
+        .cart-footer {
+          padding: 20px;
+          border-top: 1px solid rgba(212,175,55,0.3);
+          background: rgba(212,175,55,0.05);
+        }
+        
+        .cart-total {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+          font-size: 1.1rem;
+          font-weight: 700;
+        }
+        
+        .cart-total span:first-child {
+          color: var(--ink);
+        }
+        
+        .cart-total span:last-child {
+          color: var(--gold);
+          font-size: 1.3rem;
+        }
+        
+        .checkout-btn {
+          width: 100%;
+          background: linear-gradient(135deg, var(--gstart), var(--gend));
+          color: #0a0d10;
+          border: none;
+          padding: 14px;
+          border-radius: 12px;
+          font-weight: 700;
+          font-size: 0.95rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+        }
+        
+        .checkout-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(212,175,55,0.4);
+        }
+        
+        /* Scrollbar styling */
+        .cart-items::-webkit-scrollbar {
+          width: 6px;
+        }
+        
+        .cart-items::-webkit-scrollbar-track {
+          background: rgba(212,175,55,0.1);
+          border-radius: 3px;
+        }
+        
+        .cart-items::-webkit-scrollbar-thumb {
+          background: rgba(212,175,55,0.4);
+          border-radius: 3px;
+        }
+        
+        .cart-items::-webkit-scrollbar-thumb:hover {
+          background: rgba(212,175,55,0.6);
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+          .cart-dropdown {
+            width: calc(100vw - 40px);
+            right: 20px;
+            left: 20px;
+          }
+        }
+      </style>
+    `;
+
+    // Add cart styles to head
+    document.head.insertAdjacentHTML('beforeend', cartDropdownStyles);
+
+    // Load Recently Added Products
+    function loadRecentlyAdded(filter = 'all') {
+      const grid = document.getElementById('recentlyAddedGrid');
+      if (!grid) return;
+      
+      const filteredProducts = filter === 'all' 
+        ? recentlyAddedProducts 
+        : recentlyAddedProducts.filter(p => p.category === filter);
+      
+      grid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
+      
+      // Add event listeners
+      addProductEventListeners(grid, false);
+    }
+
+    // Load Coming Soon Products
+    function loadComingSoon(filter = 'all') {
+      const grid = document.getElementById('comingSoonGrid');
+      if (!grid) return;
+      
+      const filteredProducts = filter === 'all' 
+        ? comingSoonProducts 
+        : comingSoonProducts.filter(p => p.category === filter);
+      
+      grid.innerHTML = filteredProducts.map(product => createProductCard(product, true)).join('');
+      
+      // Add event listeners for notify buttons
+      grid.addEventListener('click', (e) => {
+        if (e.target.classList.contains('notify-btn')) {
+          const card = e.target.closest('.card');
+          const product = JSON.parse(card.getAttribute('data-product'));
+          alert(`You'll be notified when "${product.name}" is available!`);
+        }
+      });
+    }
+
+    // Add event listeners to product cards
+    function addProductEventListeners(grid, isComingSoon = false) {
+      grid.addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        if (!card || !grid.contains(card)) return;
+        
+        const product = JSON.parse(card.getAttribute('data-product'));
+        
+        if (e.target.classList.contains('view-btn')) {
+          openModal(product);
+        } else if (e.target.classList.contains('add-cart-btn')) {
+          addToCart(product);
+        } else if (e.target.classList.contains('buy-now-btn')) {
+          buyNow(product);
+        }
+      });
+    }
+
+    // Add to cart function
+    function addToCart(product) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      
+      cart.push({
+        ...product,
+        selectedSize: product.sizes[0] || 'One Size',
+        selectedColor: product.colors[0] || 'Gold',
+        quantity: 1
+      });
+      
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      alert('Product added to cart!');
+    }
+
+    // Buy now function
+    function buyNow(product) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      
+      cart.push({
+        ...product,
+        selectedSize: product.sizes[0] || 'One Size',
+        selectedColor: product.colors[0] || 'Gold',
+        quantity: 1
+      });
+      
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      
+      // Redirect to checkout
+      window.location.href = 'checkout.html';
+    }
+
+    // Update cart count
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartCount = document.getElementById('cartCount');
+      if (cartCount) {
+        cartCount.textContent = cart.length;
+        cartCount.style.display = cart.length > 0 ? 'flex' : 'none';
+      }
+    }
+
+    // Cart Dropdown Functions
+    function displayCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = `
+          <div class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <p>Your cart is empty</p>
+            <p style="font-size: 0.9rem; margin-top: 8px;">Add some beautiful jewelry to get started!</p>
+          </div>
+        `;
+        cartTotal.textContent = '₹0';
+        return;
+      }
+      
+      let total = 0;
+      let cartHTML = '';
+      
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * (item.quantity || 1);
+        total += itemTotal;
+        
+        cartHTML += `
+          <div class="cart-item" data-index="${index}">
+            <img src="${item.image}" alt="${item.name}" />
+            <div class="cart-item-details">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-meta">
+                Size: ${item.selectedSize || 'One Size'} | Color: ${item.selectedColor || 'Gold'} | Qty: ${item.quantity || 1}
+              </div>
+              <div class="cart-item-price">₹${itemTotal.toLocaleString('en-IN')}</div>
+            </div>
+            <div class="cart-item-remove" onclick="removeFromCart(${index})">×</div>
+          </div>
+        `;
+      });
+      
+      cartItems.innerHTML = cartHTML;
+      cartTotal.textContent = `₹${total.toLocaleString('en-IN')}`;
+    }
+
+    function removeFromCart(index) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      displayCart();
+    }
+
+    function toggleCartDropdown() {
+      const cartDropdown = document.getElementById('cartDropdown');
+      const cartButton = document.getElementById('cartButton');
+      const isVisible = cartDropdown.style.display !== 'none';
+      
+      if (isVisible) {
+        cartDropdown.style.display = 'none';
+      } else {
+        // Get cart button position
+        const cartRect = cartButton.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Position dropdown near the cart button
+        cartDropdown.style.top = (cartRect.bottom + scrollTop + 10) + 'px';
+        cartDropdown.style.right = (window.innerWidth - cartRect.right) + 'px';
+        
+        displayCart();
+        cartDropdown.style.display = 'block';
+      }
+    }
+
+    // Cart event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // Cart button click
+      const cartButton = document.getElementById('cartButton');
+      if (cartButton) {
+        cartButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleCartDropdown();
+        });
+      }
+      
+      // Close cart button
+      const closeCart = document.getElementById('closeCart');
+      if (closeCart) {
+        closeCart.addEventListener('click', function() {
+          document.getElementById('cartDropdown').style.display = 'none';
+        });
+      }
+      
+      // Checkout button
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function() {
+          window.location.href = 'checkout.html';
+        });
+      }
+      
+      // Close cart when clicking outside
+      document.addEventListener('click', function(e) {
+        const cartDropdown = document.getElementById('cartDropdown');
+        const cartButton = document.getElementById('cartButton');
+        
+        if (cartDropdown.style.display !== 'none' && 
+            !cartDropdown.contains(e.target) && 
+            !cartButton.contains(e.target)) {
+          cartDropdown.style.display = 'none';
+        }
+      });
+      
+      // Update cart count on load
+      updateCartCount();
+    });
+
+    // Modal functionality
+    function openModal(product) {
+      // Create modal if it doesn't exist
+      let modal = document.getElementById('productModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'productModal';
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 2000;
+        `;
+        document.body.appendChild(modal);
+      }
+
+      modal.innerHTML = `
+        <div style="background: var(--panel); border-radius: 20px; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative;">
+          <button id="modalClose" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--ink); font-size: 24px; cursor: pointer;">&times;</button>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 30px;">
+            <div>
+              <img src="${product.image}" alt="${product.name}" style="width: 100%; border-radius: 15px;" />
+            </div>
+            <div>
+              <h2 style="color: var(--ink); margin-bottom: 15px;">${product.name}</h2>
+              <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                <span style="color: var(--gold); font-size: 24px; font-weight: bold;">₹${product.price.toLocaleString('en-IN')}</span>
+                <span style="color: var(--muted); text-decoration: line-through;">₹${product.mrp.toLocaleString('en-IN')}</span>
+                <span style="background: var(--gold); color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">${product.discount}% OFF</span>
+              </div>
+              <div style="color: var(--gold); margin-bottom: 15px;">
+                ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))} ${product.rating}
+              </div>
+              <p style="color: var(--ink); margin-bottom: 20px;">${product.details}</p>
+              
+              <div style="margin-bottom: 20px;">
+                <label style="color: var(--ink); display: block; margin-bottom: 5px;">Size:</label>
+                <select id="sizeSelect" style="width: 100%; padding: 10px; background: var(--panel); border: 1px solid rgba(212,175,55,.3); color: var(--ink); border-radius: 8px;">
+                  ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+                </select>
+              </div>
+              
+              <div style="margin-bottom: 20px;">
+                <label style="color: var(--ink); display: block; margin-bottom: 5px;">Color:</label>
+                <select id="colorSelect" style="width: 100%; padding: 10px; background: var(--panel); border: 1px solid rgba(212,175,55,.3); color: var(--ink); border-radius: 8px;">
+                  ${product.colors.map(color => `<option value="${color}">${color}</option>`).join('')}
+                </select>
+              </div>
+              
+              <div style="display: flex; gap: 10px;">
+                <button id="addToCartBtn" style="flex: 1; background: var(--gold); color: #0a0d10; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">Add to Cart</button>
+                <button id="buyNowBtn" style="flex: 1; background: transparent; color: var(--ink); border: 1px solid var(--gold); padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">Buy Now</button>
+              </div>
             </div>
           </div>
         </div>
-      </nav>
-    </header>
+      `;
+
+      modal.style.display = 'flex';
+
+      // Add event listeners
+      document.getElementById('modalClose').addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      document.getElementById('addToCartBtn').addEventListener('click', () => {
+        const size = document.getElementById('sizeSelect').value;
+        const color = document.getElementById('colorSelect').value;
+        
+        addToCart({
+          ...product,
+          selectedSize: size,
+          selectedColor: color
+        });
+        
+        modal.style.display = 'none';
+      });
+
+      document.getElementById('buyNowBtn').addEventListener('click', () => {
+        const size = document.getElementById('sizeSelect').value;
+        const color = document.getElementById('colorSelect').value;
+        
+        buyNow({
+          ...product,
+          selectedSize: size,
+          selectedColor: color
+        });
+        
+        modal.style.display = 'none';
+      });
+
+      // Close modal when clicking outside
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load initial products
+      loadRecentlyAdded();
+      loadComingSoon();
+      
+      // Category tab switching
+      const categoryTabs = document.querySelectorAll('.category-tab');
+      const productSections = document.querySelectorAll('.product-section');
+      
+      categoryTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const category = tab.getAttribute('data-category');
+          
+          // Update tab styles
+          categoryTabs.forEach(t => {
+            t.style.background = 'transparent';
+            t.style.color = 'var(--ink)';
+            t.style.border = '1px solid rgba(212,175,55,.35)';
+          });
+          
+          tab.style.background = 'linear-gradient(90deg, var(--gstart), var(--gend))';
+          tab.style.color = '#0a0d10';
+          tab.style.border = 'none';
+          
+          // Show/hide sections
+          productSections.forEach(section => {
+            section.style.display = 'none';
+          });
+          
+          document.getElementById(category).style.display = 'block';
+        });
+      });
+      
+      // Filter dropdown functionality
+      const categoryFilter = document.getElementById('categoryFilter');
+      if (categoryFilter) {
+        categoryFilter.addEventListener('change', () => {
+          const activeTab = document.querySelector('.category-tab.active');
+          const activeCategory = activeTab.getAttribute('data-category');
+          
+          if (activeCategory === 'recently-added') {
+            loadRecentlyAdded(categoryFilter.value);
+          } else {
+            loadComingSoon(categoryFilter.value);
+          }
+        });
+      }
+      
+      // Update cart count on load
+      updateCartCount();
+    });
+  </script>
+
+  <script>
+    // Profile side panel creation
+    const side = document.createElement('div');
+    side.id='profileSide';
+    side.style.cssText='position:fixed; top:0; right:-340px; width:320px; height:100vh; background:linear-gradient(180deg, rgba(16,23,32,.97), rgba(11,15,20,.98)); border-left:1px solid rgba(212,175,55,.34); z-index:1500; transition:right 0.3s; padding:20px; overflow-y:visible; aria-hidden:true; display:flex; flex-direction:column;';
+    side.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px">
+        <div style="font-weight:900; letter-spacing:.04em; color:var(--ink); font-size:18px">My Profile</div>
+        <button id="sideClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px; background:transparent; border:1px solid rgba(212,175,55,.35); color:var(--ink)">Close</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:15px; flex-grow:1;">
+        <a href="my-orders.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:15px 20px; border-radius:12px; font-weight:700; display:block; text-align:center; transition:all 0.3s;">My Orders</a>
+        <a href="collections.html" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:15px 20px; border-radius:12px; font-weight:700; display:block; text-align:center; transition:all 0.3s;">Collections</a>
+        <a href="index.html#contact" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:15px 20px; border-radius:12px; font-weight:700; display:block; text-align:center; transition:all 0.3s;">Contact</a>
+        <a href="index.html#about" style="text-decoration:none; color:var(--ink); border:1px solid rgba(212,175,55,.3); padding:15px 20px; border-radius:12px; font-weight:700; display:block; text-align:center; transition:all 0.3s;">About Us</a>
+        <button id="logoutBtn" style="margin-top:20px; background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; padding:15px 20px; border-radius:12px; font-weight:700; cursor:pointer; display:block; text-align:center; transition:all 0.3s; width:100%;">Log out</button>
+      </div>
+    `;
+    document.body.appendChild(side);
+    const profileBtn = document.getElementById('profileBtn');
+    const openSide = ()=>{ side.style.right='0'; side.setAttribute('aria-hidden','false'); };
+    const closeSide = ()=>{ side.style.right='-340px'; side.setAttribute('aria-hidden','true'); };
+    document.addEventListener('click', (e)=>{ if(side.getAttribute('aria-hidden')==='false' && !side.contains(e.target) && !e.target.closest('#authSlot')){ closeSide(); } });
+    document.getElementById('sideClose')?.addEventListener('click', closeSide);
+
+    // Auth: render profile if signed in, else Login button
+    function renderAuth(){
+      const slot = document.getElementById('authSlot');
+      const user = JSON.parse(localStorage.getItem('user')||'null');
+      if(!slot) return;
+      if(user){
+        slot.innerHTML = '<button id="profileBtn" title="Profile" style="background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; width:42px; height:42px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 8px 22px rgba(212,175,55,.25)">👤</button>';
+        document.getElementById('profileBtn').addEventListener('click', (e)=>{ e.stopPropagation(); openSide(); });
+        // Add logout functionality to the existing logout button
+        const logoutBtn = document.getElementById('logoutBtn');
+        if(logoutBtn){
+          logoutBtn.addEventListener('click', ()=>{ 
+            localStorage.removeItem('user'); 
+            closeSide(); 
+            renderAuth(); 
+          });
+        }
+      } else {
+        slot.innerHTML = '<button id="loginBtn" title="Login" style="background:transparent; border:1px solid rgba(212,175,55,.45); color:var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; font-weight:800">Login</button>';
+        document.getElementById('loginBtn').addEventListener('click', (e)=>{ e.preventDefault(); openAuthModal(); });
+        const logout = document.getElementById('logoutBtn'); if(logout) logout.remove();
+      }
+    }
+
+    // Auth modal with users registry and improved UI
+    function openAuthModal(){
+      let backdrop = document.getElementById('authBackdrop');
+      if(!backdrop){
+        backdrop = document.createElement('div'); backdrop.id='authBackdrop';
+        backdrop.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1600';
+        const panel = document.createElement('div');
+        panel.style.cssText='width:min(640px,94%);background:linear-gradient(180deg, rgba(16,23,32,.97), rgba(11,15,20,.98));border:1px solid rgba(212,175,55,.34);border-radius:20px;box-shadow:0 40px 120px rgba(0,0,0,.7);overflow:hidden';
+        panel.innerHTML = `
+          <div style="background:linear-gradient(90deg, var(--gstart), var(--gend)); padding:16px; color:#0a0d10; display:flex; justify-content:space-between; align-items:center">
+            <div style="font-weight:900; letter-spacing:.04em">Welcome to Dissara</div>
+            <button id="authClose" class="close-x" style="position:static;width:auto;height:auto;padding:6px 10px; border-color:rgba(0,0,0,.2); color:#0a0d10">Close</button>
+          </div>
+          <div style="padding:16px">
+            <div style="display:flex; gap:8px; margin-bottom:16px">
+              <button id="tabLogin" class="tab-btn" style="background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:8px 16px; border-radius:12px; font-weight:700">Login</button>
+              <button id="tabSignup" class="tab-btn" style="background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:8px 16px; border-radius:12px; font-weight:700">Sign Up</button>
+            </div>
+            <div id="authForms"></div>
+            <div id="authErr" style="color:#f87171; margin-top:8px; display:none"></div>
+            <div id="authHint" class="lead" style="color:var(--muted); margin-top:6px"></div>
+          </div>`;
+        backdrop.appendChild(panel);
+        document.body.appendChild(backdrop);
+        backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) backdrop.remove(); });
+        document.getElementById('authClose').addEventListener('click', ()=>backdrop.remove());
+        // Tabs
+        const forms = document.getElementById('authForms');
+        const tabs = { login: document.getElementById('tabLogin'), signup: document.getElementById('tabSignup') };
+        function setActive(which){
+          [tabs.login,tabs.signup].forEach(b=>{ b.style.background='transparent'; b.style.color='var(--ink)'; });
+          tabs[which].style.background='linear-gradient(90deg, var(--gstart), var(--gend))'; tabs[which].style.color='#0a0d10';
+        }
+        function renderLogin(){
+          setActive('login');
+          forms.innerHTML = `
+            <div style="display:grid;gap:12px; grid-template-columns:1fr 1fr; align-items:start">
+              <div style="display:grid; gap:10px">
+                <label>Email</label>
+                <input id="liEmail" class="input" placeholder="you@example.com" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Password</label>
+                <input id="liPass" class="input" type="password" placeholder="••••••••" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <button id="doLogin" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Login</button>
+              </div>
+              <div style="border-left:1px solid rgba(212,175,55,.18); padding-left:14px; color:var(--muted)">
+                <div style="font-weight:800; margin-bottom:6px">New here?</div>
+                Create an account to track orders, save cart and get offers.
+              </div>
+            </div>`;
+          document.getElementById('doLogin').onclick = ()=>{
+            const email = document.getElementById('liEmail').value.trim();
+            const pass = document.getElementById('liPass').value.trim();
+            const ebox=document.getElementById('authErr');
+            if(!email || !pass){ ebox.textContent='Enter email and password.'; ebox.style.display='block'; return; }
+            const users = JSON.parse(localStorage.getItem('users')||'[]');
+            const found = users.find(u=>u.email.toLowerCase()===email.toLowerCase());
+            if(!found){ ebox.textContent='No account found. Please sign up first.'; ebox.style.display='block'; tabs.signup.click(); return; }
+            if(found.pass !== pass){ ebox.textContent='Incorrect password. Try again.'; ebox.style.display='block'; return; }
+            localStorage.setItem('user', JSON.stringify({email, name: found.name||email.split('@')[0]}));
+            document.getElementById('authErr').style.display='none';
+            backdrop.remove(); renderAuth();
+          };
+        }
+        function renderSignup(){
+          setActive('signup');
+          forms.innerHTML = `
+            <div style="display:grid;gap:12px; grid-template-columns:1fr 1fr; align-items:start">
+              <div style="display:grid; gap:10px">
+                <label>Full Name</label>
+                <input id="suName" class="input" placeholder="Aadhya Verma" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Email</label>
+                <input id="suEmail" class="input" placeholder="you@example.com" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <label>Password</label>
+                <input id="suPass" class="input" type="password" placeholder="Create a password" style="background:transparent;border:1px solid rgba(212,175,55,.3);color:var(--ink);padding:10px;border-radius:10px"/>
+                <button id="doSignup" class="btn-primary" style="padding:10px 14px;border-radius:12px;font-weight:800">Create Account</button>
+              </div>
+              <div style="border-left:1px solid rgba(212,175,55,.18); padding-left:14px; color:var(--muted)">
+                <div style="font-weight:800; margin-bottom:6px">Why join?</div>
+                Access faster checkout, order tracking and exclusive offers.
+              </div>
+            </div>`;
+          document.getElementById('doSignup').onclick = ()=>{
+            const name=document.getElementById('suName').value.trim();
+            const email=document.getElementById('suEmail').value.trim();
+            const pass=document.getElementById('suPass').value.trim();
+            const ebox=document.getElementById('authErr');
+            if(!name||!email||!pass){ ebox.textContent='Please fill all fields.'; ebox.style.display='block'; return; }
+            const users = JSON.parse(localStorage.getItem('users')||'[]');
+            if(users.find(u=>u.email.toLowerCase()===email.toLowerCase())){ ebox.textContent='Account already exists. Please login.'; ebox.style.display='block'; tabs.login.click(); return; }
+            users.push({name, email, pass});
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('user', JSON.stringify({name, email}));
+            document.getElementById('authErr').style.display='none';
+            backdrop.remove(); renderAuth();
+          };
+        }
+        tabs.login.onclick = renderLogin;
+        tabs.signup.onclick = renderSignup;
+        renderLogin();
+      }
+    }
+
+    renderAuth();
+    
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navlinks = document.getElementById('navlinks');
+    
+    if (mobileMenuToggle && navlinks) {
+      mobileMenuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        navlinks.classList.toggle('mobile-active');
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (navlinks.classList.contains('mobile-active') && 
+            !navlinks.contains(e.target) && 
+            !mobileMenuToggle.contains(e.target)) {
+          navlinks.classList.remove('mobile-active');
+        }
+      });
+      
+      // Close mobile menu when clicking on a link
+      const navLinks = navlinks.querySelectorAll('a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          navlinks.classList.remove('mobile-active');
+        });
+      });
+    }
+  </script>
 
   <!-- Hero with Parallax and Animated Gold Accents -->
   <section class="hero" aria-label="Luxury diamond showcase">
@@ -125,7 +1411,7 @@
       </div>
       <div class="hero-showcase" data-parallax="0.06">
         <div class="hero-card">
-          <img src="mainpagepic.png" alt="Featured diamond jewellery" />
+          <img src="necklace1.jpg" alt="Featured diamond jewellery" />
         </div>
         <!-- Animated sparkling accents -->
         <div class="sparks">
@@ -147,27 +1433,27 @@
       <p class="lead" style="margin-bottom:28px">Curated lines inspired by celestial light, oceanic grace, and the bold geometry of the modern age.</p>
       <div class="gallery-grid" id="gallery">
         <a class="tile span-4x2" href="#" aria-label="Eternal Rings">
-          <img src="mainpagepic.png" alt="Eternal Rings" />
+          <img src="ring3.jpg" alt="Eternal Rings" />
           <span class="label">Eternal Rings</span>
         </a>
         <a class="tile span-3x3" href="#" aria-label="Celestial Drops">
-          <img src="mainpagepic.png" alt="Celestial Drops" />
+          <img src="earings3.jpg" alt="Celestial Drops" />
           <span class="label">Celestial Drops</span>
         </a>
         <a class="tile span-5x3" href="#" aria-label="Auric Chains">
-          <img src="mainpagepic.png" alt="Auric Chains" />
+          <img src="necklace3.jpg" alt="Auric Chains" />
           <span class="label">Auric Chains</span>
         </a>
         <a class="tile span-6x4" href="#" aria-label="Midnight Halo">
-          <img src="mainpagepic.png" alt="Midnight Halo" />
+          <img src="ring1.jpg" alt="Midnight Halo" />
           <span class="label">Midnight Halo</span>
         </a>
         <a class="tile span-4x4" href="#" aria-label="Luna Bracelets">
-          <img src="mainpagepic.png" alt="Luna Bracelets" />
+          <img src="bracelet2.jpg" alt="Luna Bracelets" />
           <span class="label">Luna Bracelets</span>
         </a>
         <a class="tile span-3x3" href="#" aria-label="Gilded Studs">
-          <img src="mainpagepic.png" alt="Gilded Studs" />
+          <img src="earings1.jpg" alt="Gilded Studs" />
           <span class="label">Gilded Studs</span>
         </a>
       </div>
@@ -182,41 +1468,40 @@
     <div class="container">
       <h2 class="section-title">Curated Picks</h2>
       <p class="lead" style="margin-bottom:12px">Explore handpicked designs with dazzling brilliance and irresistible value.</p>
-      <div id="shopFilters" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px">
-        <button class="btn-ghost" data-filter="all">All</button>
-        <button class="btn-ghost" data-filter="rings">Rings</button>
-        <button class="btn-ghost" data-filter="earrings">Earrings</button>
-        <button class="btn-ghost" data-filter="necklaces">Necklaces</button>
-        <button class="btn-ghost" data-filter="bracelets">Bracelets</button>
+      
+      <!-- Category Tabs -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; border-bottom: 2px solid rgba(212,175,55,.3); padding-bottom: 10px;">
+        <button class="category-tab active" data-category="recently-added" style="background:linear-gradient(90deg, var(--gstart), var(--gend)); color:#0a0d10; border:none; padding:10px 20px; border-radius:12px; font-weight:700; cursor:pointer;">Recently Added</button>
+        <button class="category-tab" data-category="coming-soon" style="background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:10px 20px; border-radius:12px; font-weight:700; cursor:pointer;">Coming Soon</button>
       </div>
+      
+      <!-- Filter Dropdown -->
       <div style="display:flex; justify-content:flex-end; margin-bottom:16px">
         <label style="display:flex; align-items:center; gap:8px">
-          <span class="lead" style="font-size:.95rem">Sort By</span>
-          <select id="shopSort" style="background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:8px 10px; border-radius:10px">
-            <option value="popular">Popular</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="discount_desc">Discount</option>
-            <option value="rating_desc">Rating</option>
+          <span class="lead" style="font-size:.95rem">Filter:</span>
+          <select id="categoryFilter" style="background:transparent; color:var(--ink); border:1px solid rgba(212,175,55,.35); padding:8px 10px; border-radius:10px">
+            <option value="all">All Products</option>
+            <option value="rings">Rings</option>
+            <option value="earrings">Earrings</option>
+            <option value="necklaces">Necklaces</option>
+            <option value="bracelets">Bracelets</option>
           </select>
         </label>
       </div>
-      <div class="grid" id="productGrid"></div>
+      
+      <!-- Recently Added Products -->
+      <div id="recently-added" class="product-section">
+        <div class="grid" id="recentlyAddedGrid"></div>
+      </div>
+      
+      <!-- Coming Soon Products -->
+      <div id="coming-soon" class="product-section" style="display:none;">
+        <div class="grid" id="comingSoonGrid"></div>
+      </div>
     </div>
   </section>
 
   <div class="divider" aria-hidden="true"></div>
-
-
-
-  <!-- New Arrivals -->
-  <section id="newarrivals" class="products">
-    <div class="container">
-      <h2 class="section-title">New Arrivals</h2>
-      <p class="lead" style="margin-bottom:18px">Fresh drops—be the first to shine.</p>
-      <div class="grid" id="productNew"></div>
-    </div>
-  </section>
 
   <!-- About Section -->
   <section id="about" class="section">
@@ -867,12 +2152,12 @@
   
     // Shop By: data + renderer
     const PRODUCTS = [
-      {id:101, name:'Auric Radiance Necklace', image:'mainpagepic.png', price:12999, mrp:18999, category:'necklaces', gender:'women'},
-      {id:102, name:'Celestial Drop Earrings', image:'jewel11.webp', fallback:'jewel1.webp', price:8999, mrp:12999, category:'earrings', gender:'women'},
-      {id:103, name:'Gilded Halo Ring', image:'jewel1.webp', price:7499, mrp:10499, category:'rings', gender:'women'},
-      {id:104, name:'Midnight Tennis Bracelet', image:'mainpagepic.png', price:15999, mrp:21999, category:'bracelets', gender:'men'},
-      {id:105, name:'Luna Pendant', image:'mainpagepic.png', price:5999, mrp:8999, category:'necklaces', gender:'women'},
-      {id:106, name:'Aurora Studs', image:'jewel11.webp', fallback:'jewel1.webp', price:4499, mrp:6499, category:'earrings', gender:'women'}
+      {id:101, name:'Auric Radiance Necklace', image:'necklace2.jpg', price:12999, mrp:18999, category:'necklaces', gender:'women'},
+      {id:102, name:'Celestial Drop Earrings', image:'earrings2.jpg', fallback:'earrings1.jpg', price:8999, mrp:12999, category:'earrings', gender:'women'},
+      {id:103, name:'Gilded Halo Ring', image:'ring2.jpg', price:7499, mrp:10499, category:'rings', gender:'women'},
+      {id:104, name:'Midnight Tennis Bracelet', image:'bracelet1.jpg', price:15999, mrp:21999, category:'bracelets', gender:'men'},
+      {id:105, name:'Luna Pendant', image:'necklace3.jpg', price:5999, mrp:8999, category:'necklaces', gender:'women'},
+      {id:106, name:'Aurora Studs', image:'earrings3.jpg', fallback:'earrings1.jpg', price:4499, mrp:6499, category:'earrings', gender:'women'}
     ];
     const grid = document.getElementById('productGrid');
     function currency(n){ return '₹' + Number(n||0).toLocaleString('en-IN'); }

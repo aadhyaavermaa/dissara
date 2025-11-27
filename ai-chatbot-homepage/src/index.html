@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Chatbot Homepage</title>
   <link rel="stylesheet" href="chatbot.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     .chat-icon {
       position: fixed;
@@ -13,12 +14,395 @@
       width: 60px;
       height: 60px;
       cursor: pointer;
+      z-index: 1000;
+    }
+    
+    /* Profile Icon */
+    .profile-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #8e44ad;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Side Panel */
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background-color: white;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+      z-index: 1002;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .side-panel.open {
+      right: 0;
+    }
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* Side Panel Content */
+    .side-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .side-panel h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .menu-item {
+      padding: 12px 15px;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: #f5f5f5;
+    }
+
+    .menu-item i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Shop Feature Styles */
+    .shop-feature {
+      margin: 30px auto;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .shop-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .shop-btn {
+      background: linear-gradient(135deg, #8e44ad, #9b59b6);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+    }
+
+    .shop-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(142, 68, 173, 0.4);
+    }
+
+    .shop-btn .fa-chevron-down {
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .shop-btn.active .fa-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    .shop-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      margin-top: 10px;
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      min-width: 600px;
+      z-index: 1003;
+    }
+
+    .shop-menu.active {
+      display: grid;
+    }
+
+    .shop-category h3 {
+      margin: 0 0 15px 0;
+      color: #8e44ad;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .shop-category ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .shop-category li {
+      margin: 8px 0;
+    }
+
+    .shop-category a {
+      text-decoration: none;
+      color: #555;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: block;
+      transition: all 0.2s ease;
+    }
+
+    .shop-category a:hover {
+      background-color: #f8f4fb;
+      color: #8e44ad;
+      transform: translateX(5px);
+    }
+
+    /* Collections Container */
+    .collections-container {
+      margin-top: 40px;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .collections-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .collections-header h2 {
+      margin: 0;
+      color: #333;
+      font-size: 24px;
+    }
+
+    .close-collections {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .close-collections:hover {
+      background-color: #f5f5f5;
+      color: #8e44ad;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .product-info {
+      padding: 15px;
+    }
+
+    .product-name {
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+
+    .product-price {
+      color: #8e44ad;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .product-category {
+      color: #666;
+      font-size: 12px;
+      margin: 5px 0 0 0;
     }
   </style>
 </head>
 <body>
+  <!-- Profile Icon -->
+  <div class="profile-icon" id="profileIcon">
+    <i class="fas fa-user"></i>
+  </div>
+
+  <!-- Side Panel -->
+  <div class="overlay" id="overlay"></div>
+  <div class="side-panel" id="sidePanel">
+    <div class="side-panel-header">
+      <h2>Profile</h2>
+      <button class="close-btn" id="closePanel">&times;</button>
+    </div>
+    <div class="side-panel-content">
+      <div class="profile-info">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <div style="width: 80px; height: 80px; border-radius: 50%; background-color: #8e44ad; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 30px;">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Guest User</h3>
+          <p>guest@example.com</p>
+        </div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <i class="fas fa-cog"></i> Settings
+        </div>
+        <div class="menu-item">
+          <i class="fas fa-question-circle"></i> Help
+        </div>
+        <div class="menu-item">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </div>
+      </div>
+    </div>
+  </div>
+
   <h1>Welcome to Our Website</h1>
   <p>Click the chat icon to start chatting with our AI chatbot!</p>
+  
+  <!-- Shop Feature -->
+  <div class="shop-feature">
+    <div class="shop-dropdown">
+      <button class="shop-btn" id="shopBtn">
+        <i class="fas fa-shopping-bag"></i> Shop by Category
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="shop-menu" id="shopMenu">
+        <div class="shop-category">
+          <h3><i class="fas fa-male"></i> Men</h3>
+          <ul>
+            <li><a href="#" data-category="men-bracelets">Bracelets</a></li>
+            <li><a href="#" data-category="men-chains">Chains</a></li>
+            <li><a href="#" data-category="men-rings">Rings</a></li>
+            <li><a href="#" data-category="men-watches">Watches</a></li>
+            <li><a href="#" data-category="men-accessories">Accessories</a></li>
+          </ul>
+        </div>
+        <div class="shop-category">
+          <h3><i class="fas fa-female"></i> Women</h3>
+          <ul>
+            <li><a href="#" data-category="women-bracelets">Bracelets</a></li>
+            <li><a href="#" data-category="women-necklaces">Necklaces</a></li>
+            <li><a href="#" data-category="women-earrings">Earrings</a></li>
+            <li><a href="#" data-category="women-rings">Rings</a></li>
+            <li><a href="#" data-category="women-sets">Jewelry Sets</a></li>
+            <li><a href="#" data-category="women-bangles">Bangles</a></li>
+          </ul>
+        </div>
+        <div class="shop-category">
+          <h3><i class="fas fa-gem"></i> All Collections</h3>
+          <ul>
+            <li><a href="#" data-category="gold">Gold Collection</a></li>
+            <li><a href="#" data-category="silver">Silver Collection</a></li>
+            <li><a href="#" data-category="diamond">Diamond Collection</a></li>
+            <li><a href="#" data-category="pearl">Pearl Collection</a></li>
+            <li><a href="#" data-category="custom">Custom Designs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Collections Display -->
+    <div class="collections-container" id="collectionsContainer" style="display: none;">
+      <div class="collections-header">
+        <h2 id="collectionTitle">Collections</h2>
+        <button class="close-collections" id="closeCollections">&times;</button>
+      </div>
+      <div class="collections-grid" id="collectionsGrid">
+        <!-- Products will be dynamically loaded here -->
+      </div>
+    </div>
+  </div>
   
   <img src="assets/chat-icon.svg" alt="Chat Icon" class="chat-icon" onclick="openChatbot()" />
 
@@ -26,6 +410,210 @@
     function openChatbot() {
       window.open('chatbot.html', 'Chatbot', 'width=400,height=600');
     }
+
+    // Side Panel Toggle
+    const profileIcon = document.getElementById('profileIcon');
+    const sidePanel = document.getElementById('sidePanel');
+    const overlay = document.getElementById('overlay');
+    const closePanel = document.getElementById('closePanel');
+
+    profileIcon.addEventListener('click', () => {
+      sidePanel.classList.add('open');
+      overlay.classList.add('active');
+    });
+
+    closePanel.addEventListener('click', () => {
+      sidePanel.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidePanel.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+
+    // Shop Feature JavaScript
+    const shopBtn = document.getElementById('shopBtn');
+    const shopMenu = document.getElementById('shopMenu');
+    const collectionsContainer = document.getElementById('collectionsContainer');
+    const collectionsGrid = document.getElementById('collectionsGrid');
+    const collectionTitle = document.getElementById('collectionTitle');
+    const closeCollections = document.getElementById('closeCollections');
+    const categoryLinks = document.querySelectorAll('.shop-category a');
+
+    // Toggle shop dropdown
+    shopBtn.addEventListener('click', () => {
+      shopMenu.classList.toggle('active');
+      shopBtn.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!shopBtn.contains(e.target) && !shopMenu.contains(e.target)) {
+        shopMenu.classList.remove('active');
+        shopBtn.classList.remove('active');
+      }
+    });
+
+    // Sample product data
+    const productsData = {
+      'men-bracelets': [
+        { name: 'Men\'s Leather Bracelet', price: '$29.99', category: 'Bracelets' },
+        { name: 'Steel Chain Bracelet', price: '$39.99', category: 'Bracelets' },
+        { name: 'Beaded Bracelet Set', price: '$24.99', category: 'Bracelets' },
+        { name: 'Silver Cuff Bracelet', price: '$49.99', category: 'Bracelets' }
+      ],
+      'men-chains': [
+        { name: 'Silver Chain Necklace', price: '$59.99', category: 'Chains' },
+        { name: 'Gold Plated Chain', price: '$79.99', category: 'Chains' },
+        { name: 'Rope Chain', price: '$45.99', category: 'Chains' },
+        { name: 'Box Chain', price: '$69.99', category: 'Chains' }
+      ],
+      'men-rings': [
+        { name: 'Silver Signet Ring', price: '$89.99', category: 'Rings' },
+        { name: 'Black Titanium Ring', price: '$99.99', category: 'Rings' },
+        { name: 'Classic Band Ring', price: '$39.99', category: 'Rings' },
+        { name: 'Stone Ring', price: '$79.99', category: 'Rings' }
+      ],
+      'men-watches': [
+        { name: 'Classic Watch', price: '$199.99', category: 'Watches' },
+        { name: 'Sport Watch', price: '$149.99', category: 'Watches' },
+        { name: 'Luxury Watch', price: '$299.99', category: 'Watches' },
+        { name: 'Smart Watch', price: '$249.99', category: 'Watches' }
+      ],
+      'men-accessories': [
+        { name: 'Cufflinks Set', price: '$34.99', category: 'Accessories' },
+        { name: 'Tie Clip', price: '$19.99', category: 'Accessories' },
+        { name: 'Money Clip', price: '$24.99', category: 'Accessories' },
+        { name: 'Keychain', price: '$14.99', category: 'Accessories' }
+      ],
+      'women-bracelets': [
+        { name: 'Charm Bracelet', price: '$39.99', category: 'Bracelets' },
+        { name: 'Beaded Bracelet', price: '$29.99', category: 'Bracelets' },
+        { name: 'Pearl Bracelet', price: '$59.99', category: 'Bracelets' },
+        { name: 'Crystal Bracelet', price: '$49.99', category: 'Bracelets' },
+        { name: 'Gold Bangle', price: '$89.99', category: 'Bracelets' },
+        { name: 'Silver Chain Bracelet', price: '$69.99', category: 'Bracelets' }
+      ],
+      'women-necklaces': [
+        { name: 'Pearl Necklace', price: '$79.99', category: 'Necklaces' },
+        { name: 'Diamond Pendant', price: '$199.99', category: 'Necklaces' },
+        { name: 'Chain Necklace', price: '$49.99', category: 'Necklaces' },
+        { name: 'Choker Necklace', price: '$39.99', category: 'Necklaces' }
+      ],
+      'women-earrings': [
+        { name: 'Stud Earrings', price: '$29.99', category: 'Earrings' },
+        { name: 'Hoop Earrings', price: '$39.99', category: 'Earrings' },
+        { name: 'Drop Earrings', price: '$49.99', category: 'Earrings' },
+        { name: 'Chandelier Earrings', price: '$59.99', category: 'Earrings' }
+      ],
+      'women-rings': [
+        { name: 'Diamond Ring', price: '$299.99', category: 'Rings' },
+        { name: 'Promise Ring', price: '$99.99', category: 'Rings' },
+        { name: 'Band Ring Set', price: '$79.99', category: 'Rings' },
+        { name: 'Cocktail Ring', price: '$129.99', category: 'Rings' }
+      ],
+      'women-sets': [
+        { name: 'Necklace & Earrings Set', price: '$89.99', category: 'Jewelry Sets' },
+        { name: 'Bracelet & Ring Set', price: '$79.99', category: 'Jewelry Sets' },
+        { name: 'Complete Jewelry Set', price: '$149.99', category: 'Jewelry Sets' },
+        { name: 'Bridal Set', price: '$299.99', category: 'Jewelry Sets' }
+      ],
+      'women-bangles': [
+        { name: 'Gold Bangles Set', price: '$199.99', category: 'Bangles' },
+        { name: 'Silver Bangles', price: '$99.99', category: 'Bangles' },
+        { name: 'Glass Bangles', price: '$39.99', category: 'Bangles' },
+        { name: 'Designer Bangles', price: '$149.99', category: 'Bangles' }
+      ],
+      'gold': [
+        { name: 'Gold Chain', price: '$399.99', category: 'Gold Collection' },
+        { name: 'Gold Ring', price: '$299.99', category: 'Gold Collection' },
+        { name: 'Gold Earrings', price: '$249.99', category: 'Gold Collection' },
+        { name: 'Gold Bracelet', price: '$349.99', category: 'Gold Collection' },
+        { name: 'Gold Pendant', price: '$199.99', category: 'Gold Collection' },
+        { name: 'Gold Set', price: '$599.99', category: 'Gold Collection' }
+      ],
+      'silver': [
+        { name: 'Silver Necklace', price: '$99.99', category: 'Silver Collection' },
+        { name: 'Silver Ring', price: '$79.99', category: 'Silver Collection' },
+        { name: 'Silver Earrings', price: '$59.99', category: 'Silver Collection' },
+        { name: 'Silver Bracelet', price: '$89.99', category: 'Silver Collection' },
+        { name: 'Silver Anklet', price: '$49.99', category: 'Silver Collection' }
+      ],
+      'diamond': [
+        { name: 'Diamond Ring', price: '$899.99', category: 'Diamond Collection' },
+        { name: 'Diamond Necklace', price: '$799.99', category: 'Diamond Collection' },
+        { name: 'Diamond Earrings', price: '$699.99', category: 'Diamond Collection' },
+        { name: 'Diamond Bracelet', price: '$599.99', category: 'Diamond Collection' }
+      ],
+      'pearl': [
+        { name: 'Pearl Necklace', price: '$199.99', category: 'Pearl Collection' },
+        { name: 'Pearl Earrings', price: '$149.99', category: 'Pearl Collection' },
+        { name: 'Pearl Bracelet', price: '$129.99', category: 'Pearl Collection' },
+        { name: 'Pearl Ring', price: '$179.99', category: 'Pearl Collection' }
+      ],
+      'custom': [
+        { name: 'Custom Necklace', price: '$399.99', category: 'Custom Designs' },
+        { name: 'Custom Ring', price: '$299.99', category: 'Custom Designs' },
+        { name: 'Custom Bracelet', price: '$349.99', category: 'Custom Designs' },
+        { name: 'Custom Earrings', price: '$249.99', category: 'Custom Designs' },
+        { name: 'Personalized Pendant', price: '$199.99', category: 'Custom Designs' }
+      ]
+    };
+
+    // Handle category clicks
+    categoryLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = link.getAttribute('data-category');
+        showCollection(category);
+      });
+    });
+
+    // Show collection function
+    function showCollection(category) {
+      const products = productsData[category] || [];
+      const categoryTitle = link.textContent;
+      
+      // Update title
+      const categoryLink = document.querySelector(`[data-category="${category}"]`);
+      collectionTitle.textContent = categoryLink.textContent;
+      
+      // Clear existing products
+      collectionsGrid.innerHTML = '';
+      
+      // Add products
+      products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+          <div class="product-image">
+            <i class="fas fa-gem" style="font-size: 48px; color: #ddd;"></i>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-price">${product.price}</p>
+            <p class="product-category">${product.category}</p>
+          </div>
+        `;
+        collectionsGrid.appendChild(productCard);
+      });
+      
+      // Show collections container
+      collectionsContainer.style.display = 'block';
+      
+      // Hide dropdown
+      shopMenu.classList.remove('active');
+      shopBtn.classList.remove('active');
+      
+      // Scroll to collections
+      collectionsContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Close collections
+    closeCollections.addEventListener('click', () => {
+      collectionsContainer.style.display = 'none';
+    });
   </script>
 </body>
 </html>
